@@ -109,7 +109,6 @@ function getFiltersFromStorage() {
 }
 
 function getFiltersFromJson() {
-    // Assuming your JSON file is named "patterns.json"
     fetch('blocklist.json')
         .then(response => response.json())
         .then(data => {
