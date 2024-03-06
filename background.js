@@ -2,11 +2,13 @@ const youtubeFilters = [
     "*://*.youtube.com/",
     "*://*.youtube.com/watch?*",
     "*://*.youtube.com/@*",
-];
+]
 const twitterFilters = [
     "*://*.twitter.com/*",
-];
-const blockFilters = [];
+]
+const blockFilters = []
+let blockFiltersObj = []
+let blockFiltersNames = []
 let bestYoutubeSite
 
 window.onload = function () {
@@ -22,7 +24,7 @@ function youtubeRedirectFunc() {
             const youtubeRedirect = localStorage.getItem("youtubeRedirect")
             let url = details.url.toString().replace("www.youtube.com", bestYoutubeSite)
             url = url.toString().replace("music.youtube.com", bestYoutubeSite)
-            if (youtubeRedirect == "true") {
+            if (youtubeRedirect === "true") {
                 return {redirectUrl: url}
             }
         },
@@ -37,7 +39,7 @@ function twitterRedirectFunc() {
             const twitterRedirect = localStorage.getItem("twitterRedirect")
             let url = details.url.toString().replace("twitter.com", "twiiit.com")
 
-            if (twitterRedirect == "true") {
+            if (twitterRedirect === "true") {
                 return {redirectUrl: url}
             }
         },
@@ -46,14 +48,10 @@ function twitterRedirectFunc() {
     )
 }
 
-function blockAdsAndTrackers() {
-    chrome.webRequest.onBeforeRequest.addListener(
-        function () {
-            return {cancel: true}
-        },
-        {urls: blockFilters},
-        ["blocking"]
-    )
+function blockAdsAndTrackers(callback) {
+    chrome.webRequest.onBeforeRequest.addListener(function () {
+        return {cancel: true}
+    }, {urls: blockFilters}, ["blocking"])
 }
 
 function bestYoutubeInstance() {
@@ -69,6 +67,33 @@ function bestYoutubeInstance() {
 }
 
 function getFilters() {
+    const filterNames = localStorage.getItem("filterNames")
+
+    if (!filterNames){
+        getFiltersFromJson()
+    } else {
+        getFiltersFromStorage()
+    }
+}
+
+function getFiltersFromStorage(){
+    blockFiltersNames = JSON.parse(localStorage.getItem("filterNames"))
+    blockFiltersObj = JSON.parse(localStorage.getItem("filterObj"))
+
+    blockFiltersNames.forEach(key => {
+        const isToogled = localStorage.getItem(`${key}Filter`)
+        if (isToogled === "true"){
+            console.log(blockFiltersObj.filter(obj => obj.name === key))
+            const list = blockFiltersObj.filter(obj => obj.name === key)
+            list.forEach(data =>{
+                blockFilters.push(data.url)
+            })
+        }
+    })
+    blockAdsAndTrackers()
+}
+
+function getFiltersFromJson() {
     // Assuming your JSON file is named "patterns.json"
     fetch('blocklist.json')
         .then(response => response.json())
@@ -79,14 +104,19 @@ function getFilters() {
                     // Get the array of patterns for the current key
                     const patterns = data[key]
 
+                    blockFiltersNames.push(key)
+
                     // Log each pattern in the array
                     console.log(`Patterns for ${key}:`)
                     patterns.forEach(pattern => {
+                        blockFiltersObj.push({name: key, url: pattern})
                         blockFilters.push(pattern)
-                    });
+                    })
                     blockAdsAndTrackers()
                 }
             }
+            localStorage.setItem("filterNames", JSON.stringify(blockFiltersNames))
+            localStorage.setItem("filterObj", JSON.stringify(blockFiltersObj))
         })
         .catch(error => {
             console.error('Error fetching JSON:', error)
