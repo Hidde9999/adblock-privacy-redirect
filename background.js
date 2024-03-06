@@ -3,30 +3,12 @@ const youtubeFilters = [
     "*://*.youtube.com/watch?*",
     "*://*.youtube.com/@*",
 ];
-const blockFilters = [
-    "*://*.gstatic.com/*",
-    "*://*.youtube.com/api/stats/*",
-    // "*://*.youtube.com/oembed?*",
-    // "*://*.youtube.com/generate_204",
-    // "*://*.youtube.com/youtubei/*",
-    // "*://googleads.g.doubleclick.net/*",
-    "*://*.google.com/log?*",
-    "*://*.googlesyndication.com/*",
-    "*://*.googletagmanager.com/*",
-    "*://*.doubleclick.net/*",
-    "*://*.cdnst.net/javascript/ads/*",
-    "*://*.cookielaw.org/*",
-    // "*://*.2mdn.net/*",
-    // "*://*.fastclick.net/*",
-    // "*://*.jnn-pa.googleapis.com/*",
-    "*://js.stripe.com/v3/fingerprinted/*",
-    "*://api.odysee.com/membership/*",
-    "*://watchman.na-backend.odysee.com/reports/*",
-];
+const blockFilters = [];
 let bestYoutubeSite
 
 window.onload = function () {
     bestYoutubeInstance()
+    getFilters()
 }
 
 chrome.webRequest.onBeforeRequest.addListener(
@@ -42,13 +24,15 @@ chrome.webRequest.onBeforeRequest.addListener(
     ["blocking"]
 );
 
-chrome.webRequest.onBeforeRequest.addListener(
-    function() {
-        return { cancel: true };
-    },
-    { urls: blockFilters },
-    ["blocking"]
-);
+function blockAdsAndTrackers(){
+    chrome.webRequest.onBeforeRequest.addListener(
+        function() {
+            return { cancel: true };
+        },
+        { urls: blockFilters },
+        ["blocking"]
+    );
+}
 
 function bestYoutubeInstance(){
     fetch("https://api.invidious.io/instances.json?sort_by=type,health")
@@ -60,4 +44,29 @@ function bestYoutubeInstance(){
         .catch(error => {
             console.error('Error fetching RSS feed:', error)
         })
+}
+
+function getFilters(){
+    // Assuming your JSON file is named "patterns.json"
+    fetch('blocklist.json')
+        .then(response => response.json())
+        .then(data => {
+            // Iterate over each key-value pair in the data object
+            for (const key in data) {
+                if (data.hasOwnProperty(key)) {
+                    // Get the array of patterns for the current key
+                    const patterns = data[key];
+
+                    // Log each pattern in the array
+                    console.log(`Patterns for ${key}:`);
+                    patterns.forEach(pattern => {
+                        blockFilters.push(pattern)
+                    });
+                    blockAdsAndTrackers()
+                }
+            }
+        })
+        .catch(error => {
+            console.error('Error fetching JSON:', error);
+        });
 }
