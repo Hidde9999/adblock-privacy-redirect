@@ -1,27 +1,35 @@
 // script.js
 document.addEventListener("DOMContentLoaded", function() {
-    // Retrieve the value of youtubeRedirect from localStorage
-    const youtubeRedirect = localStorage.getItem("youtubeRedirect");
-
-    // If youtubeRedirect is set and true, set the switch to ON
-    if (youtubeRedirect === "true") {
-        document.getElementById("toggleSwitch").checked = true;
-    }
-
-    // Function to handle switch change
-    function handleToggle() {
-        const isChecked = this.checked;
-        localStorage.setItem("youtubeRedirect", isChecked ? "true" : "false");
-        if (isChecked) {
-            console.log("Switch is ON");
-            // Perform actions when switch is ON
-        } else {
-            console.log("Switch is OFF");
-            // Perform actions when switch is OFF
-        }
-    }
+    // Set YouTube switch
+    setSwitchFromLocalStorage("toggleSwitchYT", "youtubeRedirect");
+    // Set Twitter switch
+    setSwitchFromLocalStorage("toggleSwitchTwitter", "twitterRedirect");
 
     // Add event listener to the switch
-    document.getElementById("toggleSwitch").addEventListener("change", handleToggle);
+    document.getElementById("toggleSwitchYT").addEventListener("change", handleToggle("youtubeRedirect"));
+    // Add event listener to the switch
+    document.getElementById("toggleSwitchTwitter").addEventListener("change", handleToggle("twitterRedirect"));
 });
 
+// Function to set switch based on localStorage value
+function setSwitchFromLocalStorage(switchId, localStorageKey) {
+    const switchValue = localStorage.getItem(localStorageKey);
+    if (switchValue === "true") {
+        document.getElementById(switchId).checked = true;
+    }
+}
+
+// Function to handle switch change
+function handleToggle(name) {
+    return function() {
+        const isChecked = this.checked;
+        localStorage.setItem(name, isChecked ? "true" : "false");
+        if (isChecked) {
+            console.log(name +" Switch is ON");
+            // Perform actions when switch is ON
+        } else {
+            console.log(name +" Switch is OFF");
+            // Perform actions when switch is OFF
+        }
+    };
+}

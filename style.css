@@ -1,4 +1,8 @@
 /* styles.css */
+.popup{
+    width: 500px;
+}
+
 .switch {
     position: relative;
     display: inline-block;
