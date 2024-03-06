@@ -1,0 +1,21 @@
+{
+  "google": [
+    "*://*.gstatic.com/*",
+    "*://*.youtube.com/api/stats/*",
+    "*://*.google.com/log?*",
+    "*://*.googlesyndication.com/*",
+    "*://*.googletagmanager.com/*",
+    "*://*.doubleclick.net/*"
+  ],
+  "cookieBlock": [
+    "*://*.cookielaw.org/*"
+  ],
+  "odysee": [
+    "*://api.odysee.com/membership/*",
+    "*://watchman.na-backend.odysee.com/reports/*"
+  ],
+  "other":[
+    "*://*.cdnst.net/javascript/ads/*",
+    "*://js.stripe.com/v3/fingerprinted/*"
+  ]
+}
