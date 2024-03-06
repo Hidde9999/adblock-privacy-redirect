@@ -6,7 +6,9 @@ const youtubeFilters = [
 const twitterFilters = [
     "*://*.twitter.com/*",
 ]
-const blockFilters = []
+let blockRequest
+
+let blockFilters = []
 let blockFiltersObj = []
 let blockFiltersNames = []
 let bestYoutubeSite
@@ -16,6 +18,9 @@ window.onload = function () {
     getFilters()
     youtubeRedirectFunc()
     twitterRedirectFunc()
+
+    // Add an event listener for the storage event
+    window.addEventListener('storage', handleStorageChange)
 }
 
 function youtubeRedirectFunc() {
@@ -48,10 +53,16 @@ function twitterRedirectFunc() {
     )
 }
 
-function blockAdsAndTrackers(callback) {
-    chrome.webRequest.onBeforeRequest.addListener(function () {
+function blockAdsAndTrackers() {
+    blockRequest = function () {
+        //Instructions
         return {cancel: true}
-    }, {urls: blockFilters}, ["blocking"])
+    }
+    chrome.webRequest.onBeforeRequest.addListener(
+        blockRequest,
+        {urls: blockFilters},
+        ["blocking"]
+    )
 }
 
 function bestYoutubeInstance() {
@@ -69,23 +80,27 @@ function bestYoutubeInstance() {
 function getFilters() {
     const filterNames = localStorage.getItem("filterNames")
 
-    if (!filterNames){
+    if (!filterNames) {
         getFiltersFromJson()
     } else {
         getFiltersFromStorage()
     }
 }
 
-function getFiltersFromStorage(){
+function getFiltersFromStorage() {
     blockFiltersNames = JSON.parse(localStorage.getItem("filterNames"))
     blockFiltersObj = JSON.parse(localStorage.getItem("filterObj"))
 
+    chrome.webRequest.onBeforeRequest.removeListener(blockRequest)
+
+    blockFilters = []
+
     blockFiltersNames.forEach(key => {
         const isToogled = localStorage.getItem(`${key}Filter`)
-        if (isToogled === "true"){
-            console.log(blockFiltersObj.filter(obj => obj.name === key))
-            const list = blockFiltersObj.filter(obj => obj.name === key)
-            list.forEach(data =>{
+
+        if (isToogled === "true") {
+            const listBlocked = blockFiltersObj.filter(obj => obj.name === key)
+            listBlocked.forEach(data => {
                 blockFilters.push(data.url)
             })
         }
@@ -121,4 +136,11 @@ function getFiltersFromJson() {
         .catch(error => {
             console.error('Error fetching JSON:', error)
         })
+}
+
+// Define a function to handle changes in localStorage
+function handleStorageChange(event) {
+    if (event.key.toString().includes("Filter")) { // Check if the change is for a specific key
+        getFiltersFromStorage()
+    }
 }
