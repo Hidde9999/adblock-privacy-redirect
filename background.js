@@ -2,9 +2,14 @@ const youtubeFilters = [
     "*://*.youtube.com/",
     "*://*.youtube.com/watch?*",
     "*://*.youtube.com/@*",
+    "*://*.youtube.com/embed/*",
 ]
-const twitterFilters = [
+const redirectFilters = [
     "*://*.twitter.com/*",
+    "*://www.google.com/*",
+    "*://accounts.google.com/*",
+    "*://*.gmail.com/*",
+    "*://fonts.gstatic.com/*",
 ]
 let blockRequest
 
@@ -17,7 +22,7 @@ window.onload = function () {
     bestYoutubeInstance()
     getFilters()
     youtubeRedirectFunc()
-    twitterRedirectFunc()
+    redirectFunc()
 
     // Add an event listener for the storage event
     window.addEventListener('storage', handleStorageChange)
@@ -38,19 +43,66 @@ function youtubeRedirectFunc() {
     )
 }
 
-function twitterRedirectFunc() {
+function redirectFunc() {
     chrome.webRequest.onBeforeRequest.addListener(
         function (details) {
-            const twitterRedirect = localStorage.getItem("twitterRedirect")
-            let url = details.url.toString().replace("twitter.com", "twiiit.com")
 
-            if (twitterRedirect === "true") {
-                return {redirectUrl: url}
+            const redirectName = getRedirectName(details.url)
+
+            const redirect = localStorage.getItem(`${redirectName}Redirect`)
+
+            const url = getRedirectReplaceUrl(redirectName ,details.url)
+
+            if (!url.includes("/maps") && !url.includes("/recaptcha")) {
+                if (redirect === "true") {
+                    return {redirectUrl: url}
+                }
             }
         },
-        {urls: twitterFilters},
+        {urls: redirectFilters},
         ["blocking"]
     )
+}
+
+function getRedirectName(url){
+    let redirectName = url.replace(/^https?:\/\/(?:www\.|mail\.)?([^\/]+)(?:\/.*)?$/, "$1");
+    redirectName = redirectName.replace(".com", "")
+    redirectName = redirectName.replace("accounts.google.com", "gmail")
+    redirectName = redirectName.replace(".gstatic", "")
+    return redirectName
+}
+function getRedirectReplaceUrl(redirectName, url){
+    url = url.toString().replace("twitter.com", "twiiit.com")
+    url = url.toString().replace("www.google.com", "search.brave.com")
+
+    if (redirectName == "fonts"){ url = replaceFonts(url) }
+
+    if (redirectName == "gmail"){url = "https://account.proton.me/login"}
+    return url
+}
+
+function replaceFonts(url){
+    if (url.includes("/roboto/")){
+        if (url.includes("KFOlCnqEu92Fr1MmEU9fBBc4")){
+            url = chrome.extension.getURL("/fonts/roboto/KFOlCnqEu92Fr1MmEU9fBBc4.woff2");
+        }
+        if (url.includes("KFOlCnqEu92Fr1MmWUlfBBc4")){
+            url = chrome.extension.getURL("/fonts/roboto/KFOlCnqEu92Fr1MmWUlfBBc4.woff2");
+        }
+        if (url.includes("KFOmCnqEu92Fr1Mu4mxK")){
+            url = chrome.extension.getURL("/fonts/roboto/KFOmCnqEu92Fr1Mu4mxK.woff2");
+        }
+    }
+    if (url.includes("/googlesans/")){
+        url = chrome.extension.getURL("/fonts/googlesans/4UabrENHsxJlGDuGo1OIlLU94YtzCwY.woff2");
+    }
+    if (url.includes("/opensans/")){
+        url = chrome.extension.getURL("/fonts/opensans/memvYaGs126MiZpBA-UvWbX2vVnXBbObj2OVTS-mu0SC55I.woff2");
+    }
+    if (url.includes("HhyAU5Ak9u-oMExPeInvcuEmPosC9zSpYaEEU68cdvrHJvc8q9PLEJIz8dTgzBT9BLQV9eAKtpW99CIiY4Uzx5dFzRNFinsyGN7Ad_KqOtUz")){
+        url = chrome.extension.getURL("/fonts/mapsfont.woff2");
+    }
+    return url
 }
 
 function blockAdsAndTrackers() {
@@ -78,9 +130,7 @@ function bestYoutubeInstance() {
 }
 
 function getFilters() {
-    const filterNames = localStorage.getItem("filterNames")
-
-    if (!filterNames) {
+    if (blockFiltersNames.length < 1) {
         getFiltersFromJson()
     } else {
         getFiltersFromStorage()
@@ -99,6 +149,7 @@ function getFiltersFromStorage() {
         const isToogled = localStorage.getItem(`${key}Filter`)
 
         if (isToogled === "true") {
+            console.log(key);
             const listBlocked = blockFiltersObj.filter(obj => obj.name === key)
             listBlocked.forEach(data => {
                 blockFilters.push(data.url)

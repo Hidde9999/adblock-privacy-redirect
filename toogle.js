@@ -4,11 +4,23 @@ document.addEventListener("DOMContentLoaded", function () {
     setSwitchFromLocalStorage("toggleSwitchYT", "youtubeRedirect")
     // Set Twitter switch
     setSwitchFromLocalStorage("toggleSwitchTwitter", "twitterRedirect")
+    // Set YouTube switch
+    setSwitchFromLocalStorage("toggleSwitchGoogle", "googleRedirect")
+    // Set Twitter switch
+    setSwitchFromLocalStorage("toggleSwitchGoogleFonts", "fontsRedirect")
+    // Set YouTube switch
+    setSwitchFromLocalStorage("toggleSwitchGmail", "gmailRedirect")
 
     // Add event listener to the switch
     document.getElementById("toggleSwitchYT").addEventListener("change", handleToggle("youtubeRedirect"))
     // Add event listener to the switch
     document.getElementById("toggleSwitchTwitter").addEventListener("change", handleToggle("twitterRedirect"))
+    // Add event listener to the switch
+    document.getElementById("toggleSwitchGoogle").addEventListener("change", handleToggle("googleRedirect"))
+    // Add event listener to the switch
+    document.getElementById("toggleSwitchGoogleFonts").addEventListener("change", handleToggle("fontsRedirect"))
+    // Add event listener to the switch
+    document.getElementById("toggleSwitchGmail").addEventListener("change", handleToggle("gmailRedirect"))
 });
 
 // Function to set switch based on localStorage value

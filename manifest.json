@@ -20,5 +20,8 @@
             "js": ["content.js"]
         }
     ],
+    "web_accessible_resources": [
+        "fonts/*.woff2"
+    ],
     "manifest_version": 2
 }

@@ -1,11 +1,31 @@
 {
   "google": [
-    "*://*.gstatic.com/*",
+    "*://*.googleapis.com/*",
+
     "*://*.youtube.com/api/stats/*",
+
+    "*://*.gstatic.com/cv/js/*",
+
     "*://*.google.com/log?*",
+    "*://clients.google.com/*",
+    "*://clients1.google.com/*",
+    "*://clients2.google.com/*",
+    "*://clients3.google.com/*",
+    "*://clients4.google.com/*",
+    "*://clients5.google.com/*",
+    "*://clients6.google.com/*",
+    "*://clients7.google.com/*",
+    "*://clients8.google.com/*",
+    "*://clients9.google.com/*",
+    "*://clients0.google.com/*",
+
     "*://*.googlesyndication.com/*",
+    "*://*.googleadservices.com/*",
+
     "*://*.googletagmanager.com/*",
-    "*://*.doubleclick.net/*"
+    "*://*.doubleclick.net/*",
+    "*://*.googlecode.com/*",
+    "*://*.2mdn.net/*"
   ],
   "cookieBlock": [
     "*://*.cookielaw.org/*"
@@ -16,6 +36,8 @@
   ],
   "other":[
     "*://*.cdnst.net/javascript/ads/*",
-    "*://js.stripe.com/v3/fingerprinted/*"
+    "*://js.stripe.com/v3/fingerprinted/*",
+    "*://*.vevo.com/*",
+    "*://*.fwmrm.net/*"
   ]
 }
