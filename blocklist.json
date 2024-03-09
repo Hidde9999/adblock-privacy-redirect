@@ -5,8 +5,18 @@
     "*://*.youtube.com/api/stats/*",
 
     "*://*.gstatic.com/cv/js/*",
+    "*://*.gstatic.com/_/mss/boq-one-google/*",
+    "*://*.gstatic.com/og/_/*",
+    "*://*.gstatic.com/feedback/*",
+    "*://*.gstatic.com/meet/phone/*",
+
+
+    "*://accounts.google.com/RotateCookiesPage",
 
     "*://*.google.com/log?*",
+    "*://*.sites.google.com/*",
+    "*://video-stats.video.google.com/*",
+    "*://*.clients6.google.com/*",
     "*://clients.google.com/*",
     "*://clients1.google.com/*",
     "*://clients2.google.com/*",
