@@ -20,15 +20,17 @@
     "*://clients0.google.com/*",
 
     "*://*.googlesyndication.com/*",
+    "*://*.google-analytics.com/*",
     "*://*.googleadservices.com/*",
-
     "*://*.googletagmanager.com/*",
+
     "*://*.doubleclick.net/*",
     "*://*.googlecode.com/*",
     "*://*.2mdn.net/*"
   ],
   "cookieBlock": [
-    "*://*.cookielaw.org/*"
+    "*://*.cookielaw.org/*",
+    "*://*.cookiebot.com/*"
   ],
   "odysee": [
     "*://api.odysee.com/membership/*",
