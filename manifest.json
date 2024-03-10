@@ -2,9 +2,19 @@
     "name": "Adblocker + privacy redirect",
     "version": "1.0",
     "description": "",
-    "permissions": ["webRequest", "activeTab", "webRequestBlocking", "<all_urls>"],
+    "permissions": [
+        "webRequest",
+        "activeTab",
+        "proxy",
+        "tabs",
+        "webRequestBlocking",
+        "<all_urls>",
+        "http://*/*",
+        "https://*/*",
+        "storage"
+    ],
     "background": {
-        "scripts": ["background.js"]
+        "scripts": ["adblocker.js", "tor.js"]
     },
     "browser_action": {
         "default_popup": "index.html",

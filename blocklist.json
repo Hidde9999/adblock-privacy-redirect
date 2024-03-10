@@ -10,7 +10,6 @@
     "*://*.gstatic.com/feedback/*",
     "*://*.gstatic.com/meet/phone/*",
 
-
     "*://accounts.google.com/RotateCookiesPage",
 
     "*://*.google.com/log?*",
@@ -28,7 +27,7 @@
     "*://clients8.google.com/*",
     "*://clients9.google.com/*",
     "*://clients0.google.com/*",
-
+    
     "*://*.googlesyndication.com/*",
     "*://*.google-analytics.com/*",
     "*://*.googleadservices.com/*",
@@ -40,7 +39,8 @@
   ],
   "cookieBlock": [
     "*://*.cookielaw.org/*",
-    "*://*.cookiebot.com/*"
+    "*://*.cookiebot.com/*",
+    "*://*.euroclix.nl/assets/8.75.6/app/pages/resources/js/consent/*"
   ],
   "odysee": [
     "*://api.odysee.com/membership/*",
@@ -50,6 +50,8 @@
     "*://*.cdnst.net/javascript/ads/*",
     "*://js.stripe.com/v3/fingerprinted/*",
     "*://*.vevo.com/*",
-    "*://*.fwmrm.net/*"
+    "*://*.fwmrm.net/*",
+
+    "*://static.nos.nl/*"
   ]
 }
