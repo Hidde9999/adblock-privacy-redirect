@@ -1,0 +1,7 @@
+{
+  "bypass": [
+    "jensen.nl",
+    "chat.openai.com",
+    "corsproxy.io"
+  ]
+}
