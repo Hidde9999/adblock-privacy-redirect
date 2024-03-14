@@ -1,0 +1,33 @@
+# Set the SocksPort to listen on. This is the port your applications will connect to.
+SocksPort 9050 # Default port is 9050
+
+# Set the port for incoming connections to a relay.
+ORPort 443 # Default ORPort is 9001
+
+# Choose a nickname for your relay.
+Nickname myRelay
+
+# Configure bandwidth for the relay.
+RelayBandwidthRate 100 KBytes  # Throttle traffic to 100KB/s
+RelayBandwidthBurst 200 KBytes # Allow bursts up to 200KB/s
+
+# Limit the number of simultaneous connections.
+MaxCircuitDirtiness 10
+
+# Ensure that Tor is reachable from IPv4 and IPv6.
+ClientUseIPv4 1
+ClientUseIPv6 0
+
+# Exit policies: Adjust according to your needs.
+ExitPolicy accept *:80
+ExitPolicy accept *:443
+
+# Make sure that we're only a relay, not an exit node.
+ExitRelay 0
+
+# Control port for Tor Controller.
+ControlPort 9051
+CookieAuthentication 1
+
+# Log information to a file.
+Log notice file C:\Users\YourUsername\tor.log

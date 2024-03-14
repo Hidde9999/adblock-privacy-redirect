@@ -1,7 +1,16 @@
 {
   "bypass": [
-    "jensen.nl",
     "chat.openai.com",
+    "challenges.cloudflare.com",
+    "odysee.com",
+    "api.odysee.com",
+    "api.na-backend.odysee.com",
     "corsproxy.io"
+  ],
+  "extra": [
+    "www.ah.nl",
+    "jensen.nl",
+    "euroclix.nl",
+    "invidious.perennialte.ch"
   ]
 }

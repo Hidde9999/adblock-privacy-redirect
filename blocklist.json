@@ -3,8 +3,17 @@
     "*://*.googleapis.com/*",
 
     "*://*.youtube.com/api/stats/*",
+    "*://*.youtube.com/youtubei/v1/att/*",
+    "*://*.youtube.com/youtubei/v1/guide?*",
+    "*://*.youtube.com/youtubei/v1/feedback?*",
+    "*://*.youtube.com/ptracking?*",
+
+    "*://*.youtube.com/s/desktop/3ed4ebed/jsbin/network.vflset/network.js",
+    "*://*.youtube.com/s/desktop/3ed4ebed/jsbin/scheduler.vflset/scheduler.js",
+    "*://*.youtube.com/s/desktop/3ed4ebed/jsbin/web-animations-next-lite.min.vflset/web-animations-next-lite.min.js",
 
     "*://*.gstatic.com/cv/js/*",
+    "*://*.gstatic.com/uservoice/feedback/*",
     "*://*.gstatic.com/_/mss/boq-one-google/*",
     "*://*.gstatic.com/og/_/*",
     "*://*.gstatic.com/feedback/*",
@@ -40,7 +49,16 @@
   "cookieBlock": [
     "*://*.cookielaw.org/*",
     "*://*.cookiebot.com/*",
-    "*://*.euroclix.nl/assets/8.75.6/app/pages/resources/js/consent/*"
+    "*://*.euroclix.nl/assets/8.75.6/app/pages/resources/js/consent/*",
+    "*://myprivacy-static.dpgmedia.net/*",
+    "*://sdk.privacy-center.org/*"
+  ],
+  "facebook": [
+    "*://dit.whatsapp.net/*",
+    "*://static.ak.connect.facebook.com/*",
+    "*://static.ak.fbcdn.net/*",
+    "*://graph.facebook.com/*",
+    "*://connect.facebook.net/*"
   ],
   "odysee": [
     "*://api.odysee.com/membership/*",
@@ -52,6 +70,12 @@
     "*://*.vevo.com/*",
     "*://*.fwmrm.net/*",
 
-    "*://static.nos.nl/*"
+    "*://static.nos.nl/*",
+    "*://advertising-cdn.dpgmedia.cloud/*",
+    "*://temptation.volkskrant.nl/*",
+    "*://www.volkskrant.nl/_next/static/chunks/*",
+    "*://cdn.auth0.com/*",
+    "*://shared.mediahuis.be/*",
+    "*://*.telegraaf.nl/statics/client/client.307808cc80.js"
   ]
 }

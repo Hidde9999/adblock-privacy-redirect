@@ -10,6 +10,8 @@ document.addEventListener("DOMContentLoaded", function () {
     setSwitchFromLocalStorage("toggleSwitchGoogleFonts", "fontsRedirect")
     // Set YouTube switch
     setSwitchFromLocalStorage("toggleSwitchGmail", "gmailRedirect")
+    // Set YouTube switch
+    setSwitchFromLocalStorage("toggleSwitchNews", "newsRedirect")
 
     // Add event listener to the switch
     document.getElementById("toggleSwitchYT").addEventListener("change", handleToggle("youtubeRedirect"))
@@ -21,6 +23,8 @@ document.addEventListener("DOMContentLoaded", function () {
     document.getElementById("toggleSwitchGoogleFonts").addEventListener("change", handleToggle("fontsRedirect"))
     // Add event listener to the switch
     document.getElementById("toggleSwitchGmail").addEventListener("change", handleToggle("gmailRedirect"))
+    // Add event listener to the switch
+    document.getElementById("toggleSwitchNews").addEventListener("change", handleToggle("newsRedirect"))
 });
 
 // Function to set switch based on localStorage value

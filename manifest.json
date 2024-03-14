@@ -11,13 +11,15 @@
         "<all_urls>",
         "http://*/*",
         "https://*/*",
-        "storage"
+        "storage",
+        "cookies",
+        "background"
     ],
-    "background": {
-        "scripts": ["adblocker.js", "tor.js"]
+"background": {
+        "scripts": ["js/background/adblocker.js", "js/background/tor.js", "js/background/removeCookies.js"]
     },
     "browser_action": {
-        "default_popup": "index.html",
+        "default_popup": "html/index.html",
         "default_title": "rss"
     },
     "content_scripts": [
@@ -27,7 +29,7 @@
                 "*://www.youtube.com/watch?*",
                 "*://m.youtube.com/watch?*"
             ],
-            "js": ["content.js"]
+            "js": ["js/background/content.js"]
         }
     ],
     "web_accessible_resources": [

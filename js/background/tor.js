@@ -1,10 +1,12 @@
 let totalBypassList = [];
+
 chrome.runtime.onMessage.addListener(function(message, sender, sendResponse) {
     if (message.torEnabled) {
         // Enable Tor proxy
         chrome.storage.local.get(['bypassList'], function(result) {
             const bypassList = result.bypassList || [];
-            totalBypassList += bypassList
+            totalBypassList = bypassList.concat(totalBypassList); // Combine with existing bypass list
+
             chrome.proxy.settings.set({
                 value: {
                     mode: "fixed_servers",
@@ -27,13 +29,16 @@ chrome.runtime.onMessage.addListener(function(message, sender, sendResponse) {
 });
 
 // Read and add URLs from JSON file to bypass list
-fetch('bypass.json')
+fetch('../../bypass.json')
     .then(response => response.json())
     .then(data => {
         if (data && data.bypass && Array.isArray(data.bypass)) {
-            data.bypass.forEach(url => {
-                totalBypassList.push(url);
-            });
+            totalBypassList = totalBypassList.concat(data.bypass); // Combine with bypass list from JSON
+            // console.log(totalBypassList);
+        }
+        if (data && data.extra && Array.isArray(data.extra)) {
+            totalBypassList = totalBypassList.concat(data.extra); // Combine with bypass list from JSON
+            // console.log(totalBypassList);
         }
     })
     .catch(error => console.error('Error fetching JSON:', error));

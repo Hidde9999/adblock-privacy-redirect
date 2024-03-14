@@ -16,6 +16,7 @@ let blockRequest
 let blockFilters = []
 let blockFiltersObj = []
 let blockFiltersNames = []
+let fakeMediaList = []
 let bestYoutubeSite
 
 window.onload = function () {
@@ -51,7 +52,7 @@ function redirectFunc() {
 
             const redirect = localStorage.getItem(`${redirectName}Redirect`)
 
-            const url = getRedirectReplaceUrl(redirectName ,details.url)
+            const url = getRedirectReplaceUrl(redirectName, details.url)
 
             if (!url.includes("/maps") && !url.includes("/recaptcha")) {
                 if (redirect === "true") {
@@ -62,6 +63,31 @@ function redirectFunc() {
         {urls: redirectFilters},
         ["blocking"]
     )
+}
+
+function fakeMediaFunc() {
+    chrome.webRequest.onBeforeRequest.addListener(
+        function (details) {
+            const redirect = localStorage.getItem('newsRedirect') === 'true';
+            let url = details.url;
+            // const newUrl = `https://12ft.io/${url}`;
+
+            if (redirect) {
+                // Display confirmation dialog
+                const confirmation = confirm("Fake news alert! Do you want to proceed?");
+
+                // If user clicks OK, redirect the site
+                if (confirmation) {
+                    return { redirectUrl: url };
+                } else {
+                    // If user clicks Cancel, don't redirect
+                    return { cancel: true };
+                }
+            }
+        },
+        { urls: fakeMediaList},
+        ["blocking"]
+    );
 }
 
 function getRedirectName(url){
@@ -160,7 +186,7 @@ function getFiltersFromStorage() {
 }
 
 function getFiltersFromJson() {
-    fetch('blocklist.json')
+    fetch('../../blocklist.json')
         .then(response => response.json())
         .then(data => {
             // Iterate over each key-value pair in the data object
@@ -194,3 +220,14 @@ function handleStorageChange(event) {
         getFiltersFromStorage()
     }
 }
+
+// Read and add URLs from JSON file to bypass list
+fetch('../../fakemedia.json')
+    .then(response => response.json())
+    .then(data => {
+        if (data && data.news && Array.isArray(data.news)) {
+            fakeMediaList = data.news; // Combine with bypass list from JSON
+            fakeMediaFunc()
+        }
+    })
+    .catch(error => console.error('Error fetching JSON:', error));

@@ -1,0 +1,12 @@
+{
+  "news": [
+    "*://nos.nl/*",
+    "*://www.telegraaf.nl/nieuws/*",
+    "*://www.telegraaf.nl/entertainment/*",
+    "*://www.volkskrant.nl/*",
+    "*://www.rtlnieuws.nl/nieuws/*",
+    "*://www.bnnvara.nl/joop/artikelen/*",
+    "*://www.ad.nl/*",
+    "*://www.nrc.nl/*"
+  ]
+}
