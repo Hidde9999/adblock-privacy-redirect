@@ -17,75 +17,85 @@ window.onload = function() {
 function fakeMediaCheck() {
     if (fakeMediaList.includes(window.location.host)){
         fakeMediaPopup()
-        fakeMediaReplace()
         setTimeout(() => {
+            fakeMediaReplace()
             document.title = "Hitler Times";
         }, 50);
     }
 }
 
 function fakeMediaReplace() {
-    // Create a recursive function to traverse through all elements
-    function replaceText(node, word, replaceWord) {
-        // Check if the node is a text node
+    const replacements = [
+        { target: "Nieuwsuur", replacement: "Nieuwszuur" },
+        { target: "Nieuws", replacement: "Fake Nieuws" },
+        { target: "desinformatie", replacement: "waarheid" },
+        { target: "Belastingdienst", replacement: "Criminele organisatie die alles bij de burger wegrooft" },
+        { target: "Belastingen", replacement: "dieven" },
+        { target: "Belasting", replacement: "dief" },
+        { target: "overheid", replacement: "corrupte overheid" },
+        { target: "Hoogopgeleide", replacement: "Hoog geindoctrineerde" },
+
+        { target: /\bongevaccineerde(n)?\b/gi, replacement: "zwarte" },
+        { target: /\bgevaccineerde?\b/gi, replacement: "gifspuit krijgen" },
+        { target: /\b(ge)?vaccineerde(n)?\b/gi, replacement: "opgeoferd" },
+        { target: /\b(ge)?inent(en)?\b/gi, replacement: "opoferen" },
+        { target: "ingeënt", replacement: "opgeoferd" },
+
+        { target: /\bvaccinatie(s)?\b/gi, replacement: "gifspuit" },
+        { target: "basisvaccinaties", replacement: "basis gifspuit" },
+        { target: "Rijksvaccinatieprogramma", replacement: "Rijks liquidatie programma" },
+        { target: /\bvaccin(s)?\b/gi, replacement: "gifspuiten" },
+        { target: /\bvacciner(en)?\b/gi, replacement: "gifspuiten" },
+        { target: /\bvaccin\b/gi, replacement: "gifspuit" },
+        { target: /\bvaccinatiegraad\b/gi, replacement: "gifspuitgraad" },
+
+        { target: /\bmazelen\b/gi, replacement: "nazie" },
+        { target: /\bmazelenuitbraak\b/gi, replacement: "nazie uitbraak" },
+        { target: /\bkinkhoest\b/gi, replacement: "de overheid" },
+        { target: /\bpolio\b/gi, replacement: "WEF" },
+        { target: /\brodehond\b/gi, replacement: "rode WEF hond" },
+        { target: /\bde bof\b/gi, replacement: "de EU" },
+        { target: /\bcorona\b/gi, replacement: "de griep" },
+        { target: /\bcoronapandemie\b/gi, replacement: "de griep plandemie" },
+        { target: /\been bacterie\b/gi, replacement: "de media" },
+
+        { target: /\bhet RIVM\b/gi, replacement: "nep wetenschappers betaald door Big Pharma" },
+        { target: /\bRIVM\b/gi, replacement: "nep wetenschappers betaald door Big Pharma" },
+        { target: /\bGGD\b/gi, replacement: "nep artsen betaald door Big Pharma" },
+        { target: /\bklimaat\b/gi, replacement: "weer" },
+        { target: /\bstikstof\b/gi, replacement: "stikstof hoax" },
+        { target: /\bpresident\b/gi, replacement: "Trump" },
+        { target: /\bWoke\b/gi, replacement: "Mentaal gestoord" },
+        { target: /\bwokisme\b/gi, replacement: "mentaal gestoord" },
+        { target: /\bdomrechts\b/gi, replacement: "communisten" },
+        { target: /\bextreem-rechts\b/gi, replacement: "antifa" },
+        { target: /\bextreem rechts\b/gi, replacement: "Egg-stink-tion rebeion" },
+        { target: /\bduurzaamheids?\b/gi, replacement: "extra belasting aan de corrupte overheid" },
+        { target: /\bduurzaamheid\b/gi, replacement: "extra belasting aan de corrupte overheid" },
+        { target: /\bD66\b/gi, replacement: "Nazies" },
+        { target: /\bGL-PvdA\b/gi, replacement: "Domme Communisten" },
+        { target: /\bGroenLinks\b/gi, replacement: "BruinLinks" },
+        { target: /\bPvdA\b/gi, replacement: "Partij Van De Ondergang" },
+        { target: /\bVVD\b/gi, replacement: "Volk Val Dood" },
+        { target: /\bTimmermans\b/gi, replacement: "Dik Varken" },
+        { target: /\bJetten\b/gi, replacement: "Robot Jetten" },
+        { target: /\bKaag\b/gi, replacement: "Ssssssiegheil Kaag" },
+        { target: /\bSander Schimmelpenninck\b/gi, replacement: "Sander Schimmelpenis" }
+    ];
+
+    function replaceText(node) {
         if (node.nodeType === Node.TEXT_NODE) {
-            // Replace text content if it contains the word
-            node.textContent = node.textContent.replace(new RegExp(word, 'gi'), replaceWord);
+            let text = node.textContent;
+            replacements.forEach(({ target, replacement }) => {
+                text = text.replace(target, replacement);
+            });
+            node.textContent = text;
         } else if (node.nodeType === Node.ELEMENT_NODE) {
-            // Iterate through child nodes of element
-            for (const childNode of node.childNodes) {
-                // Recursively call replaceText for each child node
-                replaceText(childNode, word, replaceWord);
-            }
+            node.childNodes.forEach(replaceText);
         }
     }
 
-    // Start from the body element
-    replaceText(document.body, "Nieuwsuur", "Nieuwszuur");
-    replaceText(document.body, "Nieuws", "Fake Nieuws");
-
-    replaceText(document.body, "desinformatie", "waarheid");
-
-    replaceText(document.body, "Belastingdienst", "Criminele organisatie die alles bij de burger wegrooft");
-    replaceText(document.body, "Belastingen", "dieven");
-    replaceText(document.body, "Belasting", "dief");
-
-    replaceText(document.body, "overheid", "corrupte overheid");
-
-    replaceText(document.body, "ongevaccineerde", "zwarte");
-    replaceText(document.body, "gevaccineerd", "gifspuit krijgen");
-    replaceText(document.body, "niet-ingeënte", "zwarte");
-    replaceText(document.body, "ingeënt", "blank");
-    replaceText(document.body, "mazelen", "nazies");
-    replaceText(document.body, "vaccinatie", "gifspuit");
-    replaceText(document.body, "vaccins", "gifspuiten");
-    replaceText(document.body, "vaccineren", "gifspuiten");
-    replaceText(document.body, "vaccin", "gifspuit");
-
-    replaceText(document.body, "klimaat", "weer");
-    replaceText(document.body, "president", "Trump");
-
-    replaceText(document.body, "Woke", "Mentaal gestoord");
-    replaceText(document.body, "wokisme", "mentaal gestoord");
-
-    replaceText(document.body, "domrechts", "communisten");
-    replaceText(document.body, "extreem-rechts", "antifa");
-    replaceText(document.body, "extreem rechts", "Egg-stink-tion rebeion");
-
-    replaceText(document.body, "duurzaamheids", "extra belasting aan de corrupte overheid");
-    replaceText(document.body, "duurzaamheid", "extra belasting aan de corrupte overheid");
-
-    replaceText(document.body, "D66", "Nazies");
-    replaceText(document.body, "GL-PvdA", "Domme Communisten");
-    replaceText(document.body, "GroenLinks", "BruinLinks");
-    replaceText(document.body, "PvdA", "Partij Van De Ondergang");
-    replaceText(document.body, "VVD", "Volk Val Dood");
-
-    replaceText(document.body, "Timmermans", "Dik Varken");
-    replaceText(document.body, "Jetten", "Robot Jetten");
-    replaceText(document.body, "Kaag", "Ssssssiegheil Kaag");
-
-    replaceText(document.body, "Sander Schimmelpenninck", "Sander Schimmelpenis");
+    replaceText(document.body);
 }
 
 function fakeMediaPopup() {
