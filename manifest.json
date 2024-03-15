@@ -29,7 +29,10 @@
                 "*://www.youtube.com/watch?*",
                 "*://m.youtube.com/watch?*"
             ],
-            "js": ["js/background/content.js"]
+            "js": ["js/content/ytAdBlocker.js"]
+        },{
+            "matches": ["*://*/*"],
+            "js": ["js/content/fakeNews.js"]
         }
     ],
     "web_accessible_resources": [

@@ -16,7 +16,7 @@ let blockRequest
 let blockFilters = []
 let blockFiltersObj = []
 let blockFiltersNames = []
-let fakeMediaList = []
+// let fakeMediaList = []
 let bestYoutubeSite
 
 window.onload = function () {
@@ -65,30 +65,30 @@ function redirectFunc() {
     )
 }
 
-function fakeMediaFunc() {
-    chrome.webRequest.onBeforeRequest.addListener(
-        function (details) {
-            const redirect = localStorage.getItem('newsRedirect') === 'true';
-            let url = details.url;
-            // const newUrl = `https://12ft.io/${url}`;
-
-            if (redirect) {
-                // Display confirmation dialog
-                const confirmation = confirm("Fake news alert! Do you want to proceed?");
-
-                // If user clicks OK, redirect the site
-                if (confirmation) {
-                    return { redirectUrl: url };
-                } else {
-                    // If user clicks Cancel, don't redirect
-                    return { cancel: true };
-                }
-            }
-        },
-        { urls: fakeMediaList},
-        ["blocking"]
-    );
-}
+// function fakeMediaFunc() {
+//     chrome.webRequest.onBeforeRequest.addListener(
+//         function (details) {
+//             const redirect = localStorage.getItem('newsRedirect') === 'true';
+//             let url = details.url;
+//             // const newUrl = `https://12ft.io/${url}`;
+//
+//             if (redirect) {
+//                 // Display confirmation dialog
+//                 const confirmation = confirm("Fake news alert! Do you want to proceed?");
+//
+//                 // If user clicks OK, redirect the site
+//                 if (confirmation) {
+//                     return { redirectUrl: url };
+//                 } else {
+//                     // If user clicks Cancel, don't redirect
+//                     return { cancel: true };
+//                 }
+//             }
+//         },
+//         { urls: fakeMediaList},
+//         ["blocking"]
+//     );
+// }
 
 function getRedirectName(url){
     let redirectName = url.replace(/^https?:\/\/(?:www\.|mail\.)?([^\/]+)(?:\/.*)?$/, "$1");
@@ -227,7 +227,7 @@ fetch('../../fakemedia.json')
     .then(data => {
         if (data && data.news && Array.isArray(data.news)) {
             fakeMediaList = data.news; // Combine with bypass list from JSON
-            fakeMediaFunc()
+            // fakeMediaFunc()
         }
     })
     .catch(error => console.error('Error fetching JSON:', error));
