@@ -1,12 +1,12 @@
 let fakeMediaList = [
     "nos.nl",
     "www.telegraaf.nl",
-    "www.telegraaf.nl",
     "www.volkskrant.nl",
     "www.rtlnieuws.nl",
     "www.bnnvara.nl/joop/artikelen",
     "www.ad.nl",
-    "www.nrc.nl"
+    "www.nrc.nl",
+    "www.nu.nl"
 ]
 
 // Attach the replaceTextOnSite function to the onload event of the window
@@ -44,7 +44,16 @@ function fakeMediaReplace() {
     replaceText(document.body, "Nieuwsuur", "Nieuwszuur");
     replaceText(document.body, "Nieuws", "Fake Nieuws");
 
+    replaceText(document.body, "desinformatie", "waarheid");
+
+    replaceText(document.body, "Belastingdienst", "Criminele organisatie die alles bij de burger wegrooft");
+    replaceText(document.body, "Belastingen", "dieven");
+    replaceText(document.body, "Belasting", "dief");
+
+    replaceText(document.body, "overheid", "corrupte overheid");
+
     replaceText(document.body, "ongevaccineerde", "zwarte");
+    replaceText(document.body, "gevaccineerd", "gifspuit krijgen");
     replaceText(document.body, "niet-ingeënte", "zwarte");
     replaceText(document.body, "ingeënt", "blank");
     replaceText(document.body, "mazelen", "nazies");
@@ -55,6 +64,9 @@ function fakeMediaReplace() {
 
     replaceText(document.body, "klimaat", "weer");
     replaceText(document.body, "president", "Trump");
+
+    replaceText(document.body, "Woke", "Mentaal gestoord");
+    replaceText(document.body, "wokisme", "mentaal gestoord");
 
     replaceText(document.body, "domrechts", "communisten");
     replaceText(document.body, "extreem-rechts", "antifa");
@@ -73,8 +85,6 @@ function fakeMediaReplace() {
     replaceText(document.body, "Jetten", "Robot Jetten");
     replaceText(document.body, "Kaag", "Ssssssiegheil Kaag");
 
-
-
     replaceText(document.body, "Sander Schimmelpenninck", "Sander Schimmelpenis");
 }
 
@@ -84,13 +94,13 @@ function fakeMediaPopup() {
         const elemDiv = document.createElement('div');
 
     // Set styles for the div element
-        elemDiv.style.cssText = 'width: 100%; margin: 0 auto;';
+        elemDiv.style.cssText = 'position: relative; width: 100%; margin: 0 auto; z-index: 100000; background-color: #fff';
 
     // Create a p element
         const pElement = document.createElement('h1');
 
     // Set text content for the p element
-        pElement.textContent = "This site is known for their fake news!"; // Corrected "there" to "their"
+        pElement.textContent = "Warning: This site is known for their fake news!";
 
     // Append the p element to the div element
         elemDiv.appendChild(pElement);

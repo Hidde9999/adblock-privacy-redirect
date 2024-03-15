@@ -1,3 +1,11 @@
 .eVNfjI svg{
     display: none !important;
 }
+
+.tm-hybrid, .fjs-paywall-notification, .advertisement, .header__button--subscribe{
+    display: none !important;
+}
+
+.js-tm-backdrop-active {
+    overflow: auto !important;
+}
