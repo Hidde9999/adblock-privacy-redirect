@@ -42,6 +42,7 @@ function fakeMediaReplace() {
 
     // Start from the body element
     replaceText(document.body, "Nieuwsuur", "Nieuwszuur");
+    replaceText(document.body, "Nieuws", "Fake Nieuws");
 
     replaceText(document.body, "ongevaccineerde", "zwarte");
     replaceText(document.body, "niet-ingeënte", "zwarte");
@@ -62,6 +63,18 @@ function fakeMediaReplace() {
     replaceText(document.body, "duurzaamheids", "extra belasting aan de corrupte overheid");
     replaceText(document.body, "duurzaamheid", "extra belasting aan de corrupte overheid");
 
+    replaceText(document.body, "D66", "Nazies");
+    replaceText(document.body, "GL-PvdA", "Domme Communisten");
+    replaceText(document.body, "GroenLinks", "BruinLinks");
+    replaceText(document.body, "PvdA", "Partij Van De Ondergang");
+    replaceText(document.body, "VVD", "Volk Val Dood");
+
+    replaceText(document.body, "Timmermans", "Dik Varken");
+    replaceText(document.body, "Jetten", "Robot Jetten");
+    replaceText(document.body, "Kaag", "Ssssssiegheil Kaag");
+
+
+
     replaceText(document.body, "Sander Schimmelpenninck", "Sander Schimmelpenis");
 }
 
@@ -71,7 +84,7 @@ function fakeMediaPopup() {
         const elemDiv = document.createElement('div');
 
     // Set styles for the div element
-    //     elemDiv.style.cssText = 'position:absolute;width:100%;height:100px;z-index:100;background:#000;top:0px';
+        elemDiv.style.cssText = 'width: 100%; margin: 0 auto;';
 
     // Create a p element
         const pElement = document.createElement('h1');

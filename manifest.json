@@ -32,6 +32,7 @@
             "js": ["js/content/ytAdBlocker.js"]
         },{
             "matches": ["*://*/*"],
+            "css": ["css/fakeMedia.css"],
             "js": ["js/content/fakeNews.js"]
         }
     ],
