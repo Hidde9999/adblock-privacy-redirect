@@ -20,6 +20,13 @@ function fakeMediaCheck() {
         setTimeout(() => {
             fakeMediaReplace()
             document.title = "Hitler Times";
+            let link = document.querySelector("link[rel~='icon']");
+            if (!link) {
+                link = document.createElement('link');
+                link.rel = 'icon';
+                document.head.appendChild(link);
+            }
+            link.href = 'https://upload.wikimedia.org/wikipedia/commons/8/89/Swastika_nazi.svg';
         }, 50);
     }
 }
@@ -62,8 +69,11 @@ function fakeMediaReplace() {
         { target: /\bhet RIVM\b/gi, replacement: "nep wetenschappers betaald door Big Pharma" },
         { target: /\bRIVM\b/gi, replacement: "nep wetenschappers betaald door Big Pharma" },
         { target: /\bGGD\b/gi, replacement: "nep artsen betaald door Big Pharma" },
-        { target: /\bklimaat\b/gi, replacement: "weer" },
+
+        { target: /\bklimaat(top)?(deal)?(record)?\b/gi, replacement: "klimaat scam" },
+
         { target: /\bstikstof\b/gi, replacement: "stikstof hoax" },
+        
         { target: /\bpresident\b/gi, replacement: "Trump" },
         { target: /\bWoke\b/gi, replacement: "Mentaal gestoord" },
         { target: /\bwokisme\b/gi, replacement: "mentaal gestoord" },
