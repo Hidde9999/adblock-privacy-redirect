@@ -33,6 +33,7 @@ chrome.runtime.onMessage.addListener(function(message, sender, sendResponse) {
 function vpn(){
     chrome.storage.local.get(['torEnabled'], function(result) {
         if (result.torEnabled){
+            chrome.browserAction.setIcon({ path: "../../img/vpn.png" });
             // Enable Tor proxy
                 chrome.proxy.settings.set({
                     value: {
@@ -47,6 +48,8 @@ function vpn(){
                     },
                     scope: "regular"
                 });
+        } else {
+            chrome.browserAction.setIcon({ path: "../../img/vpn-off.png" }); // Set the icon for VPN OFF
         }
     })
 }
@@ -57,6 +60,14 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
         sendResponse({ online: navigator.onLine });
     }
 });
+
+function updateIcon() {
+    if (vpnEnabled) {
+        chrome.browserAction.setIcon({ path: "vpn_on_icon.png" }); // Set the icon for VPN ON
+    } else {
+        chrome.browserAction.setIcon({ path: "vpn_off_icon.png" }); // Set the icon for VPN OFF
+    }
+}
 
 
 // Read and add URLs from JSON file to bypass list

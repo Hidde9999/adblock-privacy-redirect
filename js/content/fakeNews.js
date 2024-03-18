@@ -1,13 +1,13 @@
-let fakeMediaList = [
-    "nos.nl",
-    "www.telegraaf.nl",
-    "www.volkskrant.nl",
-    "www.rtlnieuws.nl",
-    "www.bnnvara.nl/joop/artikelen",
-    "www.ad.nl",
-    "www.nrc.nl",
-    "www.nu.nl"
-]
+const fakeMediaList = [
+    { url: "nos.nl", language: "nl" },
+    { url: "www.telegraaf.nl", language: "nl" },
+    { url: "www.volkskrant.nl", language: "nl" },
+    { url: "www.rtlnieuws.nl", language: "nl" },
+    { url: "www.bnnvara.nl/joop/artikelen", language: "nl" },
+    { url: "www.ad.nl", language: "nl" },
+    { url: "www.nrc.nl", language: "nl" },
+    { url: "www.nu.nl", language: "nl" }
+];
 
 // Attach the replaceTextOnSite function to the onload event of the window
 window.onload = function() {
@@ -15,10 +15,19 @@ window.onload = function() {
 };
 
 function fakeMediaCheck() {
-    if (fakeMediaList.includes(window.location.host)){
+    let language = ""
+    const isCurrentHostInFakeMediaList = fakeMediaList.some(data => {
+        if (data.url.includes(window.location.host)){
+            language = data.language
+            return data.url.includes(window.location.host);
+        }
+    });
+
+// Use the result in your conditional statement
+    if (isCurrentHostInFakeMediaList) {
         fakeMediaPopup()
         setTimeout(() => {
-            fakeMediaReplace()
+            fakeMediaReplace(language)
             document.title = "Hitler Times";
             let link = document.querySelector("link[rel~='icon']");
             if (!link) {
@@ -31,24 +40,37 @@ function fakeMediaCheck() {
     }
 }
 
-function fakeMediaReplace() {
-    const replacements = [
+function fakeMediaReplace(language) {
+    const nlReplacements = [
         { target: "Nieuwsuur", replacement: "Nieuwszuur" },
         { target: "Nieuws", replacement: "Fake Nieuws" },
+
         { target: "desinformatie", replacement: "waarheid" },
+        { target: "nepnieuws", replacement: "waarheid" },
+        { target: /\bcorrect\b/gi, replacement: "niet waar" },
+        { target: /\bincorrect\b/gi, replacement: "waar" },
+        { target: "uit vrij recente studies blijkt", replacement: "uit corrupte studies betaald door de globalisten blijkt" },
+        { target: "feiten", replacement: "fabels" },
+
         { target: "Belastingdienst", replacement: "Criminele organisatie die alles bij de burger wegrooft" },
         { target: "Belastingen", replacement: "dieven" },
         { target: "Belasting", replacement: "dief" },
         { target: "overheid", replacement: "corrupte overheid" },
+        { target: "gemeente", replacement: "GEMEEN-te" },
+
         { target: "Hoogopgeleide", replacement: "Hoog geindoctrineerde" },
 
         { target: /\bongevaccineerde(n)?\b/gi, replacement: "zwarte" },
+        { target: /\bongevaccineerd\b/gi, replacement: "zwart" },
         { target: /\bgevaccineerde?\b/gi, replacement: "gifspuit krijgen" },
+        { target: /\binenting\b/gi, replacement: "opoferen" },
         { target: /\b(ge)?vaccineerde(n)?\b/gi, replacement: "opgeoferd" },
         { target: /\b(ge)?inent(en)?\b/gi, replacement: "opoferen" },
         { target: "ingeënt", replacement: "opgeoferd" },
 
         { target: /\bvaccinatie(s)?\b/gi, replacement: "gifspuit" },
+        { target: /\bVaccinatieplicht\b/gi, replacement: "gifspuitplicht" },
+        { target: /\bvaccinweigeraars?\b/gi, replacement: "mensen met gezond verstand die geen gifspuiten willen" },
         { target: "basisvaccinaties", replacement: "basis gifspuit" },
         { target: "Rijksvaccinatieprogramma", replacement: "Rijks liquidatie programma" },
         { target: /\bvaccin(s)?\b/gi, replacement: "gifspuiten" },
@@ -56,19 +78,34 @@ function fakeMediaReplace() {
         { target: /\bvaccin\b/gi, replacement: "gifspuit" },
         { target: /\bvaccinatiegraad\b/gi, replacement: "gifspuitgraad" },
 
-        { target: /\bmazelen\b/gi, replacement: "nazie" },
+        { target: /\bmazelen\b/gi, replacement: "nazies" },
+        { target: /\bmazelenbesmetting\b/gi, replacement: "naziebesmetting" },
+        { target: /\bmazelenbesmettingen\b/gi, replacement: "naziebesmettingen" },
+        { target: /\bmazelenvaccin\b/gi, replacement: "gifspuit tegen de nazies" },
+        { target: /\bmazelenvirus\b/gi, replacement: "naziesvirus" },
         { target: /\bmazelenuitbraak\b/gi, replacement: "nazie uitbraak" },
+        { target: /\bmazelenpatiënten\b/gi, replacement: "naziespatiënten" },
+        { target: /\bmazelenepidemie\b/gi, replacement: "nazie epidemie" },
+
         { target: /\bkinkhoest\b/gi, replacement: "de overheid" },
-        { target: /\bpolio\b/gi, replacement: "WEF" },
+        { target: /\bkinkhoestbesmettingen\b/gi, replacement: "de overheid besmettingen" },
+
+        { target: /\bpolio\b/gi, replacement: "De Media Virus" },
+        { target: /\brode hond\b/gi, replacement: "rode WEF hond" },
         { target: /\brodehond\b/gi, replacement: "rode WEF hond" },
         { target: /\bde bof\b/gi, replacement: "de EU" },
-        { target: /\bcorona\b/gi, replacement: "de griep" },
+        { target: /\bcorona(virus)?\b/gi, replacement: "de griep" },
         { target: /\bcoronapandemie\b/gi, replacement: "de griep plandemie" },
+
+        { target: /\bziekten\b/gi, replacement: "gezonden" },
         { target: /\been bacterie\b/gi, replacement: "de media" },
 
         { target: /\bhet RIVM\b/gi, replacement: "nep wetenschappers betaald door Big Pharma" },
         { target: /\bRIVM\b/gi, replacement: "nep wetenschappers betaald door Big Pharma" },
         { target: /\bGGD\b/gi, replacement: "nep artsen betaald door Big Pharma" },
+
+        { target: /\bwereldgezondheidsorganisatie\b/gi, replacement: "WereldHOAXorganisatie" },
+        { target: /\bWHO\b/gi, replacement: "World HOAX Organisation" },
 
         { target: /\bklimaat(top)?(deal)?(record)?\b/gi, replacement: "klimaat scam" },
         { target: /\bExtinction Rebellion\b/gi, replacement: "Dombo Rebellion" },
@@ -76,6 +113,8 @@ function fakeMediaReplace() {
         { target: /\bKlimaatdemonstranten\b/gi, replacement: "klimaat gekken" },
 
         { target: /\bstikstof\b/gi, replacement: "stikstof hoax" },
+
+        { target: /\bVolksgezondheid( en )?(milieu)?\b/gi, replacement: "VolksONgezondheid en zogenaamd het milieu" },
         
         { target: /\bpresident\b/gi, replacement: "Trump" },
         { target: /\bWoke\b/gi, replacement: "Mentaal gestoord" },
@@ -95,13 +134,18 @@ function fakeMediaReplace() {
         { target: /\bKaag\b/gi, replacement: "Ssssssiegheil Kaag" },
         { target: /\bSander Schimmelpenninck\b/gi, replacement: "Sander Schimmelpenis" }
     ];
+    const engReplacements= [
+
+    ]
 
     function replaceText(node) {
         if (node.nodeType === Node.TEXT_NODE) {
             let text = node.textContent;
-            replacements.forEach(({ target, replacement }) => {
-                text = text.replace(target, replacement);
-            });
+            if (language === "nl"){
+                nlReplacements.forEach(({ target, replacement }) => {
+                    text = text.replace(target, replacement);
+                });
+            }
             node.textContent = text;
         } else if (node.nodeType === Node.ELEMENT_NODE) {
             node.childNodes.forEach(replaceText);
