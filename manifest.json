@@ -25,15 +25,27 @@
     "content_scripts": [
         {
             "matches": [
-                "*://youtube.com/watch?*",
-                "*://www.youtube.com/watch?*",
-                "*://m.youtube.com/watch?*"
+                "*://youtube.com/*",
+                "*://www.youtube.com/*",
+                "*://m.youtube.com/*"
             ],
+            "css": ["css/youtube.css"],
             "js": ["js/content/ytAdBlocker.js"]
         },{
             "matches": ["*://*/*"],
             "css": ["css/fakeMedia.css"],
             "js": ["js/content/fakeNews.js"]
+        },{
+            "matches": [
+                "*://*.google.com/*",
+                "*://google.com/*"
+            ],
+            "css": ["css/google.css"],
+            "js": ["js/content/google.js"]
+        },
+        {
+            "matches": ["<all_urls>"],
+            "js": ["js/content/online.js"]
         }
     ],
     "web_accessible_resources": [

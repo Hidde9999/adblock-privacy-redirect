@@ -65,31 +65,6 @@ function redirectFunc() {
     )
 }
 
-// function fakeMediaFunc() {
-//     chrome.webRequest.onBeforeRequest.addListener(
-//         function (details) {
-//             const redirect = localStorage.getItem('newsRedirect') === 'true';
-//             let url = details.url;
-//             // const newUrl = `https://12ft.io/${url}`;
-//
-//             if (redirect) {
-//                 // Display confirmation dialog
-//                 const confirmation = confirm("Fake news alert! Do you want to proceed?");
-//
-//                 // If user clicks OK, redirect the site
-//                 if (confirmation) {
-//                     return { redirectUrl: url };
-//                 } else {
-//                     // If user clicks Cancel, don't redirect
-//                     return { cancel: true };
-//                 }
-//             }
-//         },
-//         { urls: fakeMediaList},
-//         ["blocking"]
-//     );
-// }
-
 function getRedirectName(url){
     let redirectName = url.replace(/^https?:\/\/(?:www\.|mail\.)?([^\/]+)(?:\/.*)?$/, "$1");
     redirectName = redirectName.replace(".com", "")

@@ -71,6 +71,9 @@ function fakeMediaReplace() {
         { target: /\bGGD\b/gi, replacement: "nep artsen betaald door Big Pharma" },
 
         { target: /\bklimaat(top)?(deal)?(record)?\b/gi, replacement: "klimaat scam" },
+        { target: /\bExtinction Rebellion\b/gi, replacement: "Dombo Rebellion" },
+        { target: /\bklimaatradicalen\b/gi, replacement: "klimaat gekken" },
+        { target: /\bKlimaatdemonstranten\b/gi, replacement: "klimaat gekken" },
 
         { target: /\bstikstof\b/gi, replacement: "stikstof hoax" },
         

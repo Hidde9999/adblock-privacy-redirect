@@ -4,6 +4,23 @@ document.addEventListener('DOMContentLoaded', function () {
     const bypassInput = document.getElementById('bypassInput');
     const addBypassButton = document.getElementById('addBypassButton');
     const bypassItems = document.getElementById('bypassItems');
+    getIP()
+    function getIP(){
+        // Make a request to ipinfo.io to get the user's IP address
+        fetch('https://api.ipify.org/?format=json')
+            .then(response => response.json())
+            .then(data => {
+                // Extract and display the IP address
+                document.getElementById('ip-address').textContent = `Your IP address is: ${data.ip}`;
+                // document.getElementById('ip-address').textContent = `Your IP address is: ${data.ip} from ${data.region}`;
+                toggleButton.disable = false
+            })
+            .catch(error => {
+                console.error('Error fetching IP address:', error);
+                document.getElementById('ip-address').textContent = 'Error fetching IP address';
+            });
+    }
+
 
     // Set initial status
     chrome.storage.local.get(['torEnabled'], function(result) {
@@ -21,12 +38,14 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Listen for button click event to toggle Tor proxy
     toggleButton.addEventListener('click', function () {
+        toggleButton.disable = true
         chrome.storage.local.get(['torEnabled'], function(result) {
             let torEnabled = result.torEnabled === undefined ? false : result.torEnabled;
             torEnabled = !torEnabled;
             chrome.storage.local.set({ 'torEnabled': torEnabled });
             setStatusText(torEnabled);
             chrome.runtime.sendMessage({ torEnabled: torEnabled });
+            getIP()
         });
     });
 

@@ -1,16 +1,16 @@
 {
   "bypass": [
-    "chat.openai.com",
-    "challenges.cloudflare.com",
-    "odysee.com",
-    "api.odysee.com",
-    "api.na-backend.odysee.com",
-    "corsproxy.io"
+    "https://chat.openai.com/",
+    "https://challenges.cloudflare.com/",
+    "https://odysee.com/",
+    "https://api.odysee.com/",
+    "https://api.na-backend.odysee.com/",
+    "https://corsproxy.io/"
   ],
   "extra": [
-    "www.ah.nl",
-    "jensen.nl",
-    "euroclix.nl",
-    "invidious.perennialte.ch"
+    "https://www.ah.nl/",
+    "https://jensen.nl/",
+    "https://euroclix.nl/",
+    "https://invidious.perennialte.ch/"
   ]
 }

@@ -6,6 +6,8 @@
     // Enable The Popup remover
     const removePopup = true
 
+    const removeConsentPopup = true
+
     // Enable debug messages into the console
     const debug = true
 
@@ -53,7 +55,13 @@
 
     if(adblocker) addblocker()
     if(removePopup) popupRemover()
-    if(removePopup) observer.observe(document.body, observerConfig)
+    // if(removeConsentPopup) popupConstentRemover()
+
+    // function popupConstentRemover() {
+    //
+    // }
+
+    // if(removePopup) observer.observe(document.body, observerConfig)
 
     // Remove Them pesski popups
     function popupRemover() {

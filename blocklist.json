@@ -3,14 +3,16 @@
     "*://*.googleapis.com/*",
 
     "*://*.youtube.com/api/stats/*",
+    "*://*.youtube.com/pagead/adview?*",
+    "*://*.youtube.com/pcs/activeview?*",
+    "*://*.youtube.com/youtubei/v1/log_event?*",
     "*://*.youtube.com/youtubei/v1/att/*",
     "*://*.youtube.com/youtubei/v1/guide?*",
     "*://*.youtube.com/youtubei/v1/feedback?*",
+    "*://*.youtube.com/youtubei/v1/updated_metadata?*",
+    "*://*.youtube.com/youtubei/v1/player/ad_break?*",
+    "*://*.youtube.com/youtubei/v1/get_survey?*",
     "*://*.youtube.com/ptracking?*",
-
-    "*://*.youtube.com/s/desktop/3ed4ebed/jsbin/network.vflset/network.js",
-    "*://*.youtube.com/s/desktop/3ed4ebed/jsbin/scheduler.vflset/scheduler.js",
-    "*://*.youtube.com/s/desktop/3ed4ebed/jsbin/web-animations-next-lite.min.vflset/web-animations-next-lite.min.js",
 
     "*://*.gstatic.com/cv/js/*",
     "*://*.gstatic.com/uservoice/feedback/*",
@@ -19,10 +21,12 @@
     "*://*.gstatic.com/feedback/*",
     "*://*.gstatic.com/meet/phone/*",
 
-    "*://accounts.google.com/RotateCookiesPage",
-
+    "*://accounts.google.com/*",
     "*://*.google.com/log?*",
+    "*://*.google.com/sorry/*",
     "*://*.sites.google.com/*",
+
+
     "*://video-stats.video.google.com/*",
     "*://*.clients6.google.com/*",
     "*://clients.google.com/*",
