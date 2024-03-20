@@ -23,7 +23,6 @@
 
     "*://accounts.google.com/*",
     "*://*.google.com/log?*",
-    "*://*.google.com/sorry/*",
     "*://*.sites.google.com/*",
 
 

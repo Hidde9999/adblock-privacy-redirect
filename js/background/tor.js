@@ -4,7 +4,6 @@ vpn()
 
 chrome.webRequest.onBeforeRequest.addListener(
     function (details) {
-            // Check if the URL matches any item in totalBypassList
             const isBypassed = totalBypassList.some(item => details.url.includes(item));
             let delay = 5000
 
@@ -13,8 +12,7 @@ chrome.webRequest.onBeforeRequest.addListener(
                 chrome.proxy.settings.clear({scope: 'regular'}, function () {});
                 setTimeout(vpn, delay);
             } else {
-                // Call vpn() function with a timeout of 500ms
-                setTimeout(vpn, 100);
+                setTimeout(vpn, delay);
             }
     },
     {urls: ["*://*/*"]},
@@ -54,21 +52,11 @@ function vpn(){
     })
 }
 
-chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
-    if (message.action === "checkOnlineStatus") {
-        // console.log(navigator.onLine)
-        sendResponse({ online: navigator.onLine });
-    }
-});
-
-function updateIcon() {
-    if (vpnEnabled) {
-        chrome.browserAction.setIcon({ path: "vpn_on_icon.png" }); // Set the icon for VPN ON
-    } else {
-        chrome.browserAction.setIcon({ path: "vpn_off_icon.png" }); // Set the icon for VPN OFF
-    }
-}
-
+// chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
+//     if (message.action === "checkOnlineStatus") {
+//         sendResponse({ online: navigator.onLine });
+//     }
+// });
 
 // Read and add URLs from JSON file to bypass list
 fetch('../../bypass.json')
@@ -76,11 +64,9 @@ fetch('../../bypass.json')
     .then(data => {
         if (data && data.bypass && Array.isArray(data.bypass)) {
             totalBypassList = totalBypassList.concat(data.bypass); // Combine with bypass list from JSON
-            // console.log(totalBypassList);
         }
         if (data && data.extra && Array.isArray(data.extra)) {
             totalBypassList = totalBypassList.concat(data.extra); // Combine with bypass list from JSON
-            console.log(totalBypassList);
         }
     })
     .catch(error => console.error('Error fetching JSON:', error));

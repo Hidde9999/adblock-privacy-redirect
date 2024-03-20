@@ -1,7 +1,8 @@
 {
   "bypass": [
+    "https://www.google.com/sorry/",
     "https://chat.openai.com/",
-    "https://challenges.cloudflare.com/",
+    "cloudflare.com/",
     "https://odysee.com/",
     "https://api.odysee.com/",
     "https://api.na-backend.odysee.com/",

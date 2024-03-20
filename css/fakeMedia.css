@@ -2,7 +2,7 @@
     display: none !important;
 }
 
-.tm-hybrid, .fjs-paywall-notification, .advertisement, .header__button--subscribe, .Webshop, .account-trigger{
+.tm-hybrid, .fjs-paywall-notification, .advertisement, .header__button--subscribe, .Webshop, .account-trigger, .embed-block, .LoadingIndicator{
     display: none !important;
 }
 

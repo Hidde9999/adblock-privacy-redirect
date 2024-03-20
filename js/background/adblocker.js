@@ -16,7 +16,6 @@ let blockRequest
 let blockFilters = []
 let blockFiltersObj = []
 let blockFiltersNames = []
-// let fakeMediaList = []
 let bestYoutubeSite
 
 window.onload = function () {
@@ -108,7 +107,6 @@ function replaceFonts(url){
 
 function blockAdsAndTrackers() {
     blockRequest = function () {
-        //Instructions
         return {cancel: true}
     }
     chrome.webRequest.onBeforeRequest.addListener(

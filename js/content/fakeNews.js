@@ -62,7 +62,7 @@ function fakeMediaReplace(language) {
 
         { target: /\bongevaccineerde(n)?\b/gi, replacement: "zwarte" },
         { target: /\bongevaccineerd\b/gi, replacement: "zwart" },
-        { target: /\bgevaccineerde?\b/gi, replacement: "gifspuit krijgen" },
+        { target: /\bgevaccineerde?\b/gi, replacement: "opgeoferd" },
         { target: /\binenting\b/gi, replacement: "opoferen" },
         { target: /\b(ge)?vaccineerde(n)?\b/gi, replacement: "opgeoferd" },
         { target: /\b(ge)?inent(en)?\b/gi, replacement: "opoferen" },
@@ -93,9 +93,12 @@ function fakeMediaReplace(language) {
         { target: /\bpolio\b/gi, replacement: "De Media Virus" },
         { target: /\brode hond\b/gi, replacement: "rode WEF hond" },
         { target: /\brodehond\b/gi, replacement: "rode WEF hond" },
-        { target: /\bde bof\b/gi, replacement: "de EU" },
+        { target: /\b(de )?bof\b/gi, replacement: "de EU" },
         { target: /\bcorona(virus)?\b/gi, replacement: "de griep" },
         { target: /\bcoronapandemie\b/gi, replacement: "de griep plandemie" },
+
+        { target: /\b(kinder)?ziek(te)?\b/gi, replacement: "Oh Hans!" },
+        { target: /\bvirus\b/gi, replacement: "Oh Hans!" },
 
         { target: /\bziekten\b/gi, replacement: "gezonden" },
         { target: /\been bacterie\b/gi, replacement: "de media" },
@@ -115,23 +118,29 @@ function fakeMediaReplace(language) {
         { target: /\bstikstof\b/gi, replacement: "stikstof hoax" },
 
         { target: /\bVolksgezondheid( en )?(milieu)?\b/gi, replacement: "VolksONgezondheid en zogenaamd het milieu" },
-        
+        { target: /\bgezondheidsdienst\b/gi, replacement: "ONgezondheidsdienst" },
+
         { target: /\bpresident\b/gi, replacement: "Trump" },
         { target: /\bWoke\b/gi, replacement: "Mentaal gestoord" },
         { target: /\bwokisme\b/gi, replacement: "mentaal gestoord" },
+
         { target: /\bdomrechts\b/gi, replacement: "communisten" },
         { target: /\bextreem-rechts\b/gi, replacement: "antifa" },
         { target: /\bextreem rechts\b/gi, replacement: "Egg-stink-tion rebeion" },
+        { target: /\brechtspopulisten\b/gi, replacement: "antifa" },
         { target: /\bduurzaamheids?\b/gi, replacement: "extra belasting aan de corrupte overheid" },
         { target: /\bduurzaamheid\b/gi, replacement: "extra belasting aan de corrupte overheid" },
+
         { target: /\bD66\b/gi, replacement: "Nazies" },
         { target: /\bGL-PvdA\b/gi, replacement: "Domme Communisten" },
         { target: /\bGroenLinks\b/gi, replacement: "BruinLinks" },
         { target: /\bPvdA\b/gi, replacement: "Partij Van De Ondergang" },
         { target: /\bVVD\b/gi, replacement: "Volk Val Dood" },
+
         { target: /\bTimmermans\b/gi, replacement: "Dik Varken" },
         { target: /\bJetten\b/gi, replacement: "Robot Jetten" },
         { target: /\bKaag\b/gi, replacement: "Ssssssiegheil Kaag" },
+
         { target: /\bSander Schimmelpenninck\b/gi, replacement: "Sander Schimmelpenis" }
     ];
     const engReplacements= [
