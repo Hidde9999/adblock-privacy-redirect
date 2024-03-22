@@ -106,14 +106,16 @@ function replaceFonts(url){
 }
 
 function blockAdsAndTrackers() {
-    blockRequest = function () {
-        return {cancel: true}
+    if (blockFiltersObj.length > 0){
+        blockRequest = function () {
+            return {cancel: true}
+        }
+        chrome.webRequest.onBeforeRequest.addListener(
+            blockRequest,
+            {urls: blockFilters},
+            ["blocking"]
+        )
     }
-    chrome.webRequest.onBeforeRequest.addListener(
-        blockRequest,
-        {urls: blockFilters},
-        ["blocking"]
-    )
 }
 
 function bestYoutubeInstance() {
@@ -167,15 +169,17 @@ function getFiltersFromJson() {
                 if (data.hasOwnProperty(key)) {
                     // Get the array of patterns for the current key
                     const patterns = data[key]
-
+                    const isToogled = localStorage.getItem(`${key}Filter`)
                     blockFiltersNames.push(key)
 
-                    // Log each pattern in the array
-                    console.log(`Patterns for ${key}:`)
-                    patterns.forEach(pattern => {
-                        blockFiltersObj.push({name: key, url: pattern})
-                        blockFilters.push(pattern)
-                    })
+                    if (isToogled === "true") {
+                        // Log each pattern in the array
+                        console.log(`Patterns for ${key}:`)
+                        patterns.forEach(pattern => {
+                            blockFiltersObj.push({name: key, url: pattern})
+                            blockFilters.push(pattern)
+                        })
+                    }
                     blockAdsAndTrackers()
                 }
             }
@@ -193,14 +197,3 @@ function handleStorageChange(event) {
         getFiltersFromStorage()
     }
 }
-
-// Read and add URLs from JSON file to bypass list
-fetch('../../fakemedia.json')
-    .then(response => response.json())
-    .then(data => {
-        if (data && data.news && Array.isArray(data.news)) {
-            fakeMediaList = data.news; // Combine with bypass list from JSON
-            // fakeMediaFunc()
-        }
-    })
-    .catch(error => console.error('Error fetching JSON:', error));
