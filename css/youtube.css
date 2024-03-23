@@ -5,6 +5,8 @@
 #mealbar-promo-renderer,
 #clarify-box,
 .ad-showing,
-#panels{
+#panels,
+#guide-service,
+#guide{
     display: none !important;
 }
