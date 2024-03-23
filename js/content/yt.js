@@ -6,6 +6,7 @@ const blockedChannels = [
     "NOS Jeugdjournaal",
     "NOS Stories",
     "NOS Nieuws van de Week",
+    "Nieuwsuur",
 
     "De Telegraaf",
     "RTL Nieuws",
@@ -13,6 +14,7 @@ const blockedChannels = [
 
     "Omroep PowNed",
     "De Avondshow met Arjen Lubach | VPRO",
+    "RTL Talkshow",
 
     "Vandaag Inside",
 
@@ -27,13 +29,12 @@ const videoTitels = [
 ];
 
 function onReady() {
-    console.log("DOM fully loaded and parsed");
     setInterval(() => {
         // const videoElements = document.querySelectorAll("#dismissible, #content-section, .style-scope.ytd-rich-grid-row");
         const videoElements = document.querySelectorAll("#dismissible, #content-section, .style-scope.yt-horizontal-list-renderer, .style-scope.ytd-rich-grid-row");
 
         videoElements.forEach(function (video) {
-            const channelLink = video.querySelector('#channel-name a, #info-section #text');
+            const channelLink = video.querySelector('#channel-name a, #info-section #text, #container #text');
             const videoTitle = video.querySelector('#video-title, #video-title .style-scope.ytd-video-renderer');
             if (channelLink && blockedChannels.includes(channelLink.innerHTML)) {
                 video.remove()
