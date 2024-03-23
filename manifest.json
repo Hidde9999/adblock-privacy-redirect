@@ -30,7 +30,9 @@
                 "*://m.youtube.com/*"
             ],
             "css": ["css/youtube.css"],
-            "js": ["js/content/ytAdBlocker.js"]
+            "js": [
+                "js/content/yt.js"
+            ]
         },{
             "matches": [
                 "*://*.google.com/*",
