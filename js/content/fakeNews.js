@@ -6,7 +6,8 @@ const fakeMediaList = [
     { url: "www.bnnvara.nl/joop/artikelen", language: "nl" },
     { url: "www.ad.nl", language: "nl" },
     { url: "www.nrc.nl", language: "nl" },
-    { url: "www.nu.nl", language: "nl" }
+    { url: "www.nu.nl", language: "nl" },
+    { url: "www.rijksoverheid.nl/", language: "nl" }
 ];
 
 // Attach the replaceTextOnSite function to the onload event of the window
@@ -165,22 +166,37 @@ function fakeMediaReplace(language) {
 }
 
 function fakeMediaPopup() {
+    // Create overlay element
+    const overlay = document.createElement("div");
+    overlay.setAttribute("id", "overlay");
+    overlay.classList.add("overlay");
 
-    // Create a div element
-        const elemDiv = document.createElement('div');
+// Create popup element
+    const popup = document.createElement("div");
+    popup.classList.add("popup");
 
-    // Set styles for the div element
-        elemDiv.style.cssText = 'position: relative; width: 100%; margin: 0 auto; z-index: 100000; background-color: #fff';
+// Create popup content
+    const popupContent = document.createElement("div");
+    popupContent.innerHTML = `
+  <h2>Fake News Alert</h2>
+  <p>Warning: This site is known for their fake news!!</p>
+  <button id="closeBtn">Close</button>
+`;
 
-    // Create a p element
-        const pElement = document.createElement('h1');
+// Append popup content to popup element
+    popup.appendChild(popupContent);
 
-    // Set text content for the p element
-        pElement.textContent = "Warning: This site is known for their fake news!";
+// Append popup element to overlay
+    overlay.appendChild(popup);
 
-    // Append the p element to the div element
-        elemDiv.appendChild(pElement);
+// Append overlay to body
+    document.body.appendChild(overlay);
 
-    // Insert the div element as the first child of the body
-        document.body.insertBefore(elemDiv, document.body.firstChild);
+    // Function to close the popup
+    function closePopup() {
+        overlay.style.display = "none";
+    }
+
+    // Add event listener to close button
+    document.getElementById("closeBtn").addEventListener("click", closePopup);
 }

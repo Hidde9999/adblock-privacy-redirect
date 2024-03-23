@@ -20,7 +20,7 @@
     },
     "browser_action": {
         "default_popup": "html/index.html",
-        "default_title": "rss"
+        "default_title": "settings"
     },
     "content_scripts": [
         {
@@ -40,13 +40,14 @@
             "js": ["js/content/google.js"]
         },{
             "matches": [
-                "*://*.nos.com/*",
+                "*://*.nos.nl/*",
                 "*://*.telegraaf.nl/*",
                 "*://*.volkskrant.nl/*",
                 "*://*.rtlnieuws.nl/*",
                 "*://*.ad.nl/*",
                 "*://*.nrc.nl/*",
-                "*://*.nu.nl/*"
+                "*://*.nu.nl/*",
+                "*://*.rijksoverheid.nl/*"
             ],
             "css": ["css/fakeMedia.css"],
             "js": ["js/content/fakeNews.js"]
