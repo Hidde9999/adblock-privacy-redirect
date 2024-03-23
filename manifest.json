@@ -32,20 +32,28 @@
             "css": ["css/youtube.css"],
             "js": ["js/content/ytAdBlocker.js"]
         },{
-            "matches": ["*://*/*"],
-            "css": ["css/fakeMedia.css"],
-            "js": ["js/content/fakeNews.js"]
-        },{
             "matches": [
                 "*://*.google.com/*",
                 "*://google.com/*"
             ],
             "css": ["css/google.css"],
             "js": ["js/content/google.js"]
-        },
-        {
+        },{
+            "matches": [
+                "*://*.nos.com/*",
+                "*://*.telegraaf.nl/*",
+                "*://*.volkskrant.nl/*",
+                "*://*.rtlnieuws.nl/*",
+                "*://*.ad.nl/*",
+                "*://*.nrc.nl/*",
+                "*://*.nu.nl/*"
+            ],
+            "css": ["css/fakeMedia.css"],
+            "js": ["js/content/fakeNews.js"]
+        },{
             "matches": ["<all_urls>"],
-            "js": ["js/content/online.js"]
+            "css": ["css/adblock.css"],
+            "js": ["js/content/adblock.js"]
         }
     ],
     "web_accessible_resources": [

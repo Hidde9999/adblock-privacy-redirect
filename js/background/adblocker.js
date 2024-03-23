@@ -18,11 +18,16 @@ let blockFiltersObj = []
 let blockFiltersNames = []
 let bestYoutubeSite
 
+// const youtubeVideo = [
+//     "*://*.googlevideo.com/*"
+// ]
+
 window.onload = function () {
     bestYoutubeInstance()
     getFilters()
     youtubeRedirectFunc()
     redirectFunc()
+    modifyGetRequests()
 
     // Add an event listener for the storage event
     window.addEventListener('storage', handleStorageChange)
@@ -117,6 +122,20 @@ function blockAdsAndTrackers() {
         )
     }
 }
+function modifyGetRequests() {
+    // chrome.webRequest.onBeforeRequest.addListener(
+    //     function (details) {
+    //         const ipRegex = /\bip=\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}\b/;
+    //         if (ipRegex.test(details.url)) {
+    //             const modifiedUrl = details.url.replace(ipRegex, 'ip=2a03:4000:57:a28:53c1:36bc:d7aa:d1e5');
+    //             console.log("Modified URL:", modifiedUrl);
+    //             return {redirectUrl: modifiedUrl};
+    //         }
+    //     },
+    //     {urls: youtubeVideo},
+    //     ["blocking"]
+    // );
+}
 
 function bestYoutubeInstance() {
     fetch("https://api.invidious.io/instances.json?sort_by=type,health")
@@ -174,7 +193,7 @@ function getFiltersFromJson() {
 
                     if (isToogled === "true") {
                         // Log each pattern in the array
-                        console.log(`Patterns for ${key}:`)
+                        // console.log(`Patterns for ${key}:`)
                         patterns.forEach(pattern => {
                             blockFiltersObj.push({name: key, url: pattern})
                             blockFilters.push(pattern)

@@ -1,72 +1,86 @@
-let totalBypassList = [];
+let whitelist = [
+    "api.ipify.org",
 
-vpn()
+    // google
+    "gstatic.com",
+    "googleapis.com",
+    "doubleclick.net",
+
+    // yt
+    "googlevideo.com",
+    "youtube.com",
+    "i.ytimg.com",
+
+    // meta
+    "facebook.com",
+    "instagram.com",
+    "threads.net"
+];
+
+// Map to store the VPN state per tab
+let tabVPNState = {};
 
 chrome.webRequest.onBeforeRequest.addListener(
     function (details) {
-            const isBypassed = totalBypassList.some(item => details.url.includes(item));
-            let delay = 5000
-
-            if (isBypassed) {
-                // Disable Tor proxy
-                chrome.proxy.settings.clear({scope: 'regular'}, function () {});
-                setTimeout(vpn, delay);
+        const tabId = details.tabId;
+        if (tabId !== -1) { // Exclude requests from the background script
+            if (isInWhitelist(details.url)) {
+                vpn(true, tabId);
             } else {
-                setTimeout(vpn, delay);
+                console.log("Blacklist URL: " + details.url);
+                vpn(false, tabId);
             }
+        }
     },
-    {urls: ["*://*/*"]},
+    { urls: ["<all_urls>"] },
     ["blocking"]
 );
 
 chrome.runtime.onMessage.addListener(function(message, sender, sendResponse) {
-    if (message.torEnabled) {
-        vpn()
-    } else {
-        // Disable Tor proxy
-        chrome.proxy.settings.clear({scope: 'regular'}, function () {});
+    if (message.torEnabled !== undefined && sender.tab) {
+        const tabId = sender.tab.id;
+        vpn(!message.torEnabled, tabId); // Reverse the torEnabled flag
     }
 });
 
-function vpn(){
-    chrome.storage.local.get(['torEnabled'], function(result) {
-        if (result.torEnabled){
-            chrome.browserAction.setIcon({ path: "../../img/vpn.png" });
+function vpn(shouldEnable, tabId) {
+    if (!tabVPNState.hasOwnProperty(tabId)) {
+        tabVPNState[tabId] = false; // Default VPN state for the tab
+    }
+
+    chrome.storage.local.get('torEnabled', function(result) {
+        const torEnabled = result.torEnabled || false; // Default value false if not set
+        if (torEnabled && shouldEnable) {
+            tabVPNState[tabId] = true;
+            chrome.browserAction.setIcon({ path: "../../img/vpn.png", tabId: tabId });
             // Enable Tor proxy
-                chrome.proxy.settings.set({
-                    value: {
-                        mode: "fixed_servers",
-                        rules: {
-                            singleProxy: {
-                                scheme: "socks5",
-                                host: "127.0.0.1",
-                                port: 9050 // Default Tor port
-                            }
+            chrome.proxy.settings.set({
+                value: {
+                    mode: "fixed_servers",
+                    rules: {
+                        singleProxy: {
+                            scheme: "socks5",
+                            host: "127.0.0.1",
+                            port: 9050 // Default Tor port
                         }
-                    },
-                    scope: "regular"
-                });
+                    }
+                },
+                scope: "regular"
+            }, function() {
+                console.log("Tor proxy enabled for tab: " + tabId);
+            });
         } else {
-            chrome.browserAction.setIcon({ path: "../../img/vpn-off.png" }); // Set the icon for VPN OFF
+
+            chrome.proxy.settings.clear({ scope: 'regular' }, function() {
+                // Disable Tor proxy
+                tabVPNState[tabId] = false;
+                console.log("Tor proxy disabled for tab: " + tabId);
+                chrome.browserAction.setIcon({ path: "../../img/vpn-off.png", tabId: tabId });
+            });
         }
-    })
+    });
 }
 
-// chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
-//     if (message.action === "checkOnlineStatus") {
-//         sendResponse({ online: navigator.onLine });
-//     }
-// });
-
-// Read and add URLs from JSON file to bypass list
-fetch('../../bypass.json')
-    .then(response => response.json())
-    .then(data => {
-        if (data && data.bypass && Array.isArray(data.bypass)) {
-            totalBypassList = totalBypassList.concat(data.bypass); // Combine with bypass list from JSON
-        }
-        if (data && data.extra && Array.isArray(data.extra)) {
-            totalBypassList = totalBypassList.concat(data.extra); // Combine with bypass list from JSON
-        }
-    })
-    .catch(error => console.error('Error fetching JSON:', error));
+function isInWhitelist(url) {
+    return whitelist.some(pattern => new RegExp(pattern).test(url));
+}
