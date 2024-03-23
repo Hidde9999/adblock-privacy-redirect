@@ -11,6 +11,7 @@ const blockedChannels = [
     "De Telegraaf",
     "RTL Nieuws",
     "BNR",
+    "GeenStijl",
 
     "Omroep PowNed",
     "De Avondshow met Arjen Lubach | VPRO",
@@ -30,7 +31,6 @@ const videoTitels = [
 
 function onReady() {
     setInterval(() => {
-        // const videoElements = document.querySelectorAll("#dismissible, #content-section, .style-scope.ytd-rich-grid-row");
         const videoElements = document.querySelectorAll("#dismissible, #content-section, .style-scope.yt-horizontal-list-renderer, .style-scope.ytd-rich-grid-row");
 
         videoElements.forEach(function (video) {
@@ -46,7 +46,7 @@ function onReady() {
     }, 250);
 }
 if (document.readyState !== "loading") {
-    onReady(); // Or setTimeout(onReady, 0); if you want it consistently async
+    onReady();
 } else {
     document.addEventListener("DOMContentLoaded", onReady);
 }
