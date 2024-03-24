@@ -11,17 +11,32 @@ const blockedChannels = [
     "De Telegraaf",
     "RTL Nieuws",
     "BNR",
+    "WNL",
     "GeenStijl",
+    "NPO Start",
+    "NPO Radio 1",
 
     "Omroep PowNed",
+    "Omroep Gelderland",
+
     "De Avondshow met Arjen Lubach | VPRO",
     "RTL Talkshow",
 
     "Vandaag Inside",
 
     "VRT NWS",
+    "VRT 1",
 
-    "The Telegraph"
+    "The Telegraph",
+
+    "Eurovision Song Contest",
+    "ABC News",
+    "BBC News",
+    "CNN",
+    "Reuters",
+
+    "ZDF heute-show",
+    "BILD",
 ];
 
 const videoTitels = [
@@ -29,7 +44,7 @@ const videoTitels = [
     "Handhavers"
 ];
 
-function onReady() {
+function propagandaBlocker() {
     setInterval(() => {
         const videoElements = document.querySelectorAll("#dismissible, #content-section, .style-scope.yt-horizontal-list-renderer, .style-scope.ytd-rich-grid-row");
 
@@ -45,10 +60,11 @@ function onReady() {
         });
     }, 250);
 }
+
 if (document.readyState !== "loading") {
-    onReady();
+    propagandaBlocker();
 } else {
-    document.addEventListener("DOMContentLoaded", onReady);
+    document.addEventListener("DOMContentLoaded", propagandaBlocker);
 }
 
 function includesTitels(title) {

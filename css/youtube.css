@@ -7,6 +7,14 @@
 .ad-showing,
 #panels,
 #guide-service,
-#guide{
+#guide,
+#contentWrapper,
+yt-tooltip-renderer::before,
+#sponsor-button,
+#subscribe-button,
+#flexible-item-buttons,
+.YtSegmentedLikeDislikeButtonViewModelHost,
+#button-shape,
+#action-menu{
     display: none !important;
 }
