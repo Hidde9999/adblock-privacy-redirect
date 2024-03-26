@@ -23,6 +23,8 @@
 
     "*://accounts.google.com/*",
     "*://*.google.com/log?*",
+    "*://*.google.com/gen_204?*",
+    "*://*.google.com/xjs/*",
     "*://*.sites.google.com/*",
 
     "*://video-stats.video.google.com/*",
