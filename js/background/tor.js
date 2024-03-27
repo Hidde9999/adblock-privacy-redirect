@@ -25,11 +25,13 @@ chrome.webRequest.onBeforeRequest.addListener(
         const tabId = details.tabId;
         if (tabId !== -1) { // Exclude requests from the background script
             if (isInWhitelist(details.url)) {
+                // console.log("URL: " + details.url);
                 vpn(true, tabId);
             } else {
-                console.log("Blacklist URL: " + details.url);
                 vpn(false, tabId);
             }
+        }else {
+            vpn(false, tabId);
         }
     },
     { urls: ["<all_urls>"] },
@@ -51,32 +53,35 @@ function vpn(shouldEnable, tabId) {
     chrome.storage.local.get('torEnabled', function(result) {
         const torEnabled = result.torEnabled || false; // Default value false if not set
         if (torEnabled && shouldEnable) {
-            tabVPNState[tabId] = true;
-            chrome.browserAction.setIcon({ path: "../../img/vpn.png", tabId: tabId });
-            // Enable Tor proxy
-            chrome.proxy.settings.set({
-                value: {
-                    mode: "fixed_servers",
-                    rules: {
-                        singleProxy: {
-                            scheme: "socks5",
-                            host: "127.0.0.1",
-                            port: 9050 // Default Tor port
+            if (!tabVPNState[tabId]) {
+                tabVPNState[tabId] = true;
+                chrome.browserAction.setIcon({path: "../../img/vpn.png", tabId: tabId});
+                // Enable Tor proxy
+                chrome.proxy.settings.set({
+                    value: {
+                        mode: "fixed_servers",
+                        rules: {
+                            singleProxy: {
+                                scheme: "socks5",
+                                host: "127.0.0.1",
+                                port: 9050 // Default Tor port
+                            }
                         }
-                    }
-                },
-                scope: "regular"
-            }, function() {
-                console.log("Tor proxy enabled for tab: " + tabId);
-            });
+                    },
+                    scope: "regular"
+                }, function () {
+                    console.log("Tor proxy enabled for tab: " + tabId);
+                });
+            }
         } else {
-
-            chrome.proxy.settings.clear({ scope: 'regular' }, function() {
-                // Disable Tor proxy
-                tabVPNState[tabId] = false;
-                console.log("Tor proxy disabled for tab: " + tabId);
-                chrome.browserAction.setIcon({ path: "../../img/vpn-off.png", tabId: tabId });
-            });
+            if (tabVPNState[tabId]){
+                chrome.proxy.settings.clear({ scope: 'regular' }, function() {
+                    // Disable Tor proxy
+                    tabVPNState[tabId] = false;
+                    console.log("Tor proxy disabled for tab: " + tabId);
+                    chrome.browserAction.setIcon({ path: "../../img/vpn-off.png", tabId: tabId });
+                });
+            }
         }
     });
 }
