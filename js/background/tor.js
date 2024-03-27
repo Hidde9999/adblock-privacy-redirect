@@ -72,7 +72,7 @@ function vpn(shouldEnable, tabId) {
                 });
             }
         } else {
-            if (tabVPNState[tabId]){
+            if (tabVPNState[tabId] || !torEnabled){
                 chrome.proxy.settings.clear({ scope: 'regular' }, function() {
                     // Disable Tor proxy
                     tabVPNState[tabId] = false;

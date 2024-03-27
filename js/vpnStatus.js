@@ -39,15 +39,15 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Listen for button click event to toggle Tor proxy
     toggleButton.addEventListener('click', function () {
-        toggleButton.disabled = true
-        document.getElementById('ip-address').textContent = ``;
+        // toggleButton.disabled = true
+        // document.getElementById('ip-address').textContent = ``;
         chrome.storage.local.get(['torEnabled'], function(result) {
             let torEnabled = result.torEnabled === undefined ? false : result.torEnabled;
             torEnabled = !torEnabled;
             chrome.storage.local.set({ 'torEnabled': torEnabled });
             setStatusText(torEnabled);
             chrome.runtime.sendMessage({ torEnabled: torEnabled });
-            getIP()
+            // getIP()
         });
     });
 
