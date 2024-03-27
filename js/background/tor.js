@@ -1,6 +1,4 @@
 let whitelist = [
-    "api.ipify.org",
-
     // google
     "gstatic.com",
     "googleapis.com",
