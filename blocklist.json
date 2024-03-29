@@ -1,8 +1,11 @@
 {
   "google": [
+    "*://www.google.com/recaptcha/api.js?*",
+
     "*://*.googleapis.com/*",
 
     "*://*.youtube.com/api/stats/*",
+    "*://*.youtube.com/sw.js_data",
     "*://*.youtube.com/pagead/adview?*",
     "*://*.youtube.com/pcs/activeview?*",
     "*://*.youtube.com/youtubei/v1/log_event?*",

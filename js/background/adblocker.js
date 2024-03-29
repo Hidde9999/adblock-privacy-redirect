@@ -1,15 +1,15 @@
 const youtubeFilters = [
-    "*://*.youtube.com/",
-    "*://*.youtube.com/watch?*",
-    "*://*.youtube.com/@*",
-    "*://*.youtube.com/embed/*",
+    "*://*.youtube.com/*",
+    // "*://*.youtube.com/watch?*",
+    // "*://*.youtube.com/@*",
+    // "*://*.youtube.com/embed/*",
 ]
 const redirectFilters = [
     "*://*.twitter.com/*",
     "*://www.google.com/*",
     "*://accounts.google.com/*",
     "*://*.gmail.com/*",
-    "*://fonts.gstatic.com/*",
+    "*://fonts.gstatic.com/*"
 ]
 let blockRequest
 
@@ -18,19 +18,40 @@ let blockFiltersObj = []
 let blockFiltersNames = []
 let bestYoutubeSite
 
-// const youtubeVideo = [
-//     "*://*.googlevideo.com/*"
-// ]
-
 window.onload = function () {
     bestYoutubeInstance()
     getFilters()
     youtubeRedirectFunc()
     redirectFunc()
-    modifyGetRequests()
+
+    ytBlockScriptsByName()
 
     // Add an event listener for the storage event
     window.addEventListener('storage', handleStorageChange)
+}
+
+function ytBlockScriptsByName() {
+    chrome.webRequest.onBeforeRequest.addListener(
+        function (details) {
+            if (
+                details.url.includes("sw.js") ||
+                details.url.includes("scheduler.js") ||
+                details.url.includes("spf.js") ||
+                details.url.includes("network.js") ||
+                details.url.includes("www-tampering.js") ||
+                details.url.includes("web-animations-next-lite.min.js") ||
+                details.url.includes("offline.js") ||
+                details.url.includes("remote.js") ||
+                details.url.includes("endscreen.js") ||
+                details.url.includes("inline_preview.js")
+            ) {
+                console.log(details.url);
+                return {cancel: true};
+            }
+        },
+        {urls: youtubeFilters},
+        ["blocking"]
+    )
 }
 
 function youtubeRedirectFunc() {
@@ -69,49 +90,55 @@ function redirectFunc() {
     )
 }
 
-function getRedirectName(url){
+function getRedirectName(url) {
     let redirectName = url.replace(/^https?:\/\/(?:www\.|mail\.)?([^\/]+)(?:\/.*)?$/, "$1");
     redirectName = redirectName.replace(".com", "")
     redirectName = redirectName.replace("accounts.google.com", "gmail")
     redirectName = redirectName.replace(".gstatic", "")
     return redirectName
 }
-function getRedirectReplaceUrl(redirectName, url){
+
+function getRedirectReplaceUrl(redirectName, url) {
     url = url.toString().replace("twitter.com", "twiiit.com")
     url = url.toString().replace("www.google.com", "search.brave.com")
 
-    if (redirectName == "fonts"){ url = replaceFonts(url) }
+    if (redirectName == "fonts") {
+        url = replaceFonts(url)
+    }
 
-    if (redirectName == "gmail"){url = "https://account.proton.me/login"}
+    if (redirectName == "gmail") {
+        url = "https://account.proton.me/login"
+    }
     return url
 }
 
-function replaceFonts(url){
-    if (url.includes("/roboto/")){
-        if (url.includes("KFOlCnqEu92Fr1MmEU9fBBc4")){
+function replaceFonts(url) {
+    console.log(url);
+    if (url.includes("/roboto/")) {
+        if (url.includes("KFOlCnqEu92Fr1MmEU9fBBc4")) {
             url = chrome.extension.getURL("/fonts/roboto/KFOlCnqEu92Fr1MmEU9fBBc4.woff2");
         }
-        if (url.includes("KFOlCnqEu92Fr1MmWUlfBBc4")){
+        if (url.includes("KFOlCnqEu92Fr1MmWUlfBBc4")) {
             url = chrome.extension.getURL("/fonts/roboto/KFOlCnqEu92Fr1MmWUlfBBc4.woff2");
         }
-        if (url.includes("KFOmCnqEu92Fr1Mu4mxK")){
+        if (url.includes("KFOmCnqEu92Fr1Mu4mxK")) {
             url = chrome.extension.getURL("/fonts/roboto/KFOmCnqEu92Fr1Mu4mxK.woff2");
         }
     }
-    if (url.includes("/googlesans/")){
+    if (url.includes("/googlesans/")) {
         url = chrome.extension.getURL("/fonts/googlesans/4UabrENHsxJlGDuGo1OIlLU94YtzCwY.woff2");
     }
-    if (url.includes("/opensans/")){
+    if (url.includes("/opensans/")) {
         url = chrome.extension.getURL("/fonts/opensans/memvYaGs126MiZpBA-UvWbX2vVnXBbObj2OVTS-mu0SC55I.woff2");
     }
-    if (url.includes("HhyAU5Ak9u-oMExPeInvcuEmPosC9zSpYaEEU68cdvrHJvc8q9PLEJIz8dTgzBT9BLQV9eAKtpW99CIiY4Uzx5dFzRNFinsyGN7Ad_KqOtUz")){
+    if (url.includes("HhyAU5Ak9u-oMExPeInvcuEmPosC9zSpYaEEU68cdvrHJvc8q9PLEJIz8dTgzBT9BLQV9eAKtpW99CIiY4Uzx5dFzRNFinsyGN7Ad_KqOtUz")) {
         url = chrome.extension.getURL("/fonts/mapsfont.woff2");
     }
     return url
 }
 
 function blockAdsAndTrackers() {
-    if (blockFiltersObj.length > 0){
+    if (blockFiltersObj.length > 0) {
         blockRequest = function () {
             return {cancel: true}
         }
@@ -121,20 +148,6 @@ function blockAdsAndTrackers() {
             ["blocking"]
         )
     }
-}
-function modifyGetRequests() {
-    // chrome.webRequest.onBeforeRequest.addListener(
-    //     function (details) {
-    //         const ipRegex = /\bip=\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}\b/;
-    //         if (ipRegex.test(details.url)) {
-    //             const modifiedUrl = details.url.replace(ipRegex, 'ip=2a03:4000:57:a28:53c1:36bc:d7aa:d1e5');
-    //             console.log("Modified URL:", modifiedUrl);
-    //             return {redirectUrl: modifiedUrl};
-    //         }
-    //     },
-    //     {urls: youtubeVideo},
-    //     ["blocking"]
-    // );
 }
 
 function bestYoutubeInstance() {

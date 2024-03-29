@@ -1,8 +1,12 @@
 let whitelist = [
+    // catch ip
+    "api.ipify.org",
+
     // google
     "gstatic.com",
     "googleapis.com",
     "doubleclick.net",
+    "jnn-pa.googleapis.com",
 
     // yt
     "googlevideo.com",

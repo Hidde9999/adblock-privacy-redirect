@@ -15,6 +15,7 @@ yt-tooltip-renderer::before,
 #flexible-item-buttons,
 .YtSegmentedLikeDislikeButtonViewModelHost,
 #button-shape,
-#action-menu{
+#action-menu,
+.ytp-paid-content-overlay{
     display: none !important;
 }
