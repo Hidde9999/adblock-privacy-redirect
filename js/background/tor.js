@@ -50,6 +50,7 @@ chrome.runtime.onMessage.addListener(function(message, sender, sendResponse) {
 function vpn(shouldEnable, tabId) {
     if (!tabVPNState.hasOwnProperty(tabId)) {
         tabVPNState[tabId] = false; // Default VPN state for the tab
+        disableVPN(tabId)
     }
 
     chrome.storage.local.get('torEnabled', function(result) {
@@ -77,14 +78,18 @@ function vpn(shouldEnable, tabId) {
             }
         } else {
             if (tabVPNState[tabId] || !torEnabled){
-                chrome.proxy.settings.clear({ scope: 'regular' }, function() {
-                    // Disable Tor proxy
-                    tabVPNState[tabId] = false;
-                    console.log("Tor proxy disabled for tab: " + tabId);
-                    chrome.browserAction.setIcon({ path: "../../img/vpn-off.png", tabId: tabId });
-                });
+                disableVPN(tabId)
             }
         }
+    });
+}
+
+function disableVPN(tabId){
+    chrome.proxy.settings.clear({ scope: 'regular' }, function() {
+        // Disable Tor proxy
+        tabVPNState[tabId] = false;
+        console.log("Tor proxy disabled for tab: " + tabId);
+        chrome.browserAction.setIcon({ path: "../../img/vpn-off.png", tabId: tabId });
     });
 }
 
