@@ -16,7 +16,7 @@
         "background"
     ],
 "background": {
-        "scripts": ["js/background/adblocker.js", "js/background/tor.js", "js/background/removeCookies.js"]
+        "scripts": ["js/background/onload.js","js/background/adblocker.js", "js/background/redirect.js", "js/background/tor.js"]
     },
     "browser_action": {
         "default_popup": "html/index.html",
