@@ -1,7 +1,5 @@
 {
   "google": [
-    "*://www.google.com/recaptcha/api.js?*",
-
     "*://*.googleapis.com/*",
 
     "*://*.youtube.com/api/stats/*",

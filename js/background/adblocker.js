@@ -11,6 +11,42 @@ let blockFilters = []
 let blockFiltersObj = [] // Objects containing name and URL of filters
 let blockFiltersNames = [] // Names of filters
 
+// Object to store blocked counts per tab
+let blockedCountsPerTab = {};
+let blockedURLs = [];
+
+// Function to increment the blocked count for a tab
+function incrementBlockedCount(tabId) {
+    if (!blockedCountsPerTab[tabId]) {
+        blockedCountsPerTab[tabId] = 1;
+    } else {
+        blockedCountsPerTab[tabId]++;
+    }
+    // Update badge text for the tab
+    chrome.browserAction.setBadgeText({text: blockedCountsPerTab[tabId].toString(), tabId: tabId});
+}
+
+// Function to reset the blocked count for a tab
+function resetBlockedCount(tabId) {
+    blockedCountsPerTab[tabId] = 0;
+    chrome.storage.local.set({"blockedURLs": []}, function () {
+        console.log('Blocked URLs array cleared.');
+    });
+
+    chrome.browserAction.setBadgeText({text: "", tabId: tabId}); // Remove badge
+}
+
+// Function to store blocked URLs
+function storeBlockedURL(url, tabId) {
+    if (!blockedURLs.includes(url)) {
+        // console.log(tabId + " : " + url);
+        blockedURLs.push(url);
+        incrementBlockedCount(tabId);
+        chrome.storage.local.set({"blockedURLs": blockedURLs}, function () {
+        });
+    }
+}
+
 // Function to block specific scripts on YouTube
 function ytBlockScriptsByName() {
     chrome.webRequest.onBeforeRequest.addListener(
@@ -28,31 +64,52 @@ function ytBlockScriptsByName() {
                 details.url.includes("endscreen.js") ||
                 details.url.includes("inline_preview.js")
             ) {
-                console.log(details.url);
-                // Cancelling the request to block the script
+
+                if (details.tabId != -1) {
+                    // Store blocked URL
+                    storeBlockedURL(details.url, details.tabId);
+                }
+
                 return {cancel: true};
             }
         },
         {urls: youtubeFilters}, // Matching URLs for YouTube
         ["blocking"] // Options
-    )
+    );
 }
 
 // Function to block ads and trackers based on user-defined filters
 function blockAdsAndTrackers() {
     if (blockFiltersObj.length > 0) {
         // Define the block request function
-        blockRequest = function () {
-            return {cancel: true}
-        }
+        blockRequest = function (details) {
+            if (details.tabId != -1) {
+                // Store blocked URL
+                storeBlockedURL(details.url, details.tabId);
+            }
+            return {cancel: true};
+        };
         // Add listener to block requests
         chrome.webRequest.onBeforeRequest.addListener(
             blockRequest,
             {urls: blockFilters}, // Matching URLs for blocking
             ["blocking"] // Options
-        )
+        );
     }
 }
+
+// Function to handle tab removal
+chrome.tabs.onRemoved.addListener(function (tabId) {
+    // Remove the tab's blocked count when the tab is closed
+    delete blockedCountsPerTab[tabId];
+});
+
+// Function to handle page reload/navigation
+chrome.webNavigation.onCommitted.addListener(function (details) {
+    if (details.transitionType === "reload" || details.transitionType === "typed") {
+        resetBlockedCount(details.tabId);
+    }
+});
 
 // Function to get filters from storage or JSON file
 function getFilters() {

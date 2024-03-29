@@ -8,6 +8,7 @@ let whitelist = [
     "googleapis.com",
     "doubleclick.net",
     "jnn-pa.googleapis.com",
+    "google.com/recaptcha/",
 
     // yt
     "googlevideo.com",
