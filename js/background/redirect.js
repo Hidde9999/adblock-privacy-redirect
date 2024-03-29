@@ -1,3 +1,4 @@
+// Array of URL patterns to match for redirection
 const redirectFilters = [
     "*://*.twitter.com/*",
     "*://www.google.com/*",
@@ -5,55 +6,66 @@ const redirectFilters = [
     "*://*.gmail.com/*",
     "*://fonts.gstatic.com/*"
 ]
+
+// Variable to store the best YouTube instance
 let bestYoutubeSite
 
+// Function to find the best YouTube instance
 function bestYoutubeInstance() {
+    // Fetching YouTube instances data
     fetch("https://api.invidious.io/instances.json?sort_by=type,health")
         .then(response => response.text())
         .then(jsonString => {
             jsonString = JSON.parse(jsonString)
+            // Storing the best YouTube instance
             bestYoutubeSite = jsonString[0][0]
         })
         .catch(error => {
             console.error('Error fetching RSS feed:', error)
         })
 }
+
+// Function to handle YouTube redirection
 function youtubeRedirectFunc() {
     chrome.webRequest.onBeforeRequest.addListener(
         function (details) {
+            // Checking if YouTube redirection is enabled
             const youtubeRedirect = localStorage.getItem("youtubeRedirect")
+            // Replacing YouTube URLs with the best instance URL
             let url = details.url.toString().replace("www.youtube.com", bestYoutubeSite)
             url = url.toString().replace("music.youtube.com", bestYoutubeSite)
             if (youtubeRedirect === "true") {
                 return {redirectUrl: url}
             }
         },
-        {urls: youtubeFilters},
-        ["blocking"]
+        {urls: youtubeFilters}, // Matching URLs for redirection
+        ["blocking"] // Options
     )
 }
 
+// Function to handle general redirection
 function redirectFunc() {
     chrome.webRequest.onBeforeRequest.addListener(
         function (details) {
-
+            // Getting the name of the redirect from the URL
             const redirectName = getRedirectName(details.url)
-
+            // Checking if redirection is enabled for this specific site
             const redirect = localStorage.getItem(`${redirectName}Redirect`)
-
+            // Getting the replacement URL for redirection
             const url = getRedirectReplaceUrl(redirectName, details.url)
-
+            // Avoiding redirection for specific URLs
             if (!url.includes("/maps") && !url.includes("/recaptcha")) {
                 if (redirect === "true") {
                     return {redirectUrl: url}
                 }
             }
         },
-        {urls: redirectFilters},
-        ["blocking"]
+        {urls: redirectFilters}, // Matching URLs for redirection
+        ["blocking"] // Options
     )
 }
 
+// Function to extract the name of the site from the URL
 function getRedirectName(url) {
     let redirectName = url.replace(/^https?:\/\/(?:www\.|mail\.)?([^\/]+)(?:\/.*)?$/, "$1");
     redirectName = redirectName.replace(".com", "")
@@ -62,6 +74,7 @@ function getRedirectName(url) {
     return redirectName
 }
 
+// Function to get the replacement URL for redirection
 function getRedirectReplaceUrl(redirectName, url) {
     url = url.toString().replace("twitter.com", "twiiit.com")
     url = url.toString().replace("www.google.com", "search.brave.com")
@@ -76,6 +89,7 @@ function getRedirectReplaceUrl(redirectName, url) {
     return url
 }
 
+// Function to replace font URLs with local URLs
 function replaceFonts(url) {
     console.log(url);
     if (url.includes("/roboto/")) {
