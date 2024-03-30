@@ -42,7 +42,6 @@ function resetBlockedCount(tabId, reset) {
     }
 }
 
-
 // Function to reset the blocked URLs for a tab
 function resetBlockedURLs(tabId, reset) {
     if (reset){
@@ -59,14 +58,13 @@ function storeBlockedURL(url, tabId) {
     if (!blockedURLsPerTab[tabId]) {
         blockedURLsPerTab[tabId] = [];
     }
+    incrementBlockedCount(tabId);
     if (!blockedURLsPerTab[tabId].includes(url)) {
         blockedURLsPerTab[tabId].push(url);
-        incrementBlockedCount(tabId);
         chrome.storage.local.set({"blockedURLs": blockedURLsPerTab[tabId]}, function () {
         });
     }
 }
-
 
 // Function to block specific scripts on YouTube
 function ytBlockScriptsByName() {

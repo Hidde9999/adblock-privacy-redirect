@@ -7,6 +7,7 @@ const fakeMediaList = [
     { url: "www.ad.nl", language: "nl" },
     { url: "www.nrc.nl", language: "nl" },
     { url: "www.nu.nl", language: "nl" },
+    { url: "www.groene.nl", language: "nl" },
     { url: "www.rijksoverheid.nl/", language: "nl" }
 ];
 
@@ -141,6 +142,8 @@ function fakeMediaReplace(language) {
         { target: /\bTimmermans\b/gi, replacement: "Dik Varken" },
         { target: /\bJetten\b/gi, replacement: "Robot Jetten" },
         { target: /\bKaag\b/gi, replacement: "Ssssssiegheil Kaag" },
+        { target: /\bKlaver\b/gi, replacement: "iritante kut marokkaan" },
+        { target: /\bMartin Bosma\b/gi, replacement: "Marta Bosma" },
 
         { target: /\bSander Schimmelpenninck\b/gi, replacement: "Sander Schimmelpenis" }
     ];

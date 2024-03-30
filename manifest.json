@@ -51,7 +51,9 @@
                 "*://*.ad.nl/*",
                 "*://*.nrc.nl/*",
                 "*://*.nu.nl/*",
-                "*://*.rijksoverheid.nl/*"
+                "*://*.rijksoverheid.nl/*",
+                "*://*.groene.nl/*"
+
             ],
             "css": ["css/fakeMedia.css"],
             "js": ["js/content/fakeNews.js"]

@@ -68,7 +68,8 @@
   "odysee": [
     "*://api.odysee.com/membership/*",
     "*://sentry.odysee.tv/*",
-    "*://watchman.na-backend.odysee.com/reports/*"
+    "*://watchman.na-backend.odysee.com/reports/*",
+    "*://api.na-backend.odysee.com/api/v1/metric/*"
   ],
   "other":[
     "*://*.cdnst.net/javascript/ads/*",
