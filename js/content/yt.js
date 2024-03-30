@@ -32,6 +32,11 @@ const blockedChannels = [
     "Eurovision Song Contest",
     "ABC News",
     "BBC News",
+    "CBS News",
+    "CBS Mornings",
+    "MSNBC",
+    "Fox News",
+    "FOX Weather",
     "CNN",
     "Reuters",
 
