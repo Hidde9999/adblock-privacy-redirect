@@ -6,6 +6,10 @@ const redirectFilters = [
     "*://*.gmail.com/*",
     "*://fonts.gstatic.com/*"
 ]
+// Array of URL patterns to match for YouTube filtering
+const youtubeShortFilters = [
+    "*://www.youtube.com/shorts/*",
+]
 
 // Variable to store the best YouTube instance
 let bestYoutubeSite
@@ -39,6 +43,18 @@ function youtubeRedirectFunc() {
             }
         },
         {urls: youtubeFilters}, // Matching URLs for redirection
+        ["blocking"] // Options
+    )
+}
+
+// Function to handle YouTube redirection
+function youtubeShortToVideoFunc() {
+    chrome.webRequest.onBeforeRequest.addListener(
+        function (details) {
+            const url = details.url.toString().replace("shorts/", "watch?v=")
+            return {redirectUrl: url}
+        },
+        {urls: youtubeShortFilters}, // Matching URLs for redirection
         ["blocking"] // Options
     )
 }
