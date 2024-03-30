@@ -70,7 +70,6 @@ function disableJSByName() {
     const scripts = document.querySelectorAll('script');
     for (let i = 0; i < scripts.length; i++) {
         if (scripts[i].src === "") {
-            console.log(`removed: ${scripts[i].src}`);
             scripts[i].parentNode.removeChild(scripts[i]);
         }
     }
@@ -146,6 +145,15 @@ function createBanner(ip) {
         }
     }
 }
+
+window.navigation.addEventListener("navigate", () => {
+    setTimeout(() => {
+        if (window.location.href.includes("/shorts/")) {
+            console.log("short");
+            window.location.href = window.location.href.replace("/shorts/", "/watch?v=");
+        }
+    }, 30);
+})
 
 if (document.readyState !== "loading") {
     propagandaBlocker();
