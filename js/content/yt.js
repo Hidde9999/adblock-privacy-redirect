@@ -149,7 +149,6 @@ function createBanner(ip) {
 window.navigation.addEventListener("navigate", () => {
     setTimeout(() => {
         if (window.location.href.includes("/shorts/")) {
-            console.log("short");
             window.location.href = window.location.href.replace("/shorts/", "/watch?v=");
         }
     }, 30);
@@ -162,7 +161,3 @@ if (document.readyState !== "loading") {
 } else {
     document.addEventListener("DOMContentLoaded", propagandaBlocker);
 }
-
-
-
-
