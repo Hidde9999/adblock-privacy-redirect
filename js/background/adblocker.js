@@ -13,7 +13,8 @@ let blockFiltersNames = [] // Names of filters
 
 // Object to store blocked counts per tab
 let blockedCountsPerTab = {};
-let blockedURLs = [];
+// Object to store blocked URLs per tab
+let blockedURLsPerTab = {};
 
 // Function to increment the blocked count for a tab
 function incrementBlockedCount(tabId) {
@@ -27,25 +28,45 @@ function incrementBlockedCount(tabId) {
 }
 
 // Function to reset the blocked count for a tab
-function resetBlockedCount(tabId) {
-    blockedCountsPerTab[tabId] = 0;
-    chrome.storage.local.set({"blockedURLs": []}, function () {
-        console.log('Blocked URLs array cleared.');
-    });
+function resetBlockedCount(tabId, reset) {
+    if (reset){
+        // Check if blockedCountsPerTab[tabId] is defined before accessing its value
+        if (typeof blockedCountsPerTab[tabId] !== 'undefined') {
+            blockedCountsPerTab[tabId] = 0;
+        }
+    }
 
-    chrome.browserAction.setBadgeText({text: "", tabId: tabId}); // Remove badge
+    // Check if blockedCountsPerTab[tabId] is defined before setting the badge text
+    if (typeof blockedCountsPerTab[tabId] !== 'undefined') {
+        chrome.browserAction.setBadgeText({text: blockedCountsPerTab[tabId].toString(), tabId: tabId});
+    }
 }
 
-// Function to store blocked URLs
+
+// Function to reset the blocked URLs for a tab
+function resetBlockedURLs(tabId, reset) {
+    if (reset){
+        blockedURLsPerTab[tabId] = [];
+    }
+
+    chrome.storage.local.set({"blockedURLs": blockedURLsPerTab[tabId]}, function () {
+        console.log('Blocked URLs for tab ' + tabId + ' cleared.');
+    });
+}
+
+// Function to store blocked URLs per tab
 function storeBlockedURL(url, tabId) {
-    if (!blockedURLs.includes(url)) {
-        // console.log(tabId + " : " + url);
-        blockedURLs.push(url);
+    if (!blockedURLsPerTab[tabId]) {
+        blockedURLsPerTab[tabId] = [];
+    }
+    if (!blockedURLsPerTab[tabId].includes(url)) {
+        blockedURLsPerTab[tabId].push(url);
         incrementBlockedCount(tabId);
-        chrome.storage.local.set({"blockedURLs": blockedURLs}, function () {
+        chrome.storage.local.set({"blockedURLs": blockedURLsPerTab[tabId]}, function () {
         });
     }
 }
+
 
 // Function to block specific scripts on YouTube
 function ytBlockScriptsByName() {
@@ -102,13 +123,22 @@ function blockAdsAndTrackers() {
 chrome.tabs.onRemoved.addListener(function (tabId) {
     // Remove the tab's blocked count when the tab is closed
     delete blockedCountsPerTab[tabId];
+    delete blockedURLsPerTab[tabId]
 });
 
 // Function to handle page reload/navigation
 chrome.webNavigation.onCommitted.addListener(function (details) {
     if (details.transitionType === "reload" || details.transitionType === "typed") {
-        resetBlockedCount(details.tabId);
+        resetBlockedCount(details.tabId, true);
+        resetBlockedURLs(details.tabId, true);
     }
+});
+
+// Function to handle tab activation
+chrome.tabs.onActivated.addListener(function(details) {
+    // Reset the badge count and blocked URLs for the newly activated tab
+    resetBlockedCount(details.tabId, false);
+    resetBlockedURLs(details.tabId, false);
 });
 
 // Function to get filters from storage or JSON file

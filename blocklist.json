@@ -67,6 +67,7 @@
   ],
   "odysee": [
     "*://api.odysee.com/membership/*",
+    "*://sentry.odysee.tv/*",
     "*://watchman.na-backend.odysee.com/reports/*"
   ],
   "other":[
