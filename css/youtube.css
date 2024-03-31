@@ -19,3 +19,17 @@ yt-tooltip-renderer::before,
 .ytp-paid-content-overlay{
     display: none !important;
 }
+
+.blocked-container h1{
+    font-size: 30pt;
+}
+
+.blocked-container p{
+    font-size: 12pt;
+}
+
+@media (prefers-color-scheme: dark) {
+    .blocked-container{
+        color: white!important;
+    }
+}

@@ -30,6 +30,7 @@ const blockedChannels = [
     "The Telegraph",
 
     "Eurovision Song Contest",
+
     "ABC News",
     "BBC News",
     "CBS News",
@@ -46,24 +47,67 @@ const blockedChannels = [
 
 const videoTitels = [
     "Overtreders",
-    "Handhavers"
+    "Handhavers",
+    "europapa",
+    "Joost Klein",
 ];
 
-function propagandaBlocker() {
-    setInterval(() => {
-        const videoElements = document.querySelectorAll("#dismissible, #content-section, .style-scope.yt-horizontal-list-renderer, .style-scope.ytd-rich-grid-row");
+let activeBlocker
 
-        videoElements.forEach(function (video) {
-            const channelLink = video.querySelector('#channel-name a, #info-section #text, #container #text');
-            const videoTitle = video.querySelector('#video-title, #video-title .style-scope.ytd-video-renderer');
-            if (channelLink && blockedChannels.includes(channelLink.innerHTML)) {
-                video.remove()
-            }
-            if (videoTitle && includesTitels(videoTitle.innerHTML)){
-                video.remove()
-            }
-        });
-    }, 250);
+function propagandaBlocker() {
+    const currentUrl = window.location.href.toLowerCase().replace('@', ''); // Convert URL to lowercase and remove '@'
+    if (currentUrl.includes("?search_query=") && blockedChannels.some(channel => currentUrl.toLowerCase().includes(channel.toLowerCase()))) {
+        console.log("this should be blocked");
+        document.getElementById("page-manager").innerHTML = `
+        <center>
+            <div class="blocked-container">
+                <h1>This page is blocked</h1>
+                <p>The content you're trying to access is not available due to propaganda.</p>
+            </div>
+        </center>
+        `
+    } else if(currentUrl.includes("/results")){
+        activeBlocker = setInterval(videoBlocker, 250);
+    } else if (blockedChannels.some(channel => currentUrl.toLowerCase().includes(channel.toLowerCase()))) { // Convert channel name to lowercase for comparison
+        // Replace page content with a message
+        document.getElementById("page-manager").innerHTML = `
+        <center>
+            <div class="blocked-container">
+                <h1>This page is blocked</h1>
+                <p>The content you're trying to access is not available due to propaganda.</p>
+            </div>
+        </center>
+        `;
+    }
+}
+
+function videoBlocker(){
+    const videoElements = document.querySelectorAll("#dismissible, #content-section, .style-scope.yt-horizontal-list-renderer, .style-scope.ytd-rich-grid-row, .style-scope.ytd-item-section-renderer");
+
+    videoElements.forEach(function (video) {
+        // const channelLink = video.querySelector('#channel-name a, #info-section #text, #container #text');
+        const channelLinkVideo = video.querySelector('#channel-name a');
+        const channelLinkPlaylist = video.querySelector('#video-title');
+        const channelLink = video.querySelector('#container #text');
+        const videoTitle = video.querySelector('#video-title, #video-title .style-scope.ytd-video-renderer');
+
+        // video
+        if (channelLinkVideo && blockedChannels.includes(channelLinkVideo.textContent.trim())) {
+            console.log("Removing video from blocked channel:", channelLinkVideo.textContent.trim());
+            video.remove();
+        } else if (channelLink && blockedChannels.includes(channelLink.textContent.trim())) {
+            console.log("Removing channel from blocked channel:", channelLink.textContent.trim());
+            video.remove();
+        } else if (channelLinkPlaylist && includesBlockedChannels(channelLinkPlaylist.textContent.trim())) {
+            console.log("Removing video from blocked playlist:", channelLink.textContent.trim());
+            video.remove();
+        } else if (videoTitle && includesTitles(videoTitle.textContent.trim())) {
+            console.log("Removing video with blocked title:", videoTitle.textContent.trim());
+            video.remove();
+        } else {
+            // myTimeout = setTimeout(function () {clearInterval(activeBlocker)}, 10000);
+        }
+    });
 }
 
 function disableJSByName() {
@@ -75,11 +119,20 @@ function disableJSByName() {
     }
 }
 
-function includesTitels(title) {
-    return videoTitels.some(keyword => title.includes(keyword));
+function includesTitles(title) {
+    const lowercaseTitle = title.toLowerCase();
+    return videoTitels.some(blockedTitle => lowercaseTitle.includes(blockedTitle.toLowerCase()));
 }
 
-function getIP(){
+function includesBlockedChannels(title) {
+    if (!blockedChannels || blockedChannels.length === 0) {
+        return false; // Return false if blockedChannels is undefined or empty
+    }
+    const lowercaseTitle = title.toLowerCase();
+    return blockedChannels.some(keyword => lowercaseTitle.includes(keyword.toLowerCase()));
+}
+
+function getIP() {
     // Make a request to ipinfo.io to get the user's IP address
     fetch('https://api.ipify.org/?format=json')
         .then(response => response.json())
@@ -111,7 +164,7 @@ function createBanner(ip) {
     closeButton.style.position = 'absolute';
     closeButton.style.top = '5px';
     closeButton.style.right = '10px';
-    closeButton.addEventListener('click', function() {
+    closeButton.addEventListener('click', function () {
         banner.style.display = 'none';
     });
 
@@ -154,10 +207,15 @@ window.navigation.addEventListener("navigate", () => {
     }, 30);
 })
 
+window.addEventListener('scroll', function () {
+    propagandaBlocker()
+});
+
 if (document.readyState !== "loading") {
-    propagandaBlocker();
     getIP();
     disableJSByName();
-} else {
-    document.addEventListener("DOMContentLoaded", propagandaBlocker);
+    propagandaBlocker();
 }
+// } else {
+//     document.addEventListener("DOMContentLoaded", propagandaBlocker);
+// }

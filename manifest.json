@@ -61,6 +61,9 @@
             "matches": ["<all_urls>"],
             "css": ["css/adblock.css"],
             "js": ["js/content/adblock.js"]
+        },{
+            "matches": ["<all_urls>"],
+            "js": ["js/content/redirect.js"]
         }
     ],
     "web_accessible_resources": [
