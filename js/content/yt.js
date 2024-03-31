@@ -55,12 +55,11 @@ const videoTitels = [
 let activeBlocker
 
 function propagandaBlocker() {
-    const currentUrl = window.location.href.toLowerCase().replace('@', ''); // Convert URL to lowercase and remove '@'
-    if (currentUrl.includes("?search_query=") && blockedChannels.some(channel => currentUrl.toLowerCase().includes(channel.toLowerCase()))) {
-        console.log("this should be blocked");
+    const currentUrl = window.location.href.toLowerCase().replace('@', '').replace("+", " ")
+    if (currentUrl.includes("?search_query=") && blockedChannels.some(channel => currentUrl.includes(channel.toLowerCase()))) {
         document.getElementById("page-manager").innerHTML = `
         <center>
-            <div class="blocked-container">
+            <div class="blocked-container" id="blocked-contents">
                 <h1>This page is blocked</h1>
                 <p>The content you're trying to access is not available due to propaganda.</p>
             </div>
@@ -68,11 +67,12 @@ function propagandaBlocker() {
         `
     } else if(currentUrl.includes("/results")){
         activeBlocker = setInterval(videoBlocker, 250);
-    } else if (blockedChannels.some(channel => currentUrl.toLowerCase().includes(channel.toLowerCase()))) { // Convert channel name to lowercase for comparison
+        document.getElementById("blocked-contents").remove()
+    } else if (blockedChannels.some(channel => currentUrl.includes(channel.toLowerCase()))) { // Convert channel name to lowercase for comparison
         // Replace page content with a message
         document.getElementById("page-manager").innerHTML = `
         <center>
-            <div class="blocked-container">
+            <div class="blocked-container" id="blocked-contents">
                 <h1>This page is blocked</h1>
                 <p>The content you're trying to access is not available due to propaganda.</p>
             </div>
@@ -201,6 +201,7 @@ function createBanner(ip) {
 
 window.navigation.addEventListener("navigate", () => {
     setTimeout(() => {
+        propagandaBlocker();
         if (window.location.href.includes("/shorts/")) {
             window.location.href = window.location.href.replace("/shorts/", "/watch?v=");
         }
@@ -216,6 +217,3 @@ if (document.readyState !== "loading") {
     disableJSByName();
     propagandaBlocker();
 }
-// } else {
-//     document.addEventListener("DOMContentLoaded", propagandaBlocker);
-// }
