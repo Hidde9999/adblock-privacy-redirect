@@ -11,9 +11,9 @@ let whitelist = [
     "google.com/recaptcha/",
 
     // yt
-    "googlevideo.com",
+    ".googlevideo.com/videoplayback",
     "youtube.com",
-    "i.ytimg.com",
+    // "i.ytimg.com",
 
     // meta
     "facebook.com",

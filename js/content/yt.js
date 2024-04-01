@@ -65,7 +65,7 @@ function propagandaBlocker() {
             </div>
         </center>
         `
-    } else if(currentUrl.includes("/results")){
+    } else if(currentUrl.includes("/results") || currentUrl === "https://www.youtube.com/"){
         activeBlocker = setInterval(videoBlocker, 250);
         document.getElementById("blocked-contents").remove()
     } else if (blockedChannels.some(channel => currentUrl.includes(channel.toLowerCase()))) { // Convert channel name to lowercase for comparison
@@ -201,9 +201,10 @@ function createBanner(ip) {
 
 window.navigation.addEventListener("navigate", () => {
     setTimeout(() => {
-        propagandaBlocker();
         if (window.location.href.includes("/shorts/")) {
             window.location.href = window.location.href.replace("/shorts/", "/watch?v=");
+        } else {
+            propagandaBlocker();
         }
     }, 30);
 })

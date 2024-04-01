@@ -12,21 +12,21 @@ const youtubeShortFilters = [
 ]
 
 // Variable to store the best YouTube instance
-let bestYoutubeSite
+let bestYoutubeSite = "invidious.fdn.fr"
 
 // Function to find the best YouTube instance
 function bestYoutubeInstance() {
     // Fetching YouTube instances data
-    fetch("https://api.invidious.io/instances.json?sort_by=type,health")
-        .then(response => response.text())
-        .then(jsonString => {
-            jsonString = JSON.parse(jsonString)
-            // Storing the best YouTube instance
-            bestYoutubeSite = jsonString[0][0]
-        })
-        .catch(error => {
-            console.error('Error fetching RSS feed:', error)
-        })
+    // fetch("https://api.invidious.io/instances.json?sort_by=type,health")
+    //     .then(response => response.text())
+    //     .then(jsonString => {
+    //         jsonString = JSON.parse(jsonString)
+    //         // Storing the best YouTube instance
+    //         bestYoutubeSite = jsonString[0][0]
+    //     })
+    //     .catch(error => {
+    //         console.error('Error fetching RSS feed:', error)
+    //     })
 }
 
 // Function to handle YouTube redirection
