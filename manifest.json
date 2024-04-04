@@ -17,7 +17,7 @@
         "background"
     ],
 "background": {
-        "scripts": ["js/background/onload.js","js/background/adblocker.js", "js/background/redirect.js", "js/background/tor.js"]
+        "scripts": ["js/background/onload.js","js/background/adblocker.js", "js/background/redirect.js"]
     },
     "browser_action": {
         "default_popup": "html/index.html",
@@ -33,7 +33,8 @@
             "css": ["css/youtube.css"],
             "js": [
                 "js/content/yt.js",
-                "js/content/ytAdBlocker.js"
+                "js/content/ytAdBlocker.js",
+                "js/content/ytPropagandaBlocker.js"
             ]
         },{
             "matches": [

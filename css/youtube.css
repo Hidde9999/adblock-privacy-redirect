@@ -1,23 +1,27 @@
-#guide-button,
-.yt-spec-button-shape-next.yt-spec-button-shape-next--outline.yt-spec-button-shape-next--call-to-action.yt-spec-button-shape-next--size-m.yt-spec-button-shape-next--icon-leading,
-.yt-spec-button-shape-next.yt-spec-button-shape-next--text.yt-spec-button-shape-next--overlay.yt-spec-button-shape-next--size-m.yt-spec-button-shape-next--icon-only-default,
-#gs_st50,
-#mealbar-promo-renderer,
-#clarify-box,
-.ad-showing,
-#panels,
-#guide-service,
-#guide,
-#contentWrapper,
-yt-tooltip-renderer::before,
-#sponsor-button,
-#subscribe-button,
-#flexible-item-buttons,
-.YtSegmentedLikeDislikeButtonViewModelHost,
-#button-shape,
-#action-menu,
-.ytp-paid-content-overlay{
-    display: none !important;
+/*#guide-button,*/
+/*.yt-spec-button-shape-next.yt-spec-button-shape-next--outline.yt-spec-button-shape-next--call-to-action.yt-spec-button-shape-next--size-m.yt-spec-button-shape-next--icon-leading,*/
+/*.yt-spec-button-shape-next.yt-spec-button-shape-next--text.yt-spec-button-shape-next--overlay.yt-spec-button-shape-next--size-m.yt-spec-button-shape-next--icon-only-default,*/
+/*#gs_st50,*/
+/*#mealbar-promo-renderer,*/
+/*#clarify-box,*/
+/*.ad-showing,*/
+/*#panels,*/
+/*#guide-service,*/
+/*#guide,*/
+/*#contentWrapper,*/
+/*yt-tooltip-renderer::before,*/
+/*#sponsor-button,*/
+/*#subscribe-button,*/
+/*#flexible-item-buttons,*/
+/*.YtSegmentedLikeDislikeButtonViewModelHost,*/
+/*#button-shape,*/
+/*#action-menu,*/
+/*.ytp-paid-content-overlay{*/
+/*    display: none !important;*/
+/*}*/
+
+.html5-video-container {
+     position: unset!important;
 }
 
 .blocked-container h1{
@@ -26,6 +30,24 @@ yt-tooltip-renderer::before,
 
 .blocked-container p{
     font-size: 12pt;
+}
+
+.skipped-part-overlay {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    background-color: #780606;
+    z-index: 9999;
+    pointer-events: none;
+}
+
+.skip-banner {
+    padding: 20px;
+    background-color: rgba(28, 28, 28, 0.7);
+    position: absolute;
+    bottom: 100px;
+    right: 20px;
+    z-index: 9999;
 }
 
 @media (prefers-color-scheme: dark) {
