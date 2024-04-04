@@ -52,9 +52,9 @@ const videoTitels = [
     "Joost Klein",
 ];
 
-// let activeBlocker
+let activeBlocker
 
-function propagandaBlocker() {
+function propagandaBlocker(timer) {
     const currentUrl = window.location.href.toLowerCase().replace('@', '').replace("+", " ")
     if (currentUrl.includes("?search_query=") && blockedChannels.some(channel => currentUrl.includes(channel.toLowerCase()))) {
         document.getElementById("page-manager").innerHTML = `
@@ -63,9 +63,12 @@ function propagandaBlocker() {
                 <p>The content you're trying to access is not available due to propaganda.</p>
             </div>
         `
-    } else if(currentUrl.includes("/results") || currentUrl === "https://www.youtube.com/"){
-        // activeBlocker = setInterval(videoBlocker, 250);
-        videoBlocker()
+    } else if(currentUrl.includes("/results") || currentUrl.includes("/videos") || currentUrl.includes("/watch?") || currentUrl === "https://www.youtube.com/"){
+        if (timer){
+            activeBlocker = setInterval(videoBlocker, 250);
+        } else {
+            videoBlocker()
+        }
         if (document.getElementById("blocked-contents")){
             document.getElementById("blocked-contents").remove()
         }
@@ -84,11 +87,10 @@ function videoBlocker(){
     const videoElements = document.querySelectorAll("#dismissible, #content-section, .style-scope.yt-horizontal-list-renderer, .style-scope.ytd-rich-grid-row, .style-scope.ytd-item-section-renderer");
 
     videoElements.forEach(function (video) {
-        // const channelLink = video.querySelector('#channel-name a, #info-section #text, #container #text');
         const channelLinkVideo = video.querySelector('#channel-name a');
         const channelLinkPlaylist = video.querySelector('#video-title');
         const channelLink = video.querySelector('#container #text');
-        const videoTitle = video.querySelector('#video-title, #video-title .style-scope.ytd-video-renderer');
+        const videoTitle = video.querySelector('#video-title');
 
         // video
         if (channelLinkVideo && blockedChannels.includes(channelLinkVideo.textContent.trim())) {
@@ -104,7 +106,7 @@ function videoBlocker(){
             console.log("Removing video with blocked title:", videoTitle.textContent.trim());
             video.remove();
         } else {
-            // myTimeout = setTimeout(function () {clearInterval(activeBlocker)}, 10000);
+           setTimeout(function () {clearInterval(activeBlocker)}, 10000);
         }
     });
 }
