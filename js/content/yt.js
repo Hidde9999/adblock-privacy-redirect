@@ -4,6 +4,7 @@ const blockedChannels = [
     "NOS Sport",
     "NOS op 3",
     "NOS Jeugdjournaal",
+    "Jeugdjournaal",
     "NOS Stories",
     "NOS Nieuws van de Week",
     "Nieuwsuur",
@@ -87,7 +88,7 @@ function videoBlocker(){
     const videoElements = document.querySelectorAll("#dismissible, #content-section, .style-scope.yt-horizontal-list-renderer, .style-scope.ytd-rich-grid-row, .style-scope.ytd-item-section-renderer");
 
     videoElements.forEach(function (video) {
-        const channelLinkVideo = video.querySelector('#channel-name a');
+        const channelLinkVideo = video.querySelector('#text a');
         const channelLinkPlaylist = video.querySelector('#video-title');
         const channelLink = video.querySelector('#container #text');
         const videoTitle = video.querySelector('#video-title');
@@ -106,7 +107,7 @@ function videoBlocker(){
             console.log("Removing video with blocked title:", videoTitle.textContent.trim());
             video.remove();
         } else {
-           setTimeout(function () {clearInterval(activeBlocker)}, 10000);
+           // setTimeout(function () {clearInterval(activeBlocker)}, 10000);
         }
     });
 }
@@ -138,16 +139,16 @@ window.navigation.addEventListener("navigate", () => {
         if (window.location.href.includes("/shorts/")) {
             window.location.href = window.location.href.replace("/shorts/", "/watch?v=");
         } else {
-            propagandaBlocker();
+            propagandaBlocker(false);
         }
     }, 30);
 })
 
 window.addEventListener('scroll', function () {
-    propagandaBlocker()
+    propagandaBlocker(false)
 });
 
 if (document.readyState !== "loading") {
     disableJSByName();
-    propagandaBlocker();
+    propagandaBlocker(true);
 }
