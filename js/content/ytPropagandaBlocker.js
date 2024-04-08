@@ -61,7 +61,6 @@ function checkPropaganda() {
                         setTimeout(() => {
                             banner.remove()
                         }, 5000);
-
                     }
                 });
             });
