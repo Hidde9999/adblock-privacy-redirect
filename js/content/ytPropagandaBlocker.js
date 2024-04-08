@@ -69,7 +69,6 @@ function checkPropaganda() {
     });
 }
 
-
 // Fetch propagandaVideo data from propagandaSkip.json
 fetch(chrome.runtime.getURL('json/propagandaSkip.json'))
     .then(response => response.json())
@@ -88,9 +87,3 @@ window.navigation.addEventListener("navigate", () => {
         checkPropaganda()
     }, 30);
 })
-
-// if (document.readyState !== "loading") {
-//     checkPropaganda();
-// } else {
-//     document.addEventListener("DOMContentLoaded", checkPropaganda);
-// }
