@@ -38,6 +38,13 @@
             ]
         },{
             "matches": [
+                "*://invidious.fdn.fr/*"
+            ],
+            "js": [
+                "js/content/yt.js"
+            ]
+        },{
+            "matches": [
                 "*://*.google.com/*",
                 "*://google.com/*"
             ],

@@ -46,92 +46,94 @@ const blockedChannels = [
     "BILD",
 ];
 
-const videoTitels = [
+const videoTitles = [
     "Overtreders",
     "Handhavers",
     "europapa",
     "Joost Klein",
 ];
 
-let activeBlocker
-
-function propagandaBlocker(timer) {
-    const currentUrl = window.location.href.toLowerCase().replace('@', '').replace("+", " ")
-    if (currentUrl.includes("?search_query=") && blockedChannels.some(channel => currentUrl.includes(channel.toLowerCase()))) {
-        document.getElementById("page-manager").innerHTML = `
-            <div class="blocked-container" id="blocked-contents">
-                <h1>This page is blocked</h1>
-                <p>The content you're trying to access is not available due to propaganda.</p>
-            </div>
-        `
-    } else if(currentUrl.includes("/results") || currentUrl.includes("/videos") || currentUrl.includes("/watch?") || currentUrl === "https://www.youtube.com/"){
-        if (timer){
-            activeBlocker = setInterval(videoBlocker, 250);
-        } else {
-            videoBlocker()
-        }
-        if (document.getElementById("blocked-contents")){
-            document.getElementById("blocked-contents").remove()
-        }
-    } else if (blockedChannels.some(channel => currentUrl.includes(channel.toLowerCase()))) { // Convert channel name to lowercase for comparison
-        // Replace page content with a message
-        document.getElementById("page-manager").innerHTML = `
-            <div class="blocked-container" id="blocked-contents">
-                <h1>This page is blocked</h1>
-                <p>The content you're trying to access is not available due to propaganda.</p>
-            </div>
-        `;
-    }
+function isBlockedChannel(channelName) {
+    return blockedChannels.some(keyword => channelName.toLowerCase().includes(keyword.toLowerCase()));
 }
 
-function videoBlocker(){
-    const videoElements = document.querySelectorAll("#dismissible, #content-section, .style-scope.yt-horizontal-list-renderer, .style-scope.ytd-rich-grid-row, .style-scope.ytd-item-section-renderer");
+function isBlockedTitle(title) {
+    return videoTitles.some(blockedTitle => title.toLowerCase().includes(blockedTitle.toLowerCase()));
+}
 
-    videoElements.forEach(function (video) {
-        const channelLinkVideo = video.querySelector('#text a');
-        const channelLinkPlaylist = video.querySelector('#video-title');
-        const channelLink = video.querySelector('#container #text');
+function removeBlockedVideos() {
+    const ytElements = "#dismissible, #content-section, .style-scope.yt-horizontal-list-renderer, .style-scope.ytd-rich-grid-row, .style-scope.ytd-item-section-renderer";
+    const invidiousElements = "#contents .pure-u-1";
+    let videoElements
+    const currentUrl = window.location.href.toLowerCase()
+    if (currentUrl.includes("youtube.com")){
+        videoElements = document.querySelectorAll(ytElements);
+    } else {
+        videoElements = document.querySelectorAll(invidiousElements);
+    }
+
+    videoElements.forEach(video => {
+        const channelLink = video.querySelector('#text a') || video.querySelector('#container #text') || video.querySelector(".channel-name");
         const videoTitle = video.querySelector('#video-title');
 
-        // video
-        if (channelLinkVideo && blockedChannels.includes(channelLinkVideo.textContent.trim())) {
-            console.log("Removing video from blocked channel:", channelLinkVideo.textContent.trim());
+        if (channelLink && isBlockedChannel(channelLink.textContent.trim())) {
+            console.log("Removing video from blocked channel:", channelLink.textContent.trim());
             video.remove();
-        } else if (channelLink && blockedChannels.includes(channelLink.textContent.trim())) {
-            console.log("Removing channel from blocked channel:", channelLink.textContent.trim());
-            video.remove();
-        } else if (channelLinkPlaylist && includesBlockedChannels(channelLinkPlaylist.textContent.trim())) {
-            console.log("Removing video from blocked playlist:", channelLink.textContent.trim());
-            video.remove();
-        } else if (videoTitle && includesTitles(videoTitle.textContent.trim())) {
+        } else if (videoTitle && isBlockedTitle(videoTitle.textContent.trim())) {
             console.log("Removing video with blocked title:", videoTitle.textContent.trim());
             video.remove();
-        } else {
-           // setTimeout(function () {clearInterval(activeBlocker)}, 10000);
         }
     });
 }
 
-function disableJSByName() {
-    const scripts = document.querySelectorAll('script');
-    for (let i = 0; i < scripts.length; i++) {
-        if (scripts[i].src === "") {
-            scripts[i].parentNode.removeChild(scripts[i]);
+function handlePageLoad() {
+    disableJSByName();
+    propagandaBlocker(true);
+}
+
+function propagandaBlocker(timer) {
+    const currentUrl = window.location.href.toLowerCase().replace('@', '').replace("+", " ");
+
+    if (isBlockedChannel(currentUrl)) {
+        const blockedContentsHtml = `
+        <div class="blocked-container" id="blocked-contents">
+            <h1>This page is blocked</h1>
+            <p>The content you're trying to access is not available due to propaganda.</p>
+        </div>`;
+
+        if (currentUrl.includes("youtube.com")){
+            document.getElementById("page-manager").innerHTML = blockedContentsHtml;
+        } else {
+            const blockedContainer = document.querySelector("#contents .pure-g:not(.navbar)");
+            if (blockedContainer) {
+                blockedContainer.innerHTML = blockedContentsHtml;
+            } else {
+                console.error("Target element not found:", "#contents .pure-g");
+            }
+
+        }
+
+    }else if (currentUrl.includes("/search?") || currentUrl.includes("/results") || currentUrl.includes("/videos") || currentUrl.includes("/watch?") || currentUrl === "https://www.youtube.com/") {
+        let activeBlocker;
+        if (document.getElementById("blocked-contents")) {
+            document.getElementById("blocked-contents").remove();
+        }
+        if (timer) {
+            activeBlocker = setInterval(removeBlockedVideos, 250);
+        } else {
+            removeBlockedVideos();
+            clearInterval(activeBlocker);
         }
     }
 }
 
-function includesTitles(title) {
-    const lowercaseTitle = title.toLowerCase();
-    return videoTitels.some(blockedTitle => lowercaseTitle.includes(blockedTitle.toLowerCase()));
-}
-
-function includesBlockedChannels(title) {
-    if (!blockedChannels || blockedChannels.length === 0) {
-        return false; // Return false if blockedChannels is undefined or empty
-    }
-    const lowercaseTitle = title.toLowerCase();
-    return blockedChannels.some(keyword => lowercaseTitle.includes(keyword.toLowerCase()));
+function disableJSByName() {
+    const scripts = document.querySelectorAll('script');
+    scripts.forEach(script => {
+        if (script.src === "") {
+            script.parentNode.removeChild(script);
+        }
+    });
 }
 
 window.navigation.addEventListener("navigate", () => {
@@ -142,13 +144,12 @@ window.navigation.addEventListener("navigate", () => {
             propagandaBlocker(false);
         }
     }, 30);
-})
-
-window.addEventListener('scroll', function () {
-    propagandaBlocker(false)
 });
 
+window.addEventListener('scroll', propagandaBlocker.bind(null, false));
+
 if (document.readyState !== "loading") {
-    disableJSByName();
-    propagandaBlocker(true);
+    handlePageLoad();
+} else {
+    document.addEventListener("DOMContentLoaded", handlePageLoad);
 }

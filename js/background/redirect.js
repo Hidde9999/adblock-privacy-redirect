@@ -107,7 +107,7 @@ function getRedirectReplaceUrl(redirectName, url) {
 
 // Function to replace font URLs with local URLs
 function replaceFonts(url) {
-    console.log(url);
+    // console.log(url);
     if (url.includes("/roboto/")) {
         if (url.includes("KFOlCnqEu92Fr1MmEU9fBBc4")) {
             url = chrome.extension.getURL("/fonts/roboto/KFOlCnqEu92Fr1MmEU9fBBc4.woff2");
