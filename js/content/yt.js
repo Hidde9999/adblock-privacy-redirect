@@ -36,6 +36,7 @@ const blockedChannels = [
     "BBC News",
     "CBS News",
     "CBS Mornings",
+    "Daily Mail",
     "MSNBC",
     "CNBC",
     "Fox News",
@@ -45,12 +46,21 @@ const blockedChannels = [
     "Channel 4 News",
     "Guardian News",
     "Bloomberg Television",
+    "U.S. Defense News",
+    "US Army News",
+    "The Sun",
+    "TVP World",
     "Reuters",
+    "Global News",
 
     "DW Documentary",
+    "DW News",
 
     "ZDF heute-show",
     "BILD",
+
+    "FRANCE 24",
+    "LCI",
 ];
 
 const videoTitles = [
@@ -120,7 +130,15 @@ function propagandaBlocker(timer) {
 
         }
 
-    }else if (currentUrl.includes("/search?") || currentUrl.includes("/results") || currentUrl.includes("/channel") || currentUrl.includes("/videos") || currentUrl.includes("/watch?") || currentUrl === "https://www.youtube.com/" || currentUrl.includes('/feed/popular')) {
+    }else if (
+        currentUrl.includes("/search?") ||
+        currentUrl.includes("/results") ||
+        currentUrl.includes("/channel") ||
+        currentUrl.includes("/videos") ||
+        currentUrl.includes("/watch?") ||
+        currentUrl.includes('/feed/popular') ||
+        currentUrl === "https://www.youtube.com/"
+    ) {
         let activeBlocker;
         if (document.getElementById("blocked-contents")) {
             document.getElementById("blocked-contents").remove();

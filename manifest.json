@@ -38,7 +38,9 @@
             ]
         },{
             "matches": [
-                "*://invidious.fdn.fr/*"
+                "*://invidious.fdn.fr/*",
+                "*://yt.cdaut.de/*",
+                "*://invidious.privacyredirect.com/*"
             ],
             "css": ["css/invidious.css"],
             "js": [
@@ -67,13 +69,6 @@
             ],
             "css": ["css/fakeMedia.css"],
             "js": ["js/content/fakeNews.js"]
-        },{
-            "matches": ["<all_urls>"],
-            "css": ["css/adblock.css"],
-            "js": ["js/content/adblock.js"]
-        },{
-            "matches": ["<all_urls>"],
-            "js": ["js/content/redirect.js"]
         }
     ],
     "web_accessible_resources": [

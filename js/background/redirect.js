@@ -12,7 +12,7 @@ const youtubeShortFilters = [
 ]
 
 // Variable to store the best YouTube instance
-let bestYoutubeSite = "invidious.fdn.fr"
+let bestYoutubeSite = "invidious.privacyredirect.com"
 
 // Function to find the best YouTube instance
 function bestYoutubeInstance() {
