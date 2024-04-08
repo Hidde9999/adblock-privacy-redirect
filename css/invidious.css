@@ -1,0 +1,17 @@
+.skipped-part-overlay {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    background-color: #780606;
+    z-index: 9999;
+    pointer-events: none;
+}
+
+.skip-banner {
+    padding: 20px;
+    background-color: rgba(28, 28, 28, 0.7);
+    position: absolute;
+    bottom: 100px;
+    right: 20px;
+    z-index: 9999;
+}

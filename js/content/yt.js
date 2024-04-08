@@ -63,7 +63,7 @@ function isBlockedTitle(title) {
 
 function removeBlockedVideos() {
     const ytElements = "#dismissible, #content-section, .style-scope.yt-horizontal-list-renderer, .style-scope.ytd-rich-grid-row, .style-scope.ytd-item-section-renderer";
-    const invidiousElements = "#contents .pure-u-1";
+    const invidiousElements = "#contents .pure-u-1:not(.navbar)";
     let videoElements
     const currentUrl = window.location.href.toLowerCase()
     if (currentUrl.includes("youtube.com")){
@@ -74,7 +74,7 @@ function removeBlockedVideos() {
 
     videoElements.forEach(video => {
         const channelLink = video.querySelector('#text a') || video.querySelector('#container #text') || video.querySelector(".channel-name");
-        const videoTitle = video.querySelector('#video-title');
+        const videoTitle = video.querySelector('#video-title') || video.querySelector(".video-card-row p");
 
         if (channelLink && isBlockedChannel(channelLink.textContent.trim())) {
             console.log("Removing video from blocked channel:", channelLink.textContent.trim());
@@ -113,7 +113,7 @@ function propagandaBlocker(timer) {
 
         }
 
-    }else if (currentUrl.includes("/search?") || currentUrl.includes("/results") || currentUrl.includes("/videos") || currentUrl.includes("/watch?") || currentUrl === "https://www.youtube.com/") {
+    }else if (currentUrl.includes("/search?") || currentUrl.includes("/results") || currentUrl.includes("/channel") || currentUrl.includes("/videos") || currentUrl.includes("/watch?") || currentUrl === "https://www.youtube.com/") {
         let activeBlocker;
         if (document.getElementById("blocked-contents")) {
             document.getElementById("blocked-contents").remove();

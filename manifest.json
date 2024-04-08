@@ -40,8 +40,10 @@
             "matches": [
                 "*://invidious.fdn.fr/*"
             ],
+            "css": ["css/invidious.css"],
             "js": [
-                "js/content/yt.js"
+                "js/content/yt.js",
+                "js/content/ytPropagandaBlocker.js"
             ]
         },{
             "matches": [
@@ -75,7 +77,8 @@
         }
     ],
     "web_accessible_resources": [
-        "fonts/*.woff2"
+        "fonts/*.woff2",
+        "json/*"
     ],
     "manifest_version": 2
 }
