@@ -37,10 +37,17 @@ const blockedChannels = [
     "CBS News",
     "CBS Mornings",
     "MSNBC",
+    "CNBC",
     "Fox News",
     "FOX Weather",
     "CNN",
+    "9 News Australia",
+    "Channel 4 News",
+    "Guardian News",
+    "Bloomberg Television",
     "Reuters",
+
+    "DW Documentary",
 
     "ZDF heute-show",
     "BILD",
@@ -113,7 +120,7 @@ function propagandaBlocker(timer) {
 
         }
 
-    }else if (currentUrl.includes("/search?") || currentUrl.includes("/results") || currentUrl.includes("/channel") || currentUrl.includes("/videos") || currentUrl.includes("/watch?") || currentUrl === "https://www.youtube.com/") {
+    }else if (currentUrl.includes("/search?") || currentUrl.includes("/results") || currentUrl.includes("/channel") || currentUrl.includes("/videos") || currentUrl.includes("/watch?") || currentUrl === "https://www.youtube.com/" || currentUrl.includes('/feed/popular')) {
         let activeBlocker;
         if (document.getElementById("blocked-contents")) {
             document.getElementById("blocked-contents").remove();
