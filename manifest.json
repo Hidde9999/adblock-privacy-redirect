@@ -69,10 +69,16 @@
             ],
             "css": ["css/fakeMedia.css"],
             "js": ["js/content/fakeNews.js"]
+        },{
+            "matches": [
+                "*://www.linkedin.com/*"
+            ],
+            "js": ["js/content/fakeNews.js"]
         }
     ],
     "web_accessible_resources": [
         "fonts/*.woff2",
+        "js/replaceJS/*",
         "json/*"
     ],
     "manifest_version": 2
