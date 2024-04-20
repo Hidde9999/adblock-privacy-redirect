@@ -6,6 +6,15 @@ const redirectFilters = [
     "*://*.gmail.com/*",
     "*://fonts.gstatic.com/*"
 ]
+
+const youtubeRedirectFilters = [
+    "*://*.youtube.com/",
+    "*://*.youtube.com/@*",
+    "*://*.youtube.com/watch?*",
+    "*://*.youtube.com/results?*",
+    "*://*.youtube.com/channel/*",
+]
+
 // Array of URL patterns to match for YouTube filtering
 const youtubeShortFilters = [
     "*://www.youtube.com/shorts/*",
@@ -38,11 +47,11 @@ function youtubeRedirectFunc() {
             // Replacing YouTube URLs with the best instance URL
             let url = details.url.toString().replace("www.youtube.com", bestYoutubeSite)
             url = url.toString().replace("music.youtube.com", bestYoutubeSite)
-            if (youtubeRedirect === "true") {
+            if (youtubeRedirect === "true" && !url.includes("/search?query=")) {
                 return {redirectUrl: url}
             }
         },
-        {urls: youtubeFilters}, // Matching URLs for redirection
+        {urls: youtubeRedirectFilters}, // Matching URLs for redirection
         ["blocking"] // Options
     )
 }

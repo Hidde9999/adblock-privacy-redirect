@@ -19,7 +19,6 @@ const blockedChannels = [
     "Nieuwsuur",
     "Rijkswaterstaat",
     "Het Klokhuis",
-
     "De Telegraaf",
     "RTL Nieuws",
     "de Volkskrant",
@@ -28,30 +27,32 @@ const blockedChannels = [
     "GeenStijl",
     "NPO Start",
     "NPO Radio 1",
-
     "Omroep PowNed",
     "Omroep Gelderland",
-
     "De Avondshow met Arjen Lubach | VPRO",
     "RTL Talkshow",
-
     "Vandaag Inside",
+
+    "NTR Wetenschap",
 
     "VRT NWS",
     "VRT 1",
     "VTM",
 
-    "The Telegraph",
-
     "Eurovision Song Contest",
 
     "ABC News",
+    "ABC10",
     "BBC News",
     "CBS News",
+    "ITV News",
+    "NBC News",
     "CBS Mornings",
+    "KOCO 5 News",
     "Daily Mail",
     "MSNBC",
     "CNBC",
+    "The Telegraph",
     "Fox News",
     "FOX Weather",
     "CNN",
@@ -59,17 +60,31 @@ const blockedChannels = [
     "Channel 4 News",
     "Guardian News",
     "Bloomberg Television",
+    "Eyewitness News ABC7NY",
+    "NBCLA",
+    "USA TODAY",
+    "CBS Evening News",
+    "Associated Press",
     "U.S. Defense News",
     "US Army News",
     "The Sun",
     "TVP World",
     "Reuters",
     "Global News",
+    "Times Radio",
+    "Forbes Breaking News",
+    "Saturday Night Live",
+    "KETV NewsWatch 7",
+
+    "James Charles",
+    "Beast Philanthropy",
 
     "DW Documentary",
     "DW News",
 
     "ZDF heute-show",
+    "ZDFheute Nachrichten",
+    "tagesschau",
     "BILD",
 
     "FRANCE 24",
@@ -102,7 +117,7 @@ function removeBlockedVideos() {
     }
 
     videoElements.forEach(video => {
-        const channelLink = video.querySelector('#text a') || video.querySelector('#container #text') || video.querySelector(".pure-u-14-24 a");
+        const channelLink = video.querySelector('#text a') || video.querySelector('#container #text') || video.querySelector(".pure-u-14-24 a") || video.querySelector(".channel-name");
         const videoTitle = video.querySelector('#video-title') || video.querySelector(".video-card-row p");
 
         // console.log(channelLink);
@@ -117,9 +132,25 @@ function removeBlockedVideos() {
     });
 }
 
+function addLinksToInvidious() {
+    if (currentUrl.includes("/channel/")) {
+        const videoElement = document.querySelectorAll("#dismissible")
+        if (videoElement){
+            videoElement.forEach(data =>{
+                function backToInvidious() {
+                    window.location.href = `${link.href.replace("www.youtube.com", "invidious.privacyredirect.com")}`;
+                }
+                const link = data.querySelector("a")
+                data.addEventListener('click', backToInvidious);
+            })
+        }
+    }
+}
+
 function handlePageLoad() {
     disableJSByName();
     propagandaBlocker(true);
+    addLinksToInvidious()
 }
 
 // Define a function to run when the element is loaded
@@ -139,8 +170,6 @@ function onElementLoad() {
             contents.remove();
         }
     }
-    // Do something with videoFrom
-    console.log(videoFrom);
 }
 
 function propagandaBlocker(timer) {
@@ -186,6 +215,7 @@ function propagandaBlocker(timer) {
         currentUrl.includes("/videos") ||
         currentUrl.includes("/watch?") ||
         currentUrl.includes('/feed/popular') ||
+        currentUrl.includes('/feed/trending') ||
         currentUrl === "https://www.youtube.com/"
     ) {
         const blockedContents = document.getElementById("blocked-contents");
@@ -219,7 +249,7 @@ window.navigation.addEventListener("navigate", () => {
         } else {
             propagandaBlocker(false);
         }
-    }, 30);
+    }, 100);
 });
 
 window.addEventListener('scroll', propagandaBlocker.bind(null, false));

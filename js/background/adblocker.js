@@ -81,7 +81,10 @@ function ytBlockScriptsByName() {
                 details.url.includes("offline.js") ||
                 details.url.includes("remote.js") ||
                 details.url.includes("endscreen.js") ||
-                details.url.includes("inline_preview.js")
+                details.url.includes("inline_preview.js") ||
+                details.url.includes("intersection-observer.min.js") ||
+                details.url.includes("custom-elements-es5-adapter.js") ||
+                details.url.includes("annotations_module.js")
             ) {
 
                 if (details.tabId != -1) {

@@ -19,3 +19,12 @@
 .pure-g{
     letter-spacing: unset !important;
 }
+
+.pure-button.disabled{
+    color: inherit !important;
+    background-color: gray !important;
+}
+
+#contents footer a{
+    display: block!important;
+}
