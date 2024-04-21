@@ -33,6 +33,7 @@ const blockedChannels = [
     "RTL Talkshow",
     "Vandaag Inside",
     "RTV Utrecht",
+    "Omroep West",
 
     "NTR Wetenschap",
 
@@ -91,6 +92,8 @@ const blockedChannels = [
     "Hindustan Times",
     "Forces News",
     "WION",
+    "CBS Chicago",
+    "Face the Nation",
 
     "James Charles",
     "Beast Philanthropy",
