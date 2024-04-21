@@ -46,7 +46,7 @@ function subscribeToChannel() {
 
     const subscribeButton = document.querySelector('#subscribe');
     if (subscribeButton) {
-        const subscribe = document.querySelector(".pure-u-1-2.flex-left.flexible a");
+        const subscribe = document.querySelector(".pure-u-1-2.flex-left.flexible a") || document.querySelector(".pure-button.pure-button-secondary");
         subscribeButton.href = "#";
 
         if (subscribeList && subscribeList.includes(subscribe.href)) {
@@ -156,8 +156,8 @@ function getVideosOf(url) {
 }
 
 function getRSSfeed(subscribe, index) {
-    const subscribeUrl = subscribe.replace("/channel/", "/feed/channel/")
-    console.log(subscribeUrl);
+    let subscribeUrl = subscribe.replace("feed/", "")
+    subscribeUrl = subscribeUrl.replace("/channel/", "/feed/channel/")
 
     fetch(subscribeUrl)
         .then(response => {
@@ -206,7 +206,6 @@ function getAllRSSfeeds() {
 }
 
 function channelList() {
-    console.log(subscribeListObj);
     const currentUrl = window.location.href.toLowerCase()
     if (currentUrl.includes("/channel/")) {
     }

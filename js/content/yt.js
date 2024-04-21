@@ -32,6 +32,7 @@ const blockedChannels = [
     "De Avondshow met Arjen Lubach | VPRO",
     "RTL Talkshow",
     "Vandaag Inside",
+    "RTV Utrecht",
 
     "NTR Wetenschap",
 
