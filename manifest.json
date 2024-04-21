@@ -50,6 +50,14 @@
             ]
         },{
             "matches": [
+                "*://www.instagram.com/*"
+            ],
+            "css": ["css/instagram.css"],
+            "js": [
+                "js/content/instagram.js"
+            ]
+        },{
+            "matches": [
                 "*://*.google.com/*",
                 "*://google.com/*"
             ],
@@ -69,11 +77,6 @@
 
             ],
             "css": ["css/fakeMedia.css"],
-            "js": ["js/content/fakeNews.js"]
-        },{
-            "matches": [
-                "*://www.linkedin.com/*"
-            ],
             "js": ["js/content/fakeNews.js"]
         }
     ],
