@@ -106,7 +106,6 @@ function unsubscribe(channelHref, subscribeButton) {
     }
 }
 
-
 function getVideosOf(url) {
     fetch(url)
         .then(response => response.text())
@@ -125,8 +124,6 @@ function getVideosOf(url) {
                 const thumbnail = thumbnailElement ? thumbnailElement.getAttribute('url') : ''; // Check if thumbnail exists
                 const videoIdElement = entry.getElementsByTagNameNS('*', 'videoId')[0]; // Select videoId using getElementsByTagNameNS
                 const videoId = videoIdElement ? videoIdElement.textContent : ''; // Check if videoId exists
-
-                console.log(thumbnail);
 
                 videoListObj.push({
                     title: title,
@@ -219,7 +216,6 @@ function channelList() {
             const channelTitle = document.createElement("p");
             channelTitle.textContent = subscribe.title;
             channelTitle.onclick = () => {
-                // Do something when a channel title is clicked
                 getVideosOf(subscribe.url);
             };
             channelList.appendChild(channelTitle);
@@ -236,14 +232,19 @@ function videosListFunc() {
         const videoList = document.createElement("div");
 
         videoListObj.forEach((video) => {
+            const videoLink = document.createElement("a");
+            videoLink.href = video.link;
+
             const videoImg = document.createElement("img");
             videoImg.src = video.thumbnail;
-            const videoTitle = document.createElement("a");
-            videoTitle.textContent = video.title;
-            videoTitle.href = video.link;
+            videoImg.className = "subsribe-tumb";
 
-            videoList.appendChild(videoImg);
-            videoList.appendChild(videoTitle);
+            const videoTitle = document.createElement("label");
+            videoTitle.textContent = video.title;
+
+            videoLink.appendChild(videoImg);
+            videoLink.appendChild(videoTitle);
+            videoList.appendChild(videoLink);
         })
         contents.appendChild(videoList);
     }

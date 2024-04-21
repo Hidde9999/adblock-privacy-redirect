@@ -25,6 +25,10 @@
     background-color: gray !important;
 }
 
-#contents footer a{
-    display: block!important;
+/*#contents footer a{*/
+/*    */
+/*}*/
+
+.subsribe-tumb{
+    display: block;
 }
