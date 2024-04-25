@@ -73,6 +73,15 @@
     "*://api.na-backend.odysee.com/api/v1/metric/*"
   ],
   "other":[
+    "*://cdn.optoutadvertising.com/*",
+    "*://tag.aticdn.net/*",
+    "*://tikkertje.nhnieuws.nl/*",
+    "*://sb.scorecardresearch.com/*",
+    "*://tentacles.smartocto.com/*",
+    "*://static.hotjar.com/*",
+    "*://d7d3cf2e81d293050033-3dfc0615b0fd7b49143049256703bfce.ssl.cf1.rackcdn.com/*",
+    "*://widgets.sprinklecontent.com/*",
+    "*://ditisdesupercooleappapi.nhnieuws.nl/*",
     "*://*.cdnst.net/javascript/ads/*",
     "*://js.stripe.com/v3/fingerprinted/*",
     "*://*.vevo.com/*",
@@ -88,6 +97,7 @@
     "*://tags.tiqcdn.com/utag/talpa/video-kijk-embed/prod/utag.js",
     "*://api.prd.video.talpa.network/graphql?*",
     "*://embed.prod.kijk.nl/api/playerconfig?*",
-    "*://api.weer.nl/v1/content/news-articles?limit=*"
+    "*://api.weer.nl/v1/content/news-articles?limit=*",
+    "*://api.weer.nl/v1/content/brand-campaigns?*"
   ]
 }

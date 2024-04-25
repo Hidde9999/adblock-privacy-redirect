@@ -8,7 +8,8 @@ const fakeMediaList = [
     { url: "www.nrc.nl", language: "nl" },
     { url: "www.nu.nl", language: "nl" },
     { url: "www.groene.nl", language: "nl" },
-    { url: "www.rijksoverheid.nl/", language: "nl" }
+    { url: "www.rijksoverheid.nl", language: "nl" },
+    { url: "extinctionrebellion.nl", language: "nl" }
 ];
 
 // Attach the replaceTextOnSite function to the onload event of the window
@@ -53,6 +54,7 @@ function fakeMediaReplace(language) {
         { target: /\bincorrect\b/gi, replacement: "waar" },
         { target: "uit vrij recente studies blijkt", replacement: "uit corrupte studies betaald door de globalisten blijkt" },
         { target: "feiten", replacement: "fabels" },
+        { target: "crisis", replacement: "nep crisis" },
 
         { target: "Belastingdienst", replacement: "Criminele organisatie die alles bij de burger wegrooft" },
         { target: "Belastingen", replacement: "dieven" },
@@ -112,10 +114,13 @@ function fakeMediaReplace(language) {
         { target: /\bwereldgezondheidsorganisatie\b/gi, replacement: "WereldHOAXorganisatie" },
         { target: /\bWHO\b/gi, replacement: "World HOAX Organisation" },
 
-        { target: /\bklimaat(top)?(deal)?(record)?\b/gi, replacement: "klimaat scam" },
+        { target: /\bklimaat(top)?(deal)?(record)?(rampen)\b/gi, replacement: "klimaat scam" },
+        { target: "klimaat-", replacement: "klimaat scam" },
         { target: /\bExtinction Rebellion\b/gi, replacement: "Dombo Rebellion" },
         { target: /\bklimaatradicalen\b/gi, replacement: "klimaat gekken" },
         { target: /\bKlimaatdemonstranten\b/gi, replacement: "klimaat gekken" },
+        { target: /\bfossiele\b/gi, replacement: "woke" },
+        { target: /\bNoodsituatie\b/gi, replacement: "Oh Hans!" },
 
         { target: /\bstikstof\b/gi, replacement: "stikstof hoax" },
 

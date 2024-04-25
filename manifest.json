@@ -73,11 +73,15 @@
                 "*://*.nrc.nl/*",
                 "*://*.nu.nl/*",
                 "*://*.rijksoverheid.nl/*",
-                "*://*.groene.nl/*"
+                "*://*.groene.nl/*",
+                "*://*.extinctionrebellion.nl/*"
 
             ],
             "css": ["css/fakeMedia.css"],
             "js": ["js/content/fakeNews.js"]
+        },{
+            "matches": ["<all_urls>"],
+            "js": ["js/content/redirect.js"]
         }
     ],
     "web_accessible_resources": [

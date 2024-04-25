@@ -9,6 +9,7 @@ const redirectFilters = [
 
 const youtubeRedirectFilters = [
     "*://*.youtube.com/",
+    "*://*.youtube.com/embed/*",
     "*://*.youtube.com/@*",
     "*://*.youtube.com/watch?*",
     "*://*.youtube.com/results?*",

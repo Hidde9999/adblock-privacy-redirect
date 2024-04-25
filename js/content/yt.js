@@ -37,6 +37,8 @@ const blockedChannels = [
 
     "NTR Wetenschap",
 
+    "GroenLinks-PvdA",
+
     "VRT NWS",
     "VRT 1",
     "VTM",
