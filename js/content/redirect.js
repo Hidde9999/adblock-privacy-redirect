@@ -25,7 +25,7 @@ function iframeChange() {
 if (document.readyState !== "loading") {
     iframeChange()
 } else {
-    // document.addEventListener("DOMContentLoaded", propagandaBlocker);
+    document.addEventListener("DOMContentLoaded", iframeChange);
 }
 
 // Function to find the best YouTube instance
