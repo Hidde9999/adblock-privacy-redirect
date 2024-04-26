@@ -8,7 +8,6 @@ const blockedContentsHtml = `
         </div>`;
 
 const blockedChannels = [
-    // NOS
     "NOS",
     "NOS Sport",
     "NOS op 3",
@@ -34,6 +33,10 @@ const blockedChannels = [
     "Vandaag Inside",
     "RTV Utrecht",
     "Omroep West",
+    "NPO 3",
+    "NPO 3 TV",
+    "Radar AVROTROS",
+    "AVROTROS",
 
     "NTR Wetenschap",
 
@@ -96,6 +99,9 @@ const blockedChannels = [
     "WION",
     "CBS Chicago",
     "Face the Nation",
+    "Warographics",
+    "ABC7 News Bay Area",
+    "Military Summary",
 
     "James Charles",
     "Beast Philanthropy",
