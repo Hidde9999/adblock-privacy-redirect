@@ -37,8 +37,10 @@ const blockedChannels = [
     "NPO 3 TV",
     "Radar AVROTROS",
     "AVROTROS",
+    "vpro tegenlicht",
 
     "NTR Wetenschap",
+    "Universiteit van Nederland",
 
     "GroenLinks-PvdA",
 
@@ -47,6 +49,9 @@ const blockedChannels = [
     "VTM",
 
     "Eurovision Song Contest",
+
+
+    "Sydney Children's Hospitals Network",
 
     "ABC News",
     "ABC10",
@@ -70,6 +75,7 @@ const blockedChannels = [
     "Bloomberg Television",
     "Eyewitness News ABC7NY",
     "NBCLA",
+    "KCAL News",
     "USA TODAY",
     "CBS Evening News",
     "Associated Press",
@@ -98,6 +104,8 @@ const blockedChannels = [
     "Forces News",
     "WION",
     "CBS Chicago",
+    "ABC 7 Chicago",
+    "CBS Boston",
     "Face the Nation",
     "Warographics",
     "ABC7 News Bay Area",
@@ -117,15 +125,26 @@ const blockedChannels = [
     "FRANCE 24",
 ];
 
+const whiteList = [
+    "Dfacto",
+    "Cafe Weltschmerz",
+]
+
 const videoTitles = [
     "Overtreders",
     "Handhavers",
     "europapa",
     "Joost Klein",
+    "vaccination",
+    "vaccin",
 ];
 
 function isBlockedChannel(channelName) {
     return blockedChannels.some(keyword => channelName.toLowerCase().includes(keyword.toLowerCase()));
+}
+
+function isWhitelistedChannel(channelName) {
+    return whiteList.some(keyword => channelName.toLowerCase().includes(keyword.toLowerCase()));
 }
 
 function isBlockedTitle(title) {
@@ -137,7 +156,7 @@ function removeBlockedVideos() {
     const invidiousElements = "#contents .pure-u-1:not(.navbar)";
     let videoElements
     const currentUrl = window.location.href.toLowerCase()
-    if (currentUrl.includes("youtube.com")){
+    if (currentUrl.includes("youtube.com")) {
         videoElements = document.querySelectorAll(ytElements);
     } else {
         videoElements = document.querySelectorAll(invidiousElements);
@@ -147,6 +166,9 @@ function removeBlockedVideos() {
         const channelLink = video.querySelector('#text a') || video.querySelector('#container #text') || video.querySelector(".pure-u-14-24 a") || video.querySelector(".channel-name");
         const videoTitle = video.querySelector('#video-title') || video.querySelector(".video-card-row p");
 
+        if (channelLink && isWhitelistedChannel(channelLink.textContent.trim())) {
+            return
+        }
         // console.log(channelLink);
 
         if (channelLink && isBlockedChannel(channelLink.textContent.trim())) {
@@ -162,14 +184,29 @@ function removeBlockedVideos() {
 function addLinksToInvidious() {
     if (currentUrl.includes("/channel/")) {
         const videoElement = document.querySelectorAll("#dismissible")
-        if (videoElement){
-            videoElement.forEach(data =>{
+        if (videoElement) {
+            videoElement.forEach(data => {
                 function backToInvidious() {
                     window.location.href = `${link.href.replace("www.youtube.com", "invidious.privacyredirect.com")}`;
                 }
+
                 const link = data.querySelector("a")
                 data.addEventListener('click', backToInvidious);
             })
+        }
+    }
+}
+
+function blockPage() {
+    const pageManagerElement = document.getElementById("page-manager");
+    if (pageManagerElement) {
+        pageManagerElement.innerHTML = blockedContentsHtml;
+    } else {
+        const contentsElement = document.querySelector("#contents");
+        if (contentsElement) {
+            contentsElement.innerHTML = blockedContentsHtml;
+        } else {
+            console.error("Element matching '#contents .pure-g:not(.navbar)' not found.");
         }
     }
 }
@@ -200,14 +237,14 @@ function onElementLoad() {
 }
 
 function propagandaBlocker(timer) {
-    if (blockedContentsCreated){
+    if (blockedContentsCreated) {
         return
     }
-    currentUrl = window.location.href.toLowerCase().replace('@', '').replace("+", " ");
+    currentUrl = window.location.href.toLowerCase().replace("+", " ");
 
     if (currentUrl.includes("/watch?")) {
 // Set up a timer to periodically check for the element
-        const intervalId = setInterval(function() {
+        const intervalId = setInterval(function () {
             // Select the element
             const elementToLoad = document.querySelector("#text-container a") || document.querySelector("#channel-name");
 
@@ -224,18 +261,29 @@ function propagandaBlocker(timer) {
         }, 1000); // Check every second
     }
 
-    if (isBlockedChannel(currentUrl)) {
-        if (currentUrl.includes("youtube.com")){
-            document.getElementById("page-manager").innerHTML = blockedContentsHtml;
+    if (
+        isBlockedChannel(currentUrl) && currentUrl.includes("youtube.com") ||
+        !currentUrl.includes("www.youtube.com") && currentUrl.includes("/channel/") || currentUrl.includes("/search?")
+    ) {
+        const channelNameElement = document.querySelector("meta[itemprop='name']") || document.querySelector(".channel-profile span");
+        if (channelNameElement) {
+            const channelName = channelNameElement.getAttribute("content") || channelNameElement.textContent;
+            if (isBlockedChannel(channelName)) {
+                if (!isWhitelistedChannel(currentUrl)) {
+                    blockPage()
+                }
+            }
         } else {
-            const contents = document.querySelector("#contents .pure-g:not(.navbar)");
-            if (contents) {
-                contents.innerHTML = blockedContentsHtml;
-            } else {
-                console.error("Element matching '#contents .pure-g:not(.navbar)' not found.");
+            // console.error("Channel name element not found.");
+            if (isBlockedChannel(currentUrl)) {
+                if (!isWhitelistedChannel(currentUrl)) {
+                    blockPage()
+                }
             }
         }
-    } else if (
+    }
+
+    if (
         currentUrl.includes("/search?") ||
         currentUrl.includes("/results") ||
         currentUrl.includes("/channel") ||

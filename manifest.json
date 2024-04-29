@@ -40,7 +40,8 @@
             "matches": [
                 "*://invidious.fdn.fr/*",
                 "*://yt.cdaut.de/*",
-                "*://invidious.privacyredirect.com/*"
+                "*://invidious.privacyredirect.com/*",
+                "*://yewtu.be/*"
             ],
             "css": ["css/invidious.css"],
             "js": [
