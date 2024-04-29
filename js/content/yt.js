@@ -8,6 +8,9 @@ const blockedContentsHtml = `
         </div>`;
 
 const blockedChannels = [
+    "Stop Willem Engel",
+    "Aangifte Willem Engel",
+
     "NOS",
     "NOS Sport",
     "NOS op 3",
@@ -38,6 +41,9 @@ const blockedChannels = [
     "Radar AVROTROS",
     "AVROTROS",
     "vpro tegenlicht",
+    "WeerNL TalpaNetwork",
+    "Hart van Nederland",
+    "Op1",
 
     "NTR Wetenschap",
     "Universiteit van Nederland",
@@ -128,6 +134,12 @@ const blockedChannels = [
 const whiteList = [
     "Dfacto",
     "Cafe Weltschmerz",
+    "Clintel",
+    "BENDER",
+    "Ongehoord Nederland TV",
+    "Harry Vermeegen Official",
+    "blckbx",
+    "Potkaars-live",
 ]
 
 const videoTitles = [
@@ -135,6 +147,7 @@ const videoTitles = [
     "Handhavers",
     "europapa",
     "Joost Klein",
+    "klimaat",
     "vaccination",
     "vaccin",
 ];
