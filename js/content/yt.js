@@ -140,6 +140,7 @@ const whiteList = [
     "Harry Vermeegen Official",
     "blckbx",
     "Potkaars-live",
+    "Tucker Carlson",
 ]
 
 const videoTitles = [
@@ -150,6 +151,7 @@ const videoTitles = [
     "klimaat",
     "vaccination",
     "vaccin",
+    "Ukraine",
 ];
 
 function isBlockedChannel(channelName) {
