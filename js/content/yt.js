@@ -56,7 +56,6 @@ const blockedChannels = [
 
     "Eurovision Song Contest",
 
-
     "Sydney Children's Hospitals Network",
 
     "ABC News",
@@ -71,6 +70,7 @@ const blockedChannels = [
     "Daily Mail",
     "MSNBC",
     "CNBC",
+    "CBS Sunday Morning",
     "The Telegraph",
     "Fox News",
     "FOX Weather",
@@ -149,6 +149,9 @@ const videoTitles = [
     "europapa",
     "Joost Klein",
     "klimaat",
+    "broeikaseffect",
+    "climate change",
+    "climat",
     "vaccination",
     "vaccin",
     "Ukraine",
