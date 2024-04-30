@@ -150,6 +150,7 @@ const videoTitles = [
     "Joost Klein",
     "klimaat",
     "broeikaseffect",
+    "globalwarming",
     "climate change",
     "climat",
     "vaccination",
