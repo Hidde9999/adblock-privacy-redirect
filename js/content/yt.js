@@ -45,6 +45,8 @@ const blockedChannels = [
     "Hart van Nederland",
     "Op1",
 
+    "RIVMnl",
+
     "NTR Wetenschap",
     "Universiteit van Nederland",
 
@@ -156,6 +158,10 @@ const videoTitles = [
     "vaccination",
     "vaccin",
     "Ukraine",
+    "zonnebrand",
+
+    "mazelen",
+    "measles",
 ];
 
 function isBlockedChannel(channelName) {
@@ -188,7 +194,6 @@ function removeBlockedVideos() {
         if (channelLink && isWhitelistedChannel(channelLink.textContent.trim())) {
             return
         }
-        // console.log(channelLink);
 
         if (channelLink && isBlockedChannel(channelLink.textContent.trim())) {
             console.log("Removing video from blocked channel:", channelLink.textContent.trim());
@@ -259,6 +264,16 @@ function propagandaBlocker(timer) {
     if (blockedContentsCreated) {
         return
     }
+
+    if (timer) {
+        activeBlocker = setInterval(blockVideos, 250);
+    } else {
+        blockVideos();
+        clearInterval(activeBlocker);
+    }
+}
+
+function blockVideos(){
     currentUrl = window.location.href.toLowerCase().replace("+", " ");
 
     if (currentUrl.includes("/watch?")) {
@@ -285,6 +300,7 @@ function propagandaBlocker(timer) {
         !currentUrl.includes("www.youtube.com") && currentUrl.includes("/channel/") || currentUrl.includes("/search?")
     ) {
         const channelNameElement = document.querySelector("meta[itemprop='name']") || document.querySelector(".channel-profile span");
+
         if (channelNameElement) {
             const channelName = channelNameElement.getAttribute("content") || channelNameElement.textContent;
             if (isBlockedChannel(channelName)) {
@@ -316,12 +332,7 @@ function propagandaBlocker(timer) {
         if (blockedContents && !blockedContentsCreated) {
             blockedContents.remove();
         }
-        if (timer) {
-            activeBlocker = setInterval(removeBlockedVideos, 250);
-        } else {
-            removeBlockedVideos();
-            clearInterval(activeBlocker);
-        }
+        removeBlockedVideos();
     }
 }
 
