@@ -256,8 +256,8 @@ function handlePageLoad() {
     getAllRSSfeeds()
 }
 
-if (document.readyState !== "loading") {
-    handlePageLoad();
-} else {
-    document.addEventListener("DOMContentLoaded", handlePageLoad);
-}
+// if (document.readyState !== "loading") {
+//     handlePageLoad();
+// } else {
+//     document.addEventListener("DOMContentLoaded", handlePageLoad);
+// }
