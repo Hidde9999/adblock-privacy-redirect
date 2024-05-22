@@ -1,13 +1,7 @@
 let activeBlocker;
 let blockedContentsCreated = false
-// let currentUrl
-// const blockedContentsHtml = `
-//         <div class="blocked-container" id="blocked-contents">
-//             <h1>This page is blocked</h1>
-//             <p>The content you're trying to access is not available due to propaganda.</p>
-//         </div>`;
 
-const blockedChannels = [
+const blockedChannels =  [
     "Stop Willem Engel",
     "Aangifte Willem Engel",
 
@@ -124,6 +118,8 @@ const blockedChannels = [
     "Trixie Mattel",
     "RuPaul's Drag Race",
     "Shane2",
+    "Rubi Rose",
+    "Official Saweetie",
 
     "Beast Philanthropy",
 

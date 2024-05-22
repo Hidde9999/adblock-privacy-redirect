@@ -252,12 +252,12 @@ function videosListFunc() {
 
 function handlePageLoad() {
     channelSearch()
-    subscribeToChannel()
-    getAllRSSfeeds()
+    // subscribeToChannel()
+    // getAllRSSfeeds()
 }
 
-// if (document.readyState !== "loading") {
-//     handlePageLoad();
-// } else {
-//     document.addEventListener("DOMContentLoaded", handlePageLoad);
-// }
+if (document.readyState !== "loading") {
+    handlePageLoad();
+} else {
+    document.addEventListener("DOMContentLoaded", handlePageLoad);
+}
