@@ -2,22 +2,28 @@
 let bestYoutubeSite
 
 function iframeChange() {
-    // Checking if YouTube redirection is enabled
-    const youtubeRedirect = localStorage.getItem("youtubeRedirect")
-    if (youtubeRedirect === "true") {
-        // Get all iframes on the page
-        const iframes = document.getElementsByTagName('iframe');
+    try {
+        // Checking if YouTube redirection is enabled
+        const youtubeRedirect = localStorage.getItem("youtubeRedirect");
+        if (youtubeRedirect === "true") {
+            // Get all iframes on the page
+            const iframes = document.getElementsByTagName('iframe');
 
-// Loop through each iframe
-        for (let i = 0; i < iframes.length; i++) {
-            const iframe = iframes[i];
+            // Loop through each iframe
+            for (let i = 0; i < iframes.length; i++) {
+                const iframe = iframes[i];
 
-            // Check if the src attribute contains "youtube.com"
-            if (iframe.src.includes('youtube.com')) {
-                // Replace the src with a new URL
-                // For example, let's change it to "https://www.example.com"
-                bestYoutubeInstance(iframe)
+                // Check if the src attribute contains "youtube.com"
+                if (iframe.src.includes('youtube.com')) {
+                    bestYoutubeInstance(iframe);
+                }
             }
+        }
+    } catch (e) {
+        if (e instanceof DOMException && (e.name === "SecurityError" || e.code === 18)) {
+            console.error('Access to localStorage is denied for this document.');
+        } else {
+            throw e;
         }
     }
 }

@@ -258,16 +258,19 @@ function handlePageLoad() {
 }
 
 function propagandaBlocker(timer) {
-    if (blockedContentsCreated) {
-        return;
-    }
+    chrome.storage.local.get(["youtubeBlockList"], function(result) {
+        if (blockedContentsCreated || !result["youtubeBlockList"]) {
+            console.log("Propaganda blocking turned off!");
+            return;
+        }
 
-    if (timer) {
-        activeBlocker = setInterval(blockVideos, 500);
-    } else {
-        blockVideos();
-        clearInterval(activeBlocker);
-    }
+        if (timer) {
+            activeBlocker = setInterval(blockVideos, 500);
+        } else {
+            // blockVideos();
+            // clearInterval(activeBlocker);
+        }
+    });
 }
 
 function blockVideos() {
