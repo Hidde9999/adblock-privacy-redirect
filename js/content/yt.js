@@ -240,21 +240,21 @@ function blockPage() {
     }
 }
 
-function addLinksToInvidious(videoElement) {
-    function backToInvidious(link) {
-        window.location.href = `${link.href.replace("www.youtube.com", "invidious.privacyredirect.com")}`;
-    }
-
-    if(videoElement){
-        const link = videoElement.querySelector("a");
-        videoElement.addEventListener('click', () => backToInvidious(link));
-    }
-}
+// function addLinksToInvidious(videoElement) {
+//     function backToInvidious(link) {
+//         window.location.href = `${link.href.replace("www.youtube.com", "invidious.privacyredirect.com")}`;
+//     }
+//
+//     if(videoElement){
+//         const link = videoElement.querySelector("a");
+//         videoElement.addEventListener('click', () => backToInvidious(link));
+//     }
+// }
 
 // Main Functions
 function handlePageLoad() {
     propagandaBlocker(true);
-    addLinksToInvidious();
+    // addLinksToInvidious();
 }
 
 function propagandaBlocker(timer) {
@@ -319,10 +319,6 @@ window.navigation.addEventListener("navigate", () => {
     setTimeout(() => {
         if (window.location.href.includes("/shorts/")) {
             window.location.href = window.location.href.replace("/shorts/", "/watch?v=");
-        } else if (window.location.href.includes("/results")) {
-            // propagandaBlocker(true);
-        } else {
-            // propagandaBlocker(false);
         }
     }, 200);
 });
