@@ -1,0 +1,39 @@
+chrome.webRequest.onBeforeSendHeaders.addListener(
+    function(details) {
+        if (
+            details.url.includes("openai.com") ||
+            details.url.includes("chatgpt.com") ||
+            details.url.includes("challenges.cloudflare.com")
+        ){
+            return;
+        }
+        let refererSet = false;
+        // console.log(details);
+        for (let i = 0; i < details.requestHeaders.length; ++i) {
+            if (details.requestHeaders[i].name === 'User-Agent') {
+                details.requestHeaders[i].value = 'Mozilla/5.0 (X11; Linux x86_64; rv:126.0) Gecko/20100101 Firefox/126.0';
+            }
+            if (details.requestHeaders[i].name === 'sec-ch-ua') {
+                details.requestHeaders[i].value = 'Non of your businesses';
+            }
+            if (details.requestHeaders[i].name === 'sec-ch-ua-platform') {
+                details.requestHeaders[i].value = 'Non of your businesses';
+            }
+            if (details.requestHeaders[i].name === 'Sec-Ch-Ua-Platform-Version') {
+                details.requestHeaders[i].value = '0.0.0';
+            }
+            if (details.requestHeaders[i].name === 'X-Youtube-Time-Zone') {
+                details.requestHeaders[i].value = 'Non of your businesses';
+            }
+            if (details.requestHeaders[i].name === 'X-Goog-Visitor-Id') {
+                details.requestHeaders[i].value = 'Non of your businesses';
+            }
+        }
+        // Add a custom header
+        // details.requestHeaders.push({name: "X-Custom-Header", value: "CustomValue"});
+
+        return {requestHeaders: details.requestHeaders};
+    },
+    {urls: ["<all_urls>"]},
+    ["blocking", "requestHeaders"]
+);

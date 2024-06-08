@@ -99,22 +99,6 @@ function ytBlockScriptsByName() {
         ["blocking"] // Options
     );
 }
-// Function to block specific scripts on YouTube
-function linkedinReplaceScriptsByName() {
-    // chrome.webRequest.onBeforeRequest.addListener(
-    //     function (details) {
-    //         // Checking if the URL matches any of the script URLs to be blocked
-    //         if (
-    //             details.url.includes("2hygl4j32zw66wmzugk51149y")
-    //         ) {
-    //
-    //             return {redirectUrl: chrome.extension.getURL("/js/replaceJS/2hygl4j32zw66wmzugk51149y")};
-    //         }
-    //     },
-    //     {urls: ["*://static.licdn.com/*"]}, // Matching URLs for YouTube
-    //     ["blocking"] // Options
-    // );
-}
 
 // Function to block ads and trackers based on user-defined filters
 function blockAdsAndTrackers() {

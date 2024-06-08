@@ -25,6 +25,7 @@ const blockedChannels =  [
     "NPO Radio 1",
     "Omroep PowNed",
     "Omroep Gelderland",
+    "Omroep Brabant",
     "De Avondshow met Arjen Lubach | VPRO",
     "RTL Talkshow",
     "Vandaag Inside",
@@ -40,6 +41,7 @@ const blockedChannels =  [
     "Op1",
 
     "RIVMnl",
+    "The Jim Henson Company",
 
     "NTR Wetenschap",
     "Universiteit van Nederland",
@@ -51,6 +53,7 @@ const blockedChannels =  [
     "VTM",
 
     "Eurovision Song Contest",
+    "joost klein",
     "Megan Thee Stallion",
 
     "Sydney Children's Hospitals Network",
@@ -117,6 +120,7 @@ const blockedChannels =  [
     "James Charles",
     "Trixie Mattel",
     "RuPaul's Drag Race",
+    "WOWPresents",
     "Shane2",
     "Rubi Rose",
     "Official Saweetie",
@@ -145,6 +149,8 @@ const whiteList = [
     "blckbx",
     "Potkaars-live",
     "Tucker Carlson",
+    "Blue Tiger Studio",
+    "SimpSaverSam",
 ]
 
 const videoTitles = [
@@ -162,6 +168,7 @@ const videoTitles = [
 
     "dragqueen",
     "drag queen",
+    "drag race",
 
     "vaccination",
     "vaccin",
@@ -186,7 +193,7 @@ const blockedContentsHtml = `
 
 // Helper Functions
 function isBlockedChannel(channelName) {
-    return blockedChannels.some(keyword => channelName.toLowerCase().includes(keyword.toLowerCase()));
+    return blockedChannels.includes(channelName);
 }
 
 function isWhitelistedChannel(channelName) {
@@ -199,17 +206,25 @@ function isBlockedTitle(title) {
 
 function removeBlockedVideos(videoElements) {
     videoElements.forEach(video => {
-        const channelLink = video.querySelector('#text a') || video.querySelector('#container #text') || video.querySelector(".pure-u-14-24 a") || video.querySelector(".channel-name");
+        const channelLink = video.querySelector(".pure-u-14-24 a") || video.querySelector(".channel-name") || video.querySelector('#container #text a') || document.querySelector("#inner-header-container #text");
         const videoTitle = video.querySelector('#video-title') || video.querySelector(".video-card-row p");
 
-        if (channelLink && isWhitelistedChannel(channelLink.textContent.trim())) {
+        if (!channelLink || !videoTitle){
             return;
         }
 
-        if (channelLink && isBlockedChannel(channelLink.textContent.trim())) {
+        if (!channelLink.textContent || !videoTitle.textContent){
+            return;
+        }
+
+        if (isWhitelistedChannel(channelLink.textContent.trim())) {
+            return;
+        }
+
+        if (isBlockedChannel(channelLink.textContent.trim())) {
             console.log("Removing video from blocked channel:", channelLink.textContent.trim());
             video.remove();
-        } else if (videoTitle && isBlockedTitle(videoTitle.textContent.trim())) {
+        } else if (isBlockedTitle(videoTitle.textContent.trim())) {
             console.log("Removing video with blocked title:", videoTitle.textContent.trim());
             video.remove();
         }
@@ -238,7 +253,6 @@ function addLinksToInvidious(videoElement) {
 
 // Main Functions
 function handlePageLoad() {
-    // disableJSByName();
     propagandaBlocker(true);
     addLinksToInvidious();
 }
@@ -249,7 +263,7 @@ function propagandaBlocker(timer) {
     }
 
     if (timer) {
-        activeBlocker = setInterval(blockVideos, 250);
+        activeBlocker = setInterval(blockVideos, 500);
     } else {
         blockVideos();
         clearInterval(activeBlocker);
@@ -263,9 +277,9 @@ function blockVideos() {
     if (currentUrl.includes("/watch?")) {
         const intervalId = setInterval(function () {
             const elementToLoad = document.querySelector("#text-container a") || document.querySelector("#channel-name");
-            if (elementToLoad) {
+            if (elementToLoad !== undefined) {
                 clearInterval(intervalId);
-                onElementLoad();
+                // Removed onElementLoad reference
             }
         }, 1000);
     }
@@ -306,14 +320,14 @@ window.navigation.addEventListener("navigate", () => {
         if (window.location.href.includes("/shorts/")) {
             window.location.href = window.location.href.replace("/shorts/", "/watch?v=");
         } else if (window.location.href.includes("/results")) {
-            propagandaBlocker(true);
+            // propagandaBlocker(true);
         } else {
-            propagandaBlocker(false);
+            // propagandaBlocker(false);
         }
     }, 200);
 });
 
-window.addEventListener('scroll', propagandaBlocker.bind(null, false));
+// window.addEventListener('scroll', propagandaBlocker.bind(null, false));
 
 // Initial Page Load
 if (document.readyState !== "loading") {

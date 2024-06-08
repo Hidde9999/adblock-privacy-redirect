@@ -6,7 +6,6 @@
         "webRequest",
         "webNavigation",
         "activeTab",
-        "proxy",
         "tabs",
         "webRequestBlocking",
         "<all_urls>",
@@ -17,7 +16,7 @@
         "background"
     ],
 "background": {
-        "scripts": ["js/background/onload.js","js/background/adblocker.js", "js/background/redirect.js"]
+        "scripts": ["js/background/onload.js","js/background/adblocker.js", "js/background/redirect.js","js/background/customHeader.js"]
     },
     "browser_action": {
         "default_popup": "html/index.html",
@@ -51,14 +50,6 @@
             ]
         },{
             "matches": [
-                "*://www.instagram.com/*"
-            ],
-            "css": ["css/instagram.css"],
-            "js": [
-                "js/content/instagram.js"
-            ]
-        },{
-            "matches": [
                 "*://*.google.com/*",
                 "*://google.com/*"
             ],
@@ -67,6 +58,7 @@
         },{
             "matches": [
                 "*://*.nos.nl/*",
+                "*://*.jeugdjournaal.nl/*",
                 "*://*.telegraaf.nl/*",
                 "*://*.volkskrant.nl/*",
                 "*://*.rtlnieuws.nl/*",

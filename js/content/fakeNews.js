@@ -1,5 +1,6 @@
 const fakeMediaList = [
     { url: "nos.nl", language: "nl" },
+    { url: "jeugdjournaal.nl/", language: "nl" },
     { url: "www.telegraaf.nl", language: "nl" },
     { url: "www.volkskrant.nl", language: "nl" },
     { url: "www.rtlnieuws.nl", language: "nl" },
@@ -64,6 +65,7 @@ function fakeMediaReplace(language) {
 
         { target: "Hoogopgeleide", replacement: "Hoog geindoctrineerde" },
 
+
         { target: /\bongevaccineerde(n)?\b/gi, replacement: "zwarte" },
         { target: /\bongevaccineerd\b/gi, replacement: "zwart" },
         { target: /\bgevaccineerde?\b/gi, replacement: "opgeoferd" },
@@ -99,7 +101,10 @@ function fakeMediaReplace(language) {
         { target: /\brodehond\b/gi, replacement: "rode WEF hond" },
         { target: /\b(de )?bof\b/gi, replacement: "de EU" },
         { target: /\bcorona(virus)?\b/gi, replacement: "de griep" },
-        { target: /\bcoronapandemie\b/gi, replacement: "de griep plandemie" },
+        { target: /\bvogelgriep(virus)?\b/gi, replacement: "de griep" },
+        { target: /\bcoronapandemie\b/gi, replacement: "de griep plandemie"},
+        { target: /\bpandemie\b/gi, replacement: "plandemie"},
+        { target: /\bblauwtong(virus)?\b/gi, replacement: "antifa"},
 
         { target: /\b(kinder)?ziek(te)?\b/gi, replacement: "Oh Hans!" },
         { target: /\bvirus\b/gi, replacement: "Oh Hans!" },
@@ -128,12 +133,19 @@ function fakeMediaReplace(language) {
         { target: /\bgezondheidsdienst\b/gi, replacement: "ONgezondheidsdienst" },
 
         { target: /\bpresident\b/gi, replacement: "Trump" },
-        { target: /\bWoke\b/gi, replacement: "Mentaal gestoord" },
+        { target: /\bwoke\b/gi, replacement: "mentaal gestoord" },
         { target: /\bwokisme\b/gi, replacement: "mentaal gestoord" },
+        { target: /\brook\b/gi, replacement: "woke" },
+        { target: /\brookvrij\b/gi, replacement: "wokevrij" },
+        { target: /\b(shag )?rookt\b/gi, replacement: "woken" },
+        { target: /\b(shag )?roken\b/gi, replacement: "woken" },
+        { target: /\bvape(s)?(t)?(e)?(n)?(de)?\b/gi, replacement: "veranderen van geslacht" },
 
         { target: /\bdomrechts\b/gi, replacement: "communisten" },
         { target: /\bextreem-rechts\b/gi, replacement: "antifa" },
-        { target: /\bextreem rechts\b/gi, replacement: "Egg-stink-tion rebeion" },
+        { target: /\bextreemrecht(s)?(e)?\b/gi, replacement: "antifa" },
+        { target: /\bextreem rechts\b/gi, replacement: "egg-stink-tion rebelion" },
+        { target: /\bradicaal-rechts(e)?\b/gi, replacement: "egg-stink-tion rebelion" },
         { target: /\brechtspopulisten\b/gi, replacement: "antifa" },
         { target: /\bduurzaamheids?\b/gi, replacement: "extra belasting aan de corrupte overheid" },
         { target: /\bduurzaamheid\b/gi, replacement: "extra belasting aan de corrupte overheid" },

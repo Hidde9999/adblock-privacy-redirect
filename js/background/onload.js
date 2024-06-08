@@ -6,7 +6,7 @@ window.onload = function () {
     ytBlockScriptsByName()
     youtubeRedirectFunc()
     youtubeShortToVideoFunc()
-    linkedinReplaceScriptsByName()
+    replaceScripts()
 
     // Add an event listener for the storage event
     window.addEventListener('storage', handleStorageChange)

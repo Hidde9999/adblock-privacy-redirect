@@ -1,7 +1,5 @@
 {
   "google": [
-    "*://*.googleapis.com/*",
-
     "*://*.youtube.com/api/stats/*",
     "*://*.youtube.com/sw.js_data",
     "*://*.youtube.com/pagead/adview?*",
@@ -63,8 +61,10 @@
     "*://static.ak.connect.facebook.com/*",
     "*://static.ak.fbcdn.net/*",
     "*://graph.facebook.com/*",
+    "*://graph.instagram.com/*",
     "*://connect.facebook.net/*",
-    "*://www.instagram.com/embed.js"
+    "*://www.instagram.com/embed.js",
+    "*://www.instagram.com/ajax/bz?*"
   ],
   "odysee": [
     "*://api.odysee.com/membership/*",
@@ -86,8 +86,28 @@
     "*://js.stripe.com/v3/fingerprinted/*",
     "*://*.vevo.com/*",
     "*://*.fwmrm.net/*",
+    "*://*.botndm.nl/*",
+    "*://ads.nextday.media/*",
+    "*://oneline.nextday.media/*",
+    "*://cmp.inmobi.com/*",
+    "*://static.addtoany.com/*",
+    "*://secure.statcounter.com/*",
+    "*://az416426.vo.msecnd.net/*",
+    "*://s0.wp.com/*",
+    "*://stats.wp.com/*",
+    "*://cdn-a.yieldlove.com/*",
+    "*://www.clarity.ms/*",
+    "*://links.services.disqus.com/*",
+    "*://referrer.disqus.com/*",
+    "*://x.com/i/api/1.1/jot/client_event.json",
+    "*://x.com/i/api/1.1/jot/error_log.json",
+    "*://x.com/i/api/1.1/jot/ces/p2",
+    "*://x.com/i/api/1.1/keyregistry/register",
 
     "*://static.nos.nl/*",
+    "*://resolver.streaming.api.nos.nl/*",
+    "*://npo-nl-ams-p27-am3.cdn.streamgate.nl/*",
+    "*://npo-nl-ams-p27-am5.cdn.streamgate.nl/*",
     "*://advertising-cdn.dpgmedia.cloud/*",
     "*://temptation.volkskrant.nl/*",
     "*://www.volkskrant.nl/_next/static/chunks/*",
