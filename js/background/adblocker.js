@@ -8,8 +8,6 @@ let blockRequest
 
 // Arrays to store filter data
 let blockFilters = []
-let blockFiltersObj = [] // Objects containing name and URL of filters
-let blockFiltersNames = [] // Names of filters
 
 // Object to store blocked counts per tab
 let blockedCountsPerTab = {};
@@ -102,7 +100,8 @@ function ytBlockScriptsByName() {
 
 // Function to block ads and trackers based on user-defined filters
 function blockAdsAndTrackers() {
-    if (blockFiltersObj.length > 0) {
+    if (blockFilters.length > 0) {
+        console.log(blockFilters);
         // Define the block request function
         blockRequest = function (details) {
             if (details.tabId != -1) {
@@ -142,44 +141,6 @@ chrome.tabs.onActivated.addListener(function(details) {
     resetBlockedURLs(details.tabId, false);
 });
 
-// Function to get filters from storage or JSON file
-function getFilters() {
-    if (blockFiltersNames.length < 1) {
-        getFiltersFromJson()
-    } else {
-        getFiltersFromStorage()
-    }
-}
-
-// Function to get filters from local storage
-function getFiltersFromStorage() {
-    // Retrieve filter names and objects from local storage
-    blockFiltersNames = JSON.parse(localStorage.getItem("filterNames"))
-    blockFiltersObj = JSON.parse(localStorage.getItem("filterObj"))
-
-    // Remove previous block request listener
-    chrome.webRequest.onBeforeRequest.removeListener(blockRequest)
-
-    // Clear block filters array
-    blockFilters = []
-
-    // Iterate over each filter name
-    blockFiltersNames.forEach(key => {
-        // Check if the filter is toggled on
-        const isToggled = localStorage.getItem(`${key}Filter`)
-
-        if (isToggled === "true") {
-            // Find objects with the same name and add their URLs to block filters
-            const listBlocked = blockFiltersObj.filter(obj => obj.name === key)
-            listBlocked.forEach(data => {
-                blockFilters.push(data.url)
-            })
-        }
-    })
-    // Call the function to block ads and trackers with updated filters
-    blockAdsAndTrackers()
-}
-
 // Function to get filters from a JSON file
 function getFiltersFromJson() {
     // Fetch blocklist JSON file
@@ -189,36 +150,34 @@ function getFiltersFromJson() {
             // Iterate over each key-value pair in the data object
             for (const key in data) {
                 if (data.hasOwnProperty(key)) {
-                    // Get the array of patterns for the current key
-                    const patterns = data[key]
-                    const isToggled = localStorage.getItem(`${key}Filter`)
-                    blockFiltersNames.push(key)
-
-                    if (isToggled === "true") {
-                        // Log each pattern in the array
-                        patterns.forEach(pattern => {
-                            blockFiltersObj.push({name: key, url: pattern})
-                            blockFilters.push(pattern)
-                        })
-                    }
-                    // Call the function to block ads and trackers with updated filters
-                    blockAdsAndTrackers()
+                    chrome.storage.local.get([`${key}Filter`], function (result) {
+                        if (result[`${key}Filter`]){
+                            // console.log(key);
+                            // Get the array of patterns for the current key
+                            const patterns = data[key];
+                            // Flatten the array of arrays
+                            const flattenedPatterns = patterns.flat();
+                            // Push each pattern into blockFilters
+                            flattenedPatterns.forEach(pattern => {
+                                // console.log(pattern);
+                                blockFilters.push(pattern);
+                            });
+                        }
+                    });
                 }
             }
-            // Store filter names and objects in local storage
-            localStorage.setItem("filterNames", JSON.stringify(blockFiltersNames))
-            localStorage.setItem("filterObj", JSON.stringify(blockFiltersObj))
+            // Call blockAdsAndTrackers after all patterns are pushed
+            setTimeout(blockAdsAndTrackers, 100);
         })
         .catch(error => {
-            console.error('Error fetching JSON:', error)
-        })
+            console.error('Error fetching JSON:', error);
+        });
 }
 
+
 // Define a function to handle changes in localStorage
-function handleStorageChange(event) {
-    // Check if the change is for a specific key related to filter toggles
-    if (event.key.toString().includes("Filter")) {
-        // Call the function to get filters from storage
-        getFiltersFromStorage()
-    }
+function handleStorageChange() {
+    blockFilters = []
+    chrome.webRequest.onBeforeRequest.removeListener(blockRequest)
+    getFiltersFromJson()
 }

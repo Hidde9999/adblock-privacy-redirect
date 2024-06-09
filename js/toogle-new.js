@@ -1,11 +1,36 @@
 document.addEventListener("DOMContentLoaded", function () {
-    setSwitchFromLocalStorage("youtubeBlockList");
-    setSwitchFromLocalStorage("youtubeBlockAds");
+    const currentUrl = window.location.href.toLowerCase();
 
-    // Add event listener to the switch
-    document.getElementById("youtubeBlockList").addEventListener("change", handleToggle("youtubeBlockList"));
-    // Add event listener to the switch
-    document.getElementById("youtubeBlockAds").addEventListener("change", handleToggle("youtubeBlockAds"));
+    if (currentUrl.includes("index.html")){
+        getFilterList()
+
+        setSwitchFromLocalStorage("toggleSwitchYT")
+        setSwitchFromLocalStorage("toggleSwitchTwitter")
+        setSwitchFromLocalStorage("toggleSwitchGoogle")
+        setSwitchFromLocalStorage("toggleSwitchGoogleFonts")
+        // setSwitchFromLocalStorage("toggleSwitchGmail")
+
+        // Add event listener to the switch
+        document.getElementById("toggleSwitchYT").addEventListener("change", handleToggle("toggleSwitchYT"))
+        // Add event listener to the switch
+        document.getElementById("toggleSwitchTwitter").addEventListener("change", handleToggle("toggleSwitchTwitter"))
+        // Add event listener to the switch
+        document.getElementById("toggleSwitchGoogle").addEventListener("change", handleToggle("toggleSwitchGoogle"))
+        // Add event listener to the switch
+        document.getElementById("toggleSwitchGoogleFonts").addEventListener("change", handleToggle("toggleSwitchGoogleFonts"))
+        // Add event listener to the switch
+        // document.getElementById("toggleSwitchGmail").addEventListener("change", handleToggle("toggleSwitchGmail"))
+    }
+
+    if (currentUrl.includes("youtube.html")){
+        setSwitchFromLocalStorage("youtubeBlockList");
+        setSwitchFromLocalStorage("youtubeBlockAds");
+
+        // Add event listener to the switch
+        document.getElementById("youtubeBlockList").addEventListener("change", handleToggle("youtubeBlockList"));
+        // Add event listener to the switch
+        document.getElementById("youtubeBlockAds").addEventListener("change", handleToggle("youtubeBlockAds"));
+    }
 });
 
 // Function to set switch based on localStorage value
@@ -48,17 +73,17 @@ function handleToggle(name) {
 }
 
 // Function to retrieve all items
-// function getAllItems() {
-//     chrome.storage.local.get(null, function(items) {
-//         console.log("All items in storage: ", items);
-//     });
-// }
+function getAllItems() {
+    chrome.storage.local.get(null, function(items) {
+        console.log("All items in storage: ", items);
+    });
+}
 
 // Call the function to log all items
-// getAllItems();
+getAllItems();
 
 // Uncommented and corrected getFilterList function
-/*
+
 function getFilterList() {
     // Get the div element
     const filtersDiv = document.getElementById('filters');
@@ -77,7 +102,7 @@ function getFilterList() {
             labelFilterGroup.className = "switch";
             const inputToggle = document.createElement('input');
             inputToggle.type = "checkbox"; // Set the input type to checkbox
-            inputToggle.id = `toggleSwitch${key}`;
+            inputToggle.id = `${key}Filter`;
             const spanSlider = document.createElement('span');
             spanSlider.className = "slider";
             list.appendChild(labelFilterName);
@@ -89,7 +114,7 @@ function getFilterList() {
             inputToggle.addEventListener("change", handleToggle(`${key}Filter`));
 
             // Set the switch based on localStorage value
-            setSwitchFromLocalStorage(`toggleSwitch${key}`);
+            setSwitchFromLocalStorage(`${key}Filter`);
         });
     } else {
         console.error("Filter names not found or not in expected format.");
@@ -98,4 +123,3 @@ function getFilterList() {
     // Append the list to the div
     filtersDiv.appendChild(list);
 }
-*/
