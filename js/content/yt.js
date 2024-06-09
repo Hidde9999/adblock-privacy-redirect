@@ -4,6 +4,7 @@ let blockedContentsCreated = false
 const blockedChannels =  [
     "Stop Willem Engel",
     "Aangifte Willem Engel",
+    "Politievlogger Jan-Willem",
 
     "NOS",
     "NOS Sport",
@@ -151,6 +152,7 @@ const whiteList = [
     "Tucker Carlson",
     "Blue Tiger Studio",
     "SimpSaverSam",
+    "Tom MacDonald",
 ]
 
 const videoTitles = [
@@ -185,11 +187,11 @@ const videoTitles = [
 // Constants
 const ytElementsSelector = "#dismissible, #content-section, .style-scope.yt-horizontal-list-renderer, .style-scope.ytd-rich-grid-row, .style-scope.ytd-item-section-renderer";
 const invidiousElementsSelector = "#contents .pure-u-1:not(.navbar)";
-const blockedContentsHtml = `
-    <div class="blocked-container" id="blocked-contents">
-        <h1>This page is blocked</h1>
-        <p>The content you're trying to access is not available due to propaganda.</p>
-    </div>`;
+// const blockedContentsHtml = `
+//     <div class="blocked-container" id="blocked-contents">
+//         <h1>This page is blocked</h1>
+//         <p>The content you're trying to access is not available due to propaganda.</p>
+//     </div>`;
 
 // Helper Functions
 function isBlockedChannel(channelName) {
@@ -206,7 +208,7 @@ function isBlockedTitle(title) {
 
 function removeBlockedVideos(videoElements) {
     videoElements.forEach(video => {
-        const channelLink = video.querySelector(".pure-u-14-24 a") || video.querySelector(".channel-name") || video.querySelector('#container #text a') || document.querySelector("#inner-header-container #text");
+        const channelLink = video.querySelector(".pure-u-14-24 a") || video.querySelector(".channel-name") || video.querySelector('#container #text a') || video.querySelector('#container #text') || document.querySelector("#inner-header-container #text");
         const videoTitle = video.querySelector('#video-title') || video.querySelector(".video-card-row p");
 
         if (!channelLink || !videoTitle){
@@ -231,14 +233,14 @@ function removeBlockedVideos(videoElements) {
     });
 }
 
-function blockPage() {
-    const pageManagerElement = document.getElementById("page-manager") || document.querySelector("#contents");
-    if (pageManagerElement) {
-        pageManagerElement.innerHTML = blockedContentsHtml;
-    } else {
-        console.error("Element matching '#page-manager' or '#contents' not found.");
-    }
-}
+// function blockPage() {
+//     const pageManagerElement = document.getElementById("page-manager") || document.querySelector("#contents");
+//     if (pageManagerElement) {
+//         pageManagerElement.innerHTML = blockedContentsHtml;
+//     } else {
+//         console.error("Element matching '#page-manager' or '#contents' not found.");
+//     }
+// }
 
 // function addLinksToInvidious(videoElement) {
 //     function backToInvidious(link) {
@@ -257,19 +259,13 @@ function handlePageLoad() {
     // addLinksToInvidious();
 }
 
-function propagandaBlocker(timer) {
+function propagandaBlocker() {
     chrome.storage.local.get(["youtubeBlockList"], function(result) {
         if (blockedContentsCreated || !result["youtubeBlockList"]) {
             console.log("Propaganda blocking turned off!");
             return;
         }
-
-        if (timer) {
-            activeBlocker = setInterval(blockVideos, 500);
-        } else {
-            // blockVideos();
-            // clearInterval(activeBlocker);
-        }
+        activeBlocker = setInterval(blockVideos, 500);
     });
 }
 
@@ -277,26 +273,26 @@ function blockVideos() {
     const currentUrl = window.location.href.toLowerCase().replace("+", " ");
     const videoElements = currentUrl.includes("youtube.com") ? document.querySelectorAll(ytElementsSelector) : document.querySelectorAll(invidiousElementsSelector);
 
-    if (currentUrl.includes("/watch?")) {
-        const intervalId = setInterval(function () {
-            const elementToLoad = document.querySelector("#text-container a") || document.querySelector("#channel-name");
-            if (elementToLoad !== undefined) {
-                clearInterval(intervalId);
-                // Removed onElementLoad reference
-            }
-        }, 1000);
-    }
+    // if (currentUrl.includes("/watch?")) {
+    //     const intervalId = setInterval(function () {
+    //         const elementToLoad = document.querySelector("#text-container a") || document.querySelector("#channel-name");
+    //         if (elementToLoad !== undefined) {
+    //             clearInterval(intervalId);
+    //             // Removed onElementLoad reference
+    //         }
+    //     }, 1000);
+    // }
 
-    if (
-        isBlockedChannel(currentUrl) && currentUrl.includes("youtube.com") ||
-        (!currentUrl.includes("www.youtube.com") && currentUrl.includes("/channel/")) || currentUrl.includes("/search?")
-    ) {
-        const channelNameElement = document.querySelector("meta[itemprop='name']") || document.querySelector(".channel-profile span");
-        const channelName = channelNameElement ? (channelNameElement.getAttribute("content") || channelNameElement.textContent) : null;
-        if (channelName && isBlockedChannel(channelName) && !isWhitelistedChannel(channelName)) {
-            blockPage();
-        }
-    }
+    // if (
+    //     isBlockedChannel(currentUrl) && currentUrl.includes("youtube.com") ||
+    //     (!currentUrl.includes("www.youtube.com") && currentUrl.includes("/channel/")) || currentUrl.includes("/search?")
+    // ) {
+    //     const channelNameElement = document.querySelector("meta[itemprop='name']") || document.querySelector(".channel-profile span");
+    //     const channelName = channelNameElement ? (channelNameElement.getAttribute("content") || channelNameElement.textContent) : null;
+    //     if (channelName && isBlockedChannel(channelName) && !isWhitelistedChannel(channelName)) {
+    //         blockPage();
+    //     }
+    // }
 
     if (
         currentUrl.includes("/search?") ||
