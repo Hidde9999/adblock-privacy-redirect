@@ -1,199 +1,7 @@
-// let activeBlocker;
 let currentUrl;
-let blockedContentsCreated = false
-
-const blockedChannels = [
-    "Stop Willem Engel",
-    "Aangifte Willem Engel",
-    "Politievlogger Jan-Willem",
-
-    "NOS",
-    "NOS Sport",
-    "NOS op 3",
-    "NOS Jeugdjournaal",
-    "Jeugdjournaal",
-    "NOS Stories",
-    "NOS Nieuws van de Week",
-    "Nieuwsuur",
-    "Rijkswaterstaat",
-    "Het Klokhuis",
-    "De Telegraaf",
-    "RTL Nieuws",
-    "de Volkskrant",
-    "BNR",
-    "WNL",
-    "GeenStijl",
-    "NPO Start",
-    "NPO Radio 1",
-    "Omroep PowNed",
-    "Omroep Gelderland",
-    "Omroep Brabant",
-    "De Avondshow met Arjen Lubach | VPRO",
-    "RTL Talkshow",
-    "Vandaag Inside",
-    "RTV Utrecht",
-    "Omroep West",
-    "NPO 3",
-    "NPO 3 TV",
-    "Radar AVROTROS",
-    "AVROTROS",
-    "vpro tegenlicht",
-    "WeerNL TalpaNetwork",
-    "Hart van Nederland",
-    "Op1",
-
-    "RIVMnl",
-    "The Jim Henson Company",
-
-    "NTR Wetenschap",
-    "Universiteit van Nederland",
-
-    "GroenLinks-PvdA",
-
-    "VRT NWS",
-    "VRT 1",
-    "VTM",
-
-    "Eurovision Song Contest",
-    "joost klein",
-    "Megan Thee Stallion",
-
-    "Sydney Children's Hospitals Network",
-
-    "ABC News",
-    "ABC10",
-    "BBC News",
-    "BBC",
-    "CBS News",
-    "ITV News",
-    "NBC News",
-    "CBS Mornings",
-    "KOCO 5 News",
-    "Daily Mail",
-    "MSNBC",
-    "CNBC",
-    "CBS Sunday Morning",
-    "The Telegraph",
-    "Fox News",
-    "FOX Weather",
-    "CNN",
-    "9 News Australia",
-    "Channel 4 News",
-    "Guardian News",
-    "Bloomberg Television",
-    "Eyewitness News ABC7NY",
-    "NBCLA",
-    "KCAL News",
-    "USA TODAY",
-    "CBS Evening News",
-    "Associated Press",
-    "U.S. Defense News",
-    "US Army News",
-    "The Sun",
-    "TVP World",
-    "Reuters",
-    "Global News",
-    "Times Radio",
-    "Forbes Breaking News",
-    "Saturday Night Live",
-    "KETV NewsWatch 7",
-    "KTLA 5",
-    "PBS NewsHour",
-    "US Military News",
-    "CBS Philadelphia",
-    "The Military Show",
-    "Sky News",
-    "LBC",
-    "Al Jazeera English",
-    "Kanal13",
-    "The Hill",
-    "WAR●MY",
-    "Hindustan Times",
-    "Forces News",
-    "WION",
-    "CBS Chicago",
-    "ABC 7 Chicago",
-    "CBS Boston",
-    "Face the Nation",
-    "Warographics",
-    "ABC7 News Bay Area",
-    "Military Summary",
-
-    "World Health Organization (WHO)",
-    "House M.D.",
-
-    "James Charles",
-    "Nic Kaufmann",
-    "Nathan McCallum",
-    "Trixie Mattel",
-    "RuPaul's Drag Race",
-    "WOWPresents",
-    "Shane2",
-    "Rubi Rose",
-    "Official Saweetie",
-
-    "Beast Philanthropy",
-
-    "DW Documentary",
-    "DW News",
-
-    "ZDF heute-show",
-    "ZDFheute Nachrichten",
-    "tagesschau",
-    "BILD",
-
-    "FRANCE 24",
-];
-
-const whiteList = [
-    "Dfacto",
-    "Project Paraguay",
-    "Cafe Weltschmerz",
-    "Clintel",
-    "BENDER",
-    "Ongehoord Nederland TV",
-    "Harry Vermeegen Official",
-    "blckbx",
-    "Potkaars-live",
-    "Tucker Carlson",
-    "Blue Tiger Studio",
-    "SimpSaverSam",
-    "Tom MacDonald",
-    "Wybren van Haga - BVNL",
-]
-
-const videoTitles = [
-    "Overtreders",
-    "Handhavers",
-
-    "europapa",
-    "Joost Klein",
-
-    "klimaat",
-    "broeikaseffect",
-    "globalwarming",
-    "climate change",
-    "climate",
-
-    "dragqueen",
-    "drag queen",
-    "drag race",
-
-    "vaccination",
-    "vaccinatie",
-    "vaccin",
-    "flu shot",
-    "griep prik",
-    "griepprik",
-    "inenten",
-
-    "Ukraine",
-
-    "zonnebrand",
-
-    "mazelen",
-    "measles",
-];
+let blockedChannels = [];
+let whiteList = [];
+let videoTitles = [];
 
 // Constants
 const ytElementsSelector = "#dismissible, #content-section, .style-scope.yt-horizontal-list-renderer, .style-scope.ytd-rich-grid-row, .style-scope.ytd-item-section-renderer";
@@ -219,21 +27,18 @@ function isBlockedTitle(title) {
 
 function removeBlockedVideos() {
     const videoElements = currentUrl.includes("youtube.com") ? document.querySelectorAll(ytElementsSelector) : document.querySelectorAll(invidiousElementsSelector);
+    if (blockedChannels === [] || videoTitles === []){
+        return;
+    }
     videoElements.forEach(video => {
         const channelLink = video.querySelector(".pure-u-14-24 a") || video.querySelector(".channel-name") || video.querySelector('#container #text a') || video.querySelector('#container #text') || document.querySelector("#inner-header-container #text");
         const videoTitle = video.querySelector('#video-title') || video.querySelector(".video-card-row p");
 
-        if (!channelLink || !videoTitle) {
-            return;
-        }
+        if (!channelLink || !videoTitle) return;
 
-        if (!channelLink.textContent || !videoTitle.textContent) {
-            return;
-        }
+        if (!channelLink.textContent || !videoTitle.textContent) return;
 
-        if (isWhitelistedChannel(channelLink.textContent.trim())) {
-            return;
-        }
+        if (isWhitelistedChannel(channelLink.textContent.trim())) return;
 
         if (isBlockedChannel(channelLink.textContent.trim())) {
             console.log("Removing video from blocked channel:", channelLink.textContent.trim());
@@ -249,7 +54,7 @@ function blockPage() {
     const pageManagerElement = document.getElementById("page-manager") || document.querySelector("#contents");
     if (pageManagerElement) {
         pageManagerElement.innerHTML = blockedContentsHtml;
-        document.getElementById("blocked-contents").style.display = "block"
+        document.getElementById("blocked-contents").style.display = "block";
     } else {
         console.error("Element matching '#page-manager' or '#contents' not found.");
     }
@@ -257,25 +62,18 @@ function blockPage() {
 
 function toInvidious() {
     chrome.storage.local.get(["toggleSwitchYT"], function (result) {
-        // Create a new div element
         const privacyNotice = document.createElement('div');
-
-        // Set the id and inner text
         privacyNotice.id = 'privacy-notice';
         privacyNotice.innerText = 'Privacy redirect is on';
-        privacyNotice.style.display = "none"; // Initially hide the notice
-
-        // Append the div to the body
+        privacyNotice.style.display = "none";
         document.body.prepend(privacyNotice);
 
-        // Check the state of the toggle switch
         if (!result["toggleSwitchYT"]) {
-            console.log("Youtube privacy direct is turned off!");
+            console.log("YouTube privacy redirect is turned off!");
             privacyNotice.style.display = "none";
             return;
         }
 
-        // If the toggle switch is on, show the notice
         privacyNotice.style.display = "block";
 
         function backToInvidious(link) {
@@ -284,13 +82,25 @@ function toInvidious() {
 
         document.querySelectorAll("a").forEach(link => {
             link.addEventListener('click', (event) => {
-                event.preventDefault(); // Prevent default action
+                event.preventDefault();
                 backToInvidious(link);
             });
         });
     });
 }
 
+// Fetch JSON Data
+async function fetchJsonData() {
+    try {
+        const response = await fetch(chrome.runtime.getURL("json/blocklistYoutube.json"));
+        const data = await response.json();
+        blockedChannels = data.blockedChannels;
+        whiteList = data.whiteList;
+        videoTitles = data.videoTitles;
+    } catch (error) {
+        console.error('Failed to fetch JSON data:', error);
+    }
+}
 
 // Main Functions
 function handlePageLoad() {
@@ -298,13 +108,13 @@ function handlePageLoad() {
     propagandaBlocker();
     blockVideoWithBlockedChannel();
     if (currentUrl.includes("youtube.com")) {
-        toInvidious()
+        toInvidious();
     }
 }
 
 function propagandaBlocker() {
     chrome.storage.local.get(["youtubeBlockList"], function (result) {
-        if (blockedContentsCreated || !result["youtubeBlockList"]) {
+        if (!result["youtubeBlockList"]) {
             console.log("Propaganda blocking turned off!");
             return;
         }
@@ -318,41 +128,36 @@ function propagandaBlocker() {
             currentUrl.includes('/feed/trending') ||
             currentUrl === "https://www.youtube.com/"
         ) {
-            // const blockedContents = document.getElementById("blocked-contents");
-            // if (blockedContents && !blockedContentsCreated) {
-            //     blockedContents.remove();
-            // }
-            // activeBlocker = setInterval(removeBlockedVideos(videoElements), 500)
-            setInterval(removeBlockedVideos, 500)
+            setInterval(removeBlockedVideos, 250);
         }
     });
 }
 
-function blockVideoWithBlockedChannel(currentUrl) {
+function blockVideoWithBlockedChannel() {
     chrome.storage.local.get(["youtubeBlockList"], function (result) {
-        if (blockedContentsCreated || !result["youtubeBlockList"]) {
+        if (!result["youtubeBlockList"]) {
             console.log("Propaganda blocking turned off!");
             return;
         }
         if (currentUrl.includes("/watch?")) {
             const intervalId = setInterval(function () {
                 const elementToLoad = document.querySelector("#text-container a") || document.querySelector("#channel-name");
-                const titleVideo = document.querySelector("#title .style-scope.ytd-watch-metadata:last-child")
-                if (elementToLoad.textContent !== undefined && titleVideo.textContent !== undefined && titleVideo.textContent !== null && elementToLoad.textContent !== null) {
+                const titleVideo = document.querySelector("#title .style-scope.ytd-watch-metadata:last-child");
+                if (elementToLoad && elementToLoad.textContent && titleVideo && titleVideo.textContent) {
                     clearInterval(intervalId);
-                    // console.log(titleVideo.textContent);
                     if (isBlockedChannel(elementToLoad.textContent)) {
-                        blockPage()
+                        blockPage();
                     }
                     if (isBlockedTitle(titleVideo.textContent)) {
-                        blockPage()
+                        blockPage();
                     }
                 }
             }, 50);
         }
-    })
+    });
 }
 
+// Add navigation event listener for SPA
 if ('navigation' in window) {
     window.navigation.addEventListener("navigate", () => {
         setTimeout(() => {
@@ -373,18 +178,19 @@ if ('navigation' in window) {
                 toInvidious();
             }
 
-            blockVideoWithBlockedChannel(currentUrl);
-            // propagandaBlocker(currentUrl);
+            blockVideoWithBlockedChannel();
         }, 200);
     });
 } else {
     console.error("window.navigation is not supported in this browser.");
 }
 
-
 // Initial Page Load
 if (document.readyState !== "loading") {
+    // console.log("Document is ready, fetching JSON data"); // Add logging here
+    fetchJsonData();
     handlePageLoad();
 } else {
-    document.addEventListener("DOMContentLoaded", handlePageLoad);
+    // console.log("Document is not ready, adding event listener for DOMContentLoaded"); // Add logging here
+    document.addEventListener("DOMContentLoaded", fetchJsonData);
 }
