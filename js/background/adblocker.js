@@ -144,7 +144,7 @@ chrome.tabs.onActivated.addListener(function(details) {
 // Function to get filters from a JSON file
 function getFiltersFromJson() {
     // Fetch blocklist JSON file
-    fetch('../../blocklist.json')
+    fetch('../json/blocklist.json')
         .then(response => response.json())
         .then(data => {
             // Iterate over each key-value pair in the data object
