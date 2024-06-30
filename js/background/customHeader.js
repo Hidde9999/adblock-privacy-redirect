@@ -15,6 +15,10 @@ const browser = [
     "Firefox/126.0",
     "Chrome/126.0.0.0",
 ]
+const browser2 = [
+    "Firefox/126.0",
+    "Chrome/126.0.0.0",
+]
 
 
 
@@ -35,10 +39,9 @@ chrome.webRequest.onBeforeSendHeaders.addListener(
                 let randomOS = os[Math.floor(Math.random() * os.length)];
                 let randomOS2 = os2[Math.floor(Math.random() * os2.length)];
                 let randomBrowser = browser[Math.floor(Math.random() * browser.length)];
+                let randomBrowser2 = browser2[Math.floor(Math.random() * browser2.length)];
 
-                console.log(randomOS)
-
-                details.requestHeaders[i].value = `Mozilla/5.0 (${randomOS}; ${randomOS2}; rv:126.0) Gecko/20100101 ${randomBrowser}`;
+                details.requestHeaders[i].value = `${randomBrowser2} (${randomOS}; ${randomOS2}; rv:126.0) Gecko/20100101 ${randomBrowser}`;
             }
             if (details.requestHeaders[i].name === 'sec-ch-ua') {
                 details.requestHeaders[i].value = 'Non of your businesses';
