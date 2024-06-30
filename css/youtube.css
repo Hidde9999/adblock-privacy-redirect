@@ -20,6 +20,11 @@
 /*    display: none !important;*/
 /*}*/
 
+#dialog
+{
+    display: none !important;
+}
+
 .html5-video-container {
      position: unset!important;
 }

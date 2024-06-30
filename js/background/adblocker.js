@@ -101,7 +101,7 @@ function ytBlockScriptsByName() {
 // Function to block ads and trackers based on user-defined filters
 function blockAdsAndTrackers() {
     if (blockFilters.length > 0) {
-        console.log(blockFilters);
+        // console.log(blockFilters);
         // Define the block request function
         blockRequest = function (details) {
             if (details.tabId != -1) {

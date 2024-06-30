@@ -1,3 +1,23 @@
+const os = [
+    "Windows NT 10.0",
+    "Windows NT 11.0",
+    "Mac",
+    "X11"
+]
+
+const os2 = [
+    "Linux x86_64",
+    "Win64",
+    "Win32"
+]
+
+const browser = [
+    "Firefox/126.0",
+    "Chrome/126.0.0.0",
+]
+
+
+
 chrome.webRequest.onBeforeSendHeaders.addListener(
     function(details) {
         if (
@@ -11,7 +31,14 @@ chrome.webRequest.onBeforeSendHeaders.addListener(
         // console.log(details);
         for (let i = 0; i < details.requestHeaders.length; ++i) {
             if (details.requestHeaders[i].name === 'User-Agent') {
-                details.requestHeaders[i].value = 'Mozilla/5.0 (X11; Linux x86_64; rv:126.0) Gecko/20100101 Firefox/126.0';
+                // details.requestHeaders[i].value = 'Mozilla/5.0 (X11; Linux x86_64; rv:126.0) Gecko/20100101 Firefox/126.0';
+                let randomOS = os[Math.floor(Math.random() * os.length)];
+                let randomOS2 = os2[Math.floor(Math.random() * os2.length)];
+                let randomBrowser = browser[Math.floor(Math.random() * browser.length)];
+
+                console.log(randomOS)
+
+                details.requestHeaders[i].value = `Mozilla/5.0 (${randomOS}; ${randomOS2}; rv:126.0) Gecko/20100101 ${randomBrowser}`;
             }
             if (details.requestHeaders[i].name === 'sec-ch-ua') {
                 details.requestHeaders[i].value = 'Non of your businesses';

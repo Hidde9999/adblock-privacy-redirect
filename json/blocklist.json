@@ -63,6 +63,7 @@
     "*://graph.facebook.com/*",
     "*://graph.instagram.com/*",
     "*://connect.facebook.net/*",
+    "*://*.facebook.com/*",
     "*://www.instagram.com/embed.js",
     "*://www.instagram.com/ajax/bz?*"
   ],
@@ -118,6 +119,8 @@
     "*://api.prd.video.talpa.network/graphql?*",
     "*://embed.prod.kijk.nl/api/playerconfig?*",
     "*://api.weer.nl/v1/content/news-articles?limit=*",
-    "*://api.weer.nl/v1/content/brand-campaigns?*"
+    "*://api.weer.nl/v1/content/brand-campaigns?*",
+
+    "*://www.linkedin.com/li/track"
   ]
 }

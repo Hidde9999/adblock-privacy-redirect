@@ -24,10 +24,10 @@ window.onload = function () {
             } else {
                 loadRedirectSettings()
             }
-            console.log(
-                `Storage key "${key}" in namespace "${namespace}" changed.`,
-                `Old value was "${oldValue}", new value is "${newValue}".`
-            );
+            // console.log(
+            //     `Storage key "${key}" in namespace "${namespace}" changed.`,
+            //     `Old value was "${oldValue}", new value is "${newValue}".`
+            // );
         }
     });
 }
