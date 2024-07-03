@@ -9,7 +9,7 @@ const replaceScriptsFilters = [
     "*://code.jquery.com/*",
     "*://use.fontawesome.com/*",
     "*://stackpath.bootstrapcdn.com/*",
-    "*://cdn.jsdelivr.net/*",
+    "*://cdn.jsdelivr.net/*"
 ]
 
 const replaceFontsFilters = [
