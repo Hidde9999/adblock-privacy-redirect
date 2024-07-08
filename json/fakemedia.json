@@ -10,12 +10,14 @@
     { "url": "www.nrc.nl", "language": "nl" },
     { "url": "www.nu.nl", "language": "nl" },
     { "url": "www.bnr.nl", "language": "nl" },
+    { "url": "www.trouw.nl", "language": "nl" },
     { "url": "www.groene.nl", "language": "nl" },
     { "url": "www.rijksoverheid.nl", "language": "nl" },
     { "url": "extinctionrebellion.nl", "language": "nl" }
   ],
   "nlReplacements": [
     { "target": "Nieuwsuur", "replacement": "Nieuwszuur" },
+    { "target": "rechtspopulisme", "replacement": "linkspopulisme" },
     { "target": "Nieuws", "replacement": "Fake Nieuws" },
     { "target": "desinformatie", "replacement": "waarheid" },
     { "target": "nepnieuws", "replacement": "waarheid" },

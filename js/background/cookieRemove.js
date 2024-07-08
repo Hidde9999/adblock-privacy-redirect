@@ -26,6 +26,9 @@ const allowedCookies = [{
 },{
     domain: "openai.com",
     cookies: ["*"]
+},{
+    domain: "proton.me",
+    cookies: ["*"]
 }
 ];
 
