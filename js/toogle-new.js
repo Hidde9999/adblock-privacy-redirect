@@ -1,7 +1,34 @@
+function switchToInvidious() {
+
+    // Query the active tab to get its ID and URL
+    chrome.tabs.query({ active: true, currentWindow: true }, function(tabs) {
+        // tabs is an array of tabs that match the query parameters
+        if (tabs.length > 0) {
+            const currentTab = tabs[0];
+            const tabId = currentTab.id;
+            const url = currentTab.url;
+            const newUrl = url.replace("www.youtube.com" , "invidious.privacyredirect.com");
+            console.log('Current tab URL:', url);
+
+            // Check if the current tab is from youtube.com
+            if (url.includes("youtube.com")) {
+                // Update the URL of the tab to Invidious
+                chrome.tabs.update(tabId, { url: newUrl }, function(updatedTab) {
+                    console.log('Tab URL updated successfully:', updatedTab.url);
+                });
+            } else {
+                console.log('Current tab is not from YouTube.');
+            }
+        } else {
+            console.log('No active tabs found.');
+        }
+    });
+}
+
 document.addEventListener("DOMContentLoaded", function () {
     const currentUrl = window.location.href.toLowerCase();
 
-    if (currentUrl.includes("index.html")){
+    if (currentUrl.includes("home.html")){
         getFilterList()
 
         setSwitchFromLocalStorage("toggleSwitchYT")
@@ -30,6 +57,7 @@ document.addEventListener("DOMContentLoaded", function () {
         document.getElementById("youtubeBlockList").addEventListener("change", handleToggle("youtubeBlockList"));
         // Add event listener to the switch
         document.getElementById("youtubeBlockAds").addEventListener("change", handleToggle("youtubeBlockAds"));
+        document.getElementById('invidiousButton').addEventListener('click', function(){switchToInvidious();});
     }
 
     if (currentUrl.includes("media.html")){

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Toggle Switch</title>
+    <link rel="stylesheet" type="text/css" href="../css/style.css">
+</head>
+<body>
+<iframe src="header.html"></iframe>
+<div class="popup">
+    <h2>Redirect</h2>
+    <label>YouTube</label>
+    <label class="switch">
+        <input type="checkbox" id="toggleSwitchYT">
+        <span class="slider"></span>
+    </label>
+    <label>Twitter</label>
+    <label class="switch">
+        <input type="checkbox" id="toggleSwitchTwitter">
+        <span class="slider"></span>
+    </label>
+    <label>Google</label>
+    <label class="switch">
+        <input type="checkbox" id="toggleSwitchGoogle">
+        <span class="slider"></span>
+    </label>
+    <label>Google Fonts</label>
+    <label class="switch">
+        <input type="checkbox" id="toggleSwitchGoogleFonts">
+        <span class="slider"></span>
+    </label>
+
+    <h2>Block filters</h2>
+    <div id="filters"></div>
+
+    <h2>Blocked Items</h2>
+    <ul id="blockedList"></ul>
+
+    <script src="../js/blockedItems.js"></script>
+
+    <script src="../js/toogle-new.js"></script>
+</div>
+</body>
+</html>
