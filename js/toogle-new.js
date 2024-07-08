@@ -31,6 +31,16 @@ document.addEventListener("DOMContentLoaded", function () {
         // Add event listener to the switch
         document.getElementById("youtubeBlockAds").addEventListener("change", handleToggle("youtubeBlockAds"));
     }
+
+    if (currentUrl.includes("media.html")){
+        setSwitchFromLocalStorage("mediaWarning");
+        setSwitchFromLocalStorage("mediaReplceWords");
+
+        // Add event listener to the switch
+        document.getElementById("mediaWarning").addEventListener("change", handleToggle("mediaWarning"));
+        // Add event listener to the switch
+        document.getElementById("mediaReplceWords").addEventListener("change", handleToggle("mediaReplceWords"));
+    }
 });
 
 // Function to set switch based on localStorage value
@@ -91,34 +101,42 @@ function getFilterList() {
     const list = document.createElement('div');
 
     // Parse stored filter names from localStorage
-    const blockFiltersNames = JSON.parse(localStorage.getItem("filterNames"));
+    // const blockFiltersNames = JSON.parse(localStorage.getItem("filterNames"));
 
-    // Check if blockFiltersNames is not null and is an array
-    if (Array.isArray(blockFiltersNames)) {
-        blockFiltersNames.forEach(key => {
-            const labelFilterName = document.createElement('label');
-            labelFilterName.textContent = key;
-            const labelFilterGroup = document.createElement('label');
-            labelFilterGroup.className = "switch";
-            const inputToggle = document.createElement('input');
-            inputToggle.type = "checkbox"; // Set the input type to checkbox
-            inputToggle.id = `${key}Filter`;
-            const spanSlider = document.createElement('span');
-            spanSlider.className = "slider";
-            list.appendChild(labelFilterName);
-            labelFilterGroup.appendChild(inputToggle);
-            labelFilterGroup.appendChild(spanSlider);
-            list.appendChild(labelFilterGroup);
+    fetch('../json/blocklist.json')
+        .then(response => response.json())
+        .then(data => {
+            // Iterate over each key-value pair in the data object
+            for (const key in data) {
+                if (data.hasOwnProperty(key)) {
+                    console.log(key);
+                    const labelFilterName = document.createElement('label');
+                    labelFilterName.textContent = key;
+                    const labelFilterGroup = document.createElement('label');
+                    labelFilterGroup.className = "switch";
+                    const inputToggle = document.createElement('input');
+                    inputToggle.type = "checkbox"; // Set the input type to checkbox
+                    inputToggle.id = `${key}Filter`;
+                    const spanSlider = document.createElement('span');
+                    spanSlider.className = "slider";
+                    list.appendChild(labelFilterName);
+                    labelFilterGroup.appendChild(inputToggle);
+                    labelFilterGroup.appendChild(spanSlider);
+                    list.appendChild(labelFilterGroup);
 
-            // Add event listener to the switch
-            inputToggle.addEventListener("change", handleToggle(`${key}Filter`));
+                    // Add event listener to the switch
+                    inputToggle.addEventListener("change", handleToggle(`${key}Filter`));
 
-            // Set the switch based on localStorage value
-            setSwitchFromLocalStorage(`${key}Filter`);
+                    // Set the switch based on localStorage value
+                    setSwitchFromLocalStorage(`${key}Filter`);
+                }
+            }
+            // Call blockAdsAndTrackers after all patterns are pushed
+            setTimeout(blockAdsAndTrackers, 100);
+        })
+        .catch(error => {
+            console.error('Error fetching JSON:', error);
         });
-    } else {
-        console.error("Filter names not found or not in expected format.");
-    }
 
     // Append the list to the div
     filtersDiv.appendChild(list);

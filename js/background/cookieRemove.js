@@ -18,6 +18,7 @@ const allowedCookies = [{
     cookies: [
         "com.euroclix.login",
         "com.euroclix.hash",
+        "ECX_COOKIE_CONSENT",
     ]
 },{
     domain: "chatgpt.com",
@@ -38,9 +39,6 @@ chrome.cookies.onChanged.addListener(function (changeInfo) {
 });
 
 function handleNewCookie(cookie) {
-    // Log the cookie name
-    // console.log(cookie.name);
-
     // Check if the cookie is in the allowedCookies list
     if (!isAllowedCookie(cookie)) {
         // Remove the cookie after a 5-second delay

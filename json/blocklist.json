@@ -20,11 +20,9 @@
     "*://*.gstatic.com/feedback/*",
     "*://*.gstatic.com/meet/phone/*",
 
-    "*://accounts.google.com/*",
     "*://*.google.com/log?*",
     "*://*.google.com/gen_204?*",
     "*://*.google.com/xjs/*",
-    "*://*.sites.google.com/*",
 
     "*://video-stats.video.google.com/*",
     "*://*.clients6.google.com/*",
@@ -48,6 +46,10 @@
     "*://*.doubleclick.net/*",
     "*://*.googlecode.com/*",
     "*://*.2mdn.net/*"
+  ],
+  "google-extra": [
+    "*://accounts.google.com/*",
+    "*://*.sites.google.com/*"
   ],
   "cookieBlock": [
     "*://*.cookielaw.org/*",

@@ -3,36 +3,49 @@ function handlePageLoad() {
 }
 
 function fakeMediaCheck() {
-    fetch(chrome.runtime.getURL("json/fakemedia.json"))
-        .then(response => response.json())
-        .then(data => {
-            const fakeMediaList = data.fakeMediaList;
-            const nlReplacements = data.nlReplacements;
+    chrome.storage.local.get(["mediaWarning"], function (result) {
+        if (!result["mediaWarning"]) {
+            console.log("Media warning turned off!");
+            return;
+        }
 
-            let language = "";
-            const isCurrentHostInFakeMediaList = fakeMediaList.some(site => {
-                if (site.url.includes(window.location.host)) {
-                    language = site.language;
-                    return site.url.includes(window.location.host);
-                }
-            });
+        fetch(chrome.runtime.getURL("json/fakemedia.json"))
+            .then(response => response.json())
+            .then(data => {
+                const fakeMediaList = data.fakeMediaList;
+                const nlReplacements = data.nlReplacements;
 
-            if (isCurrentHostInFakeMediaList) {
-                fakeMediaPopup();
-                setTimeout(() => {
-                    fakeMediaReplace(language, nlReplacements);
-                    document.title = "Hitler Times";
-                    let link = document.querySelector("link[rel~='icon']");
-                    if (!link) {
-                        link = document.createElement('link');
-                        link.rel = 'icon';
-                        document.head.appendChild(link);
+                let language = "";
+                const isCurrentHostInFakeMediaList = fakeMediaList.some(site => {
+                    if (site.url.includes(window.location.host)) {
+                        language = site.language;
+                        return site.url.includes(window.location.host);
                     }
-                    link.href = 'https://upload.wikimedia.org/wikipedia/commons/8/89/Swastika_nazi.svg';
-                }, 50);
-            }
-        })
-        .catch(error => console.error('Error loading replacement data:', error));
+                });
+
+                if (isCurrentHostInFakeMediaList) {
+                    fakeMediaPopup();
+                    setTimeout(() => {
+                        chrome.storage.local.get(["mediaReplceWords"], function (result) {
+                            if (!result["mediaReplceWords"]) {
+                                console.log("Media replace words turned off!");
+                                return;
+                            }
+                            fakeMediaReplace(language, nlReplacements);
+                        })
+                        document.title = "Hitler Times";
+                        let link = document.querySelector("link[rel~='icon']");
+                        if (!link) {
+                            link = document.createElement('link');
+                            link.rel = 'icon';
+                            document.head.appendChild(link);
+                        }
+                        link.href = 'https://upload.wikimedia.org/wikipedia/commons/8/89/Swastika_nazi.svg';
+                    }, 50);
+                }
+            })
+            .catch(error => console.error('Error loading replacement data:', error));
+    })
 }
 
 function fakeMediaReplace(language, nlReplacements) {
