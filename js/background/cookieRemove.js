@@ -1,51 +1,36 @@
-const allowedCookies = [
-    // roundcube
-    "roundcube_sessid",
-    "roundcube_sessauth",
-
-    // euroclix
-    "com.euroclix.login",
-    "com.euroclix.hash",
-
-    // hva
-    "MSISAuth",
-
-    // github
-    "user_session",
-    "logged_in"
+const allowedCookies = [{
+    domain: null,
+    cookies: [
+        "roundcube_sessid",
+        "roundcube_sessauth",
+    ],
+}, {
+    domain: null,
+    cookies: ["MSISAuth"],
+}, {
+    domain: "github.com",
+    cookies: [
+        "user_session",
+        "logged_in"
+    ],
+}, {
+    domain: "euroclix.nl",
+    cookies: [
+        "com.euroclix.login",
+        "com.euroclix.hash",
+    ]
+},{
+    domain: "chatgpt.com",
+    cookies: ["*"]
+},{
+    domain: "openai.com",
+    cookies: ["*"]
+}
 ];
 
-const blockedCookies = [
-    "lang",
-    "timezone",
-    "JSESSIONID",
-];
-
-// Domains to ignore
-const ignoredDomains = [
-    "chatgpt.com",
-    "openai.com",
-    "linkedin.com",
-    "instagram.com",
-    "x.com"
-];
-
-chrome.cookies.onChanged.addListener(function(changeInfo) {
+chrome.cookies.onChanged.addListener(function (changeInfo) {
     if (changeInfo.cause === "explicit" && !changeInfo.removed) {
         const cookie = changeInfo.cookie;
-
-        // Check if the cookie is blocked
-        if (blockedCookies.includes(cookie.name)) {
-            handleNewCookie(cookie);
-            return;
-        }
-
-        // Check if the cookie domain should be ignored
-        for (const domain of ignoredDomains) {
-            if (cookie.domain.includes(domain)) {
-                return;
-            }
-        }
 
         // Handle other cookies
         handleNewCookie(cookie);
@@ -54,26 +39,34 @@ chrome.cookies.onChanged.addListener(function(changeInfo) {
 
 function handleNewCookie(cookie) {
     // Log the cookie name
-    console.log(cookie.name);
+    // console.log(cookie.name);
 
-    // Check if the cookie is allowed
-    if (allowedCookies.includes(cookie.name)) {
-        return;
+    // Check if the cookie is in the allowedCookies list
+    if (!isAllowedCookie(cookie)) {
+        // Remove the cookie after a 5-second delay
+        setTimeout(() => {
+            chrome.cookies.remove({
+                url: getCookieUrl(cookie),
+                name: cookie.name
+            }, function (details) {
+                if (details) {
+                    console.log("Cookie removed:", details);
+                } else {
+                    console.log("Failed to remove cookie:", cookie);
+                }
+            });
+        }, 5000); // 5-second delay
+    } else {
+        // console.log(cookie + " Allowed")
     }
+}
 
-    // Remove the cookie after a 5-second delay
-    setTimeout(() => {
-        chrome.cookies.remove({
-            url: getCookieUrl(cookie),
-            name: cookie.name
-        }, function(details) {
-            if (details) {
-                console.log("Cookie removed:", details);
-            } else {
-                console.log("Failed to remove cookie:", cookie);
-            }
-        });
-    }, 5000); // 5-second delay
+function isAllowedCookie(cookie) {
+    return allowedCookies.some(allowedCookie => {
+        const domainMatch = allowedCookie.domain === null || cookie.domain.endsWith(allowedCookie.domain);
+        const nameMatch =  allowedCookie.cookies.includes("*") || allowedCookie.cookies.includes(cookie.name);
+        return domainMatch && nameMatch;
+    });
 }
 
 function getCookieUrl(cookie) {

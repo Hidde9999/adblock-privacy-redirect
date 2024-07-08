@@ -65,6 +65,8 @@
                 "*://*.ad.nl/*",
                 "*://*.nrc.nl/*",
                 "*://*.nu.nl/*",
+                "*://*.bnnvara.nl/joop/*",
+                "*://*.bnr.nl/*",
                 "*://*.rijksoverheid.nl/*",
                 "*://*.groene.nl/*",
                 "*://*.extinctionrebellion.nl/*"
