@@ -56,7 +56,7 @@ function handleNewCookie(cookie) {
                     console.log("Failed to remove cookie:", cookie);
                 }
             });
-        }, 8000); // 8-second delay
+        }, 10000); // 10-second delay
     } else {
         // console.log(cookie + " Allowed")
     }

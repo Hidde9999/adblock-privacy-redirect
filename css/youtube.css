@@ -20,7 +20,8 @@
 /*    display: none !important;*/
 /*}*/
 
-#dialog
+#dialog,
+#mealbar-promo-renderer
 {
     display: none !important;
 }

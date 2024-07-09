@@ -2,7 +2,7 @@
   "google": [
     "*://*.youtube.com/api/stats/*",
     "*://*.youtube.com/sw.js_data",
-    "*://*.youtube.com/pagead/adview?*",
+    "*://*.youtube.com/pagead/*",
     "*://*.youtube.com/pcs/activeview?*",
     "*://*.youtube.com/youtubei/v1/log_event?*",
     "*://*.youtube.com/youtubei/v1/att/*",
@@ -20,6 +20,7 @@
     "*://*.gstatic.com/feedback/*",
     "*://*.gstatic.com/meet/phone/*",
 
+    "*://*.google.nl/pagead/*",
     "*://*.google.com/log?*",
     "*://*.google.com/gen_204?*",
     "*://*.google.com/xjs/*",
@@ -65,9 +66,12 @@
     "*://graph.facebook.com/*",
     "*://graph.instagram.com/*",
     "*://connect.facebook.net/*",
-    "*://*.facebook.com/*",
     "*://www.instagram.com/embed.js",
     "*://www.instagram.com/ajax/bz?*"
+  ],
+  "facebook-extra": [
+    "*://*.facebook.com/*",
+    "*://*.instagram.com/*"
   ],
   "odysee": [
     "*://api.odysee.com/membership/*",
