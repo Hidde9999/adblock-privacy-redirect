@@ -1,0 +1,46 @@
+[
+  {
+    "domain": null,
+    "cookies": [
+      "roundcube_sessid",
+      "roundcube_sessauth"
+    ]
+  },
+  {
+    "domain": null,
+    "cookies": [
+      "MSISAuth"
+    ]
+  },
+  {
+    "domain": "github.com",
+    "cookies": [
+      "user_session",
+      "logged_in"
+    ]
+  },
+  {
+    "domain": "euroclix.nl",
+    "cookies": [
+      "com.euroclix.login",
+      "com.euroclix.hash",
+      "ECX_COOKIE_CONSENT"
+    ]
+  },
+  {
+    "domain": "chatgpt.com",
+    "cookies": ["*"]
+  },
+  {
+    "domain": "openai.com",
+    "cookies": ["*"]
+  },
+  {
+    "domain": "proton.me",
+    "cookies": ["*"]
+  },
+  {
+    "domain": "x.com",
+    "cookies": ["*"]
+  }
+]

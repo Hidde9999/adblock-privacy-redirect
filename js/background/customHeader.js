@@ -13,11 +13,13 @@ const os2 = [
 
 const browser = [
     "Firefox/126.0",
-    "Chrome/126.0.0.0",
+    "Chrome/126.0",
+    "Safari/537.36",
 ]
 const browser2 = [
     "Firefox/126.0",
-    "Chrome/126.0.0.0",
+    "Chrome/126.0",
+    "Safari/537.36",
 ]
 
 
@@ -35,7 +37,6 @@ chrome.webRequest.onBeforeSendHeaders.addListener(
         // console.log(details);
         for (let i = 0; i < details.requestHeaders.length; ++i) {
             if (details.requestHeaders[i].name === 'User-Agent') {
-                // details.requestHeaders[i].value = 'Mozilla/5.0 (X11; Linux x86_64; rv:126.0) Gecko/20100101 Firefox/126.0';
                 let randomOS = os[Math.floor(Math.random() * os.length)];
                 let randomOS2 = os2[Math.floor(Math.random() * os2.length)];
                 let randomBrowser = browser[Math.floor(Math.random() * browser.length)];

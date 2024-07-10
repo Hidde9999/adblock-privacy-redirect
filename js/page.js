@@ -5,7 +5,6 @@ document.addEventListener('DOMContentLoaded', function() {
         if (tabs.length > 0) {
             const currentTab = tabs[0];
             const url = currentTab.url;
-            // console.log('Current tab URL:', url);
             if (url.includes("youtube.com") || url.includes("invidious.privacyredirect.com")) {
                 window.location = "youtube.html"
             } else {

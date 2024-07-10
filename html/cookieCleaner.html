@@ -10,9 +10,23 @@
     <div class="popup">
         <iframe src="header.html"></iframe>
         <h1>Cookies Manager</h1>
-        <button id="clearCookiesButton">Clear All Cookies</button>
+        <label>Google Cookies</label>
+        <label class="switch">
+            <input type="checkbox" id="googleCookies">
+            <span class="slider"></span>
+        </label>
+<!--        <label>Google Cookies</label>-->
+<!--        <label class="switch">-->
+<!--            <input type="checkbox" id="googleCookies">-->
+<!--            <span class="slider"></span>-->
+<!--        </label>-->
+        <br>
+        <button id="clearAllCookiesButton">Clear All Cookies</button>
+        <button id="clearCookiesButton">Clear Cookies except</button>
         <ul id="cookieList"></ul>
+        <div id="status"></div>
         <script src="../js/cookieCleaner.js"></script>
+        <script src="../js/toogle-new.js"></script>
     </div>
     </body>
     </html>

@@ -1,36 +1,72 @@
-const allowedCookies = [{
-    domain: null,
-    cookies: [
-        "roundcube_sessid",
-        "roundcube_sessauth",
-    ],
-}, {
-    domain: null,
-    cookies: ["MSISAuth"],
-}, {
-    domain: "github.com",
-    cookies: [
-        "user_session",
-        "logged_in"
-    ],
-}, {
-    domain: "euroclix.nl",
-    cookies: [
-        "com.euroclix.login",
-        "com.euroclix.hash",
-        "ECX_COOKIE_CONSENT",
-    ]
-},{
-    domain: "chatgpt.com",
-    cookies: ["*"]
-},{
-    domain: "openai.com",
-    cookies: ["*"]
-},{
-    domain: "proton.me",
-    cookies: ["*"]
+let allowedCookies = [];
+
+fetch(chrome.runtime.getURL("json/cookies.json"))
+    .then(response => response.json())
+    .then(data => {
+        allowedCookies = data;
+        console.log("Allowed cookies loaded:", allowedCookies);
+    })
+    .catch(error => console.error('Error loading allowed cookies:', error));
+
+// Convert the async storage get call to a promise-based function
+function getGoogleCookies() {
+    return new Promise((resolve, reject) => {
+        chrome.storage.local.get(["googleCookies"], function (result) {
+            if (chrome.runtime.lastError) {
+                return reject(chrome.runtime.lastError);
+            }
+            resolve(result["googleCookies"]);
+        });
+    });
 }
-];
+
+async function isAllowedCookie(cookie) {
+    // Check if the cookie domain is google.com and googleCookies is set
+    try {
+        const googleCookies = await getGoogleCookies();
+        if (googleCookies && (cookie.domain.includes('google.com') || cookie.domain.includes('youtube.com'))) {
+            return true;
+        }
+    } catch (error) {
+        console.error('Error accessing storage:', error);
+    }
+
+    // Check if the cookie is in the allowedCookies list
+    return allowedCookies.some(allowedCookie => {
+        const domainMatch = allowedCookie.domain === null || cookie.domain.endsWith(allowedCookie.domain);
+        const nameMatch = allowedCookie.cookies.includes("*") || allowedCookie.cookies.includes(cookie.name);
+        return domainMatch && nameMatch;
+    });
+}
+
+// Modify handleNewCookie to handle asynchronous isAllowedCookie check
+function handleNewCookie(cookie) {
+    isAllowedCookie(cookie).then(isAllowed => {
+        if (!isAllowed) {
+            // Remove the cookie after a 10-second delay
+            setTimeout(() => {
+                chrome.cookies.remove({
+                    url: getCookieUrl(cookie),
+                    name: cookie.name
+                }, function (details) {
+                    if (details) {
+                        console.log("Cookie removed:", details);
+                    } else {
+                        console.log("Failed to remove cookie:", cookie);
+                    }
+                });
+            }, 10000); // 10-second delay
+        } else {
+            // console.log(cookie + " Allowed")
+        }
+    });
+}
+
+function getCookieUrl(cookie) {
+    // Construct the URL for the cookie
+    const protocol = cookie.secure ? "https:" : "http:";
+    return `${protocol}//${cookie.domain}${cookie.path}`;
+}
 
 chrome.cookies.onChanged.addListener(function (changeInfo) {
     if (changeInfo.cause === "explicit" && !changeInfo.removed) {
@@ -41,37 +77,3 @@ chrome.cookies.onChanged.addListener(function (changeInfo) {
     }
 });
 
-function handleNewCookie(cookie) {
-    // Check if the cookie is in the allowedCookies list
-    if (!isAllowedCookie(cookie)) {
-        // Remove the cookie after a 5-second delay
-        setTimeout(() => {
-            chrome.cookies.remove({
-                url: getCookieUrl(cookie),
-                name: cookie.name
-            }, function (details) {
-                if (details) {
-                    console.log("Cookie removed:", details);
-                } else {
-                    console.log("Failed to remove cookie:", cookie);
-                }
-            });
-        }, 10000); // 10-second delay
-    } else {
-        // console.log(cookie + " Allowed")
-    }
-}
-
-function isAllowedCookie(cookie) {
-    return allowedCookies.some(allowedCookie => {
-        const domainMatch = allowedCookie.domain === null || cookie.domain.endsWith(allowedCookie.domain);
-        const nameMatch =  allowedCookie.cookies.includes("*") || allowedCookie.cookies.includes(cookie.name);
-        return domainMatch && nameMatch;
-    });
-}
-
-function getCookieUrl(cookie) {
-    // Construct the URL for the cookie
-    const protocol = cookie.secure ? "https:" : "http:";
-    return `${protocol}//${cookie.domain}${cookie.path}`;
-}

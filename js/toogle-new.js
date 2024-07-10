@@ -26,7 +26,7 @@ function switchToInvidious() {
 }
 
 document.addEventListener("DOMContentLoaded", function () {
-    const currentUrl = window.location.href.toLowerCase();
+    const currentUrl = window.location.href;
 
     if (currentUrl.includes("home.html")){
         getFilterList()
@@ -58,6 +58,12 @@ document.addEventListener("DOMContentLoaded", function () {
         // Add event listener to the switch
         document.getElementById("youtubeBlockAds").addEventListener("change", handleToggle("youtubeBlockAds"));
         document.getElementById('invidiousButton').addEventListener('click', function(){switchToInvidious();});
+    }
+
+    if (currentUrl.includes("cookieCleaner.html")){
+        setSwitchFromLocalStorage("googleCookies");
+
+        document.getElementById("googleCookies").addEventListener("change", handleToggle("googleCookies"));
     }
 
     if (currentUrl.includes("media.html")){

@@ -71,13 +71,30 @@
   ],
   "facebook-extra": [
     "*://*.facebook.com/*",
-    "*://*.instagram.com/*"
+    "*://*.instagram.com/*",
+    "*://*.meta.com/*"
   ],
   "odysee": [
     "*://api.odysee.com/membership/*",
     "*://sentry.odysee.tv/*",
     "*://watchman.na-backend.odysee.com/reports/*",
     "*://api.na-backend.odysee.com/api/v1/metric/*"
+  ],
+  "propaganda-media": [
+    "*://*.nos.nl/*",
+    "*://*.jeugdjournaal.nl/*",
+    "*://*.telegraaf.nl/*",
+    "*://*.volkskrant.nl/*",
+    "*://*.rtlnieuws.nl/*",
+    "*://*.ad.nl/*",
+    "*://*.nrc.nl/*",
+    "*://*.nu.nl/*",
+    "*://*.bnnvara.nl/joop/*",
+    "*://*.bnr.nl/*",
+    "*://*.trouw.nl/*",
+    "*://*.rijksoverheid.nl/*",
+    "*://*.groene.nl/*",
+    "*://*.extinctionrebellion.nl/*"
   ],
   "other":[
     "*://cdn.optoutadvertising.com/*",
