@@ -10,26 +10,34 @@
 <iframe src="header.html"></iframe>
 <div class="popup">
     <h2>Redirect</h2>
-    <label>YouTube</label>
-    <label class="switch">
-        <input type="checkbox" id="toggleSwitchYT">
-        <span class="slider"></span>
-    </label>
-    <label>Twitter</label>
-    <label class="switch">
-        <input type="checkbox" id="toggleSwitchTwitter">
-        <span class="slider"></span>
-    </label>
-    <label>Google</label>
-    <label class="switch">
-        <input type="checkbox" id="toggleSwitchGoogle">
-        <span class="slider"></span>
-    </label>
-    <label>Google Fonts</label>
-    <label class="switch">
-        <input type="checkbox" id="toggleSwitchGoogleFonts">
-        <span class="slider"></span>
-    </label>
+    <div class="switch-container">
+        <label for="toggleSwitchYT">YouTube</label>
+        <label class="switch">
+            <input type="checkbox" id="toggleSwitchYT">
+            <span class="slider"></span>
+        </label>
+    </div>
+    <div class="switch-container">
+        <label for="toggleSwitchTwitter">Twitter</label>
+        <label class="switch">
+            <input type="checkbox" id="toggleSwitchTwitter">
+            <span class="slider"></span>
+        </label>
+    </div>
+    <div class="switch-container">
+        <label for="toggleSwitchGoogle">Google</label>
+        <label class="switch">
+            <input type="checkbox" id="toggleSwitchGoogle">
+            <span class="slider"></span>
+        </label>
+    </div>
+    <div class="switch-container">
+        <label for="toggleSwitchGoogleFonts">Google Fonts</label>
+        <label class="switch">
+            <input type="checkbox" id="toggleSwitchGoogleFonts">
+            <span class="slider"></span>
+        </label>
+    </div>
 
     <h2>Block filters</h2>
     <div id="filters"></div>
@@ -38,7 +46,6 @@
     <ul id="blockedList"></ul>
 
     <script src="../js/blockedItems.js"></script>
-
     <script src="../js/toogle-new.js"></script>
 </div>
 </body>

@@ -143,7 +143,8 @@ function getFilterList() {
             // Iterate over each key-value pair in the data object
             for (const key in data) {
                 if (data.hasOwnProperty(key)) {
-                    console.log(key);
+                    const containerDiv = document.createElement('div');
+                    containerDiv.className = "switch-container";
                     const labelFilterName = document.createElement('label');
                     labelFilterName.textContent = key;
                     const labelFilterGroup = document.createElement('label');
@@ -153,10 +154,11 @@ function getFilterList() {
                     inputToggle.id = `${key}Filter`;
                     const spanSlider = document.createElement('span');
                     spanSlider.className = "slider";
-                    list.appendChild(labelFilterName);
+                    containerDiv.appendChild(labelFilterName);
                     labelFilterGroup.appendChild(inputToggle);
                     labelFilterGroup.appendChild(spanSlider);
-                    list.appendChild(labelFilterGroup);
+                    containerDiv.appendChild(labelFilterGroup);
+                    filtersDiv.appendChild(containerDiv);
 
                     // Add event listener to the switch
                     inputToggle.addEventListener("change", handleToggle(`${key}Filter`));
