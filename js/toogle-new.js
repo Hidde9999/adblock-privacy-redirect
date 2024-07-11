@@ -62,8 +62,10 @@ document.addEventListener("DOMContentLoaded", function () {
 
     if (currentUrl.includes("cookieCleaner.html")){
         setSwitchFromLocalStorage("googleCookies");
+        setSwitchFromLocalStorage("autoCookies");
 
         document.getElementById("googleCookies").addEventListener("change", handleToggle("googleCookies"));
+        document.getElementById("autoCookies").addEventListener("change", handleToggle("autoCookies"));
     }
 
     if (currentUrl.includes("media.html")){

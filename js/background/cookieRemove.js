@@ -41,25 +41,31 @@ async function isAllowedCookie(cookie) {
 
 // Modify handleNewCookie to handle asynchronous isAllowedCookie check
 function handleNewCookie(cookie) {
-    isAllowedCookie(cookie).then(isAllowed => {
-        if (!isAllowed) {
-            // Remove the cookie after a 10-second delay
-            setTimeout(() => {
-                chrome.cookies.remove({
-                    url: getCookieUrl(cookie),
-                    name: cookie.name
-                }, function (details) {
-                    if (details) {
-                        console.log("Cookie removed:", details);
-                    } else {
-                        console.log("Failed to remove cookie:", cookie);
-                    }
-                });
-            }, 10000); // 10-second delay
-        } else {
-            // console.log(cookie + " Allowed")
+    chrome.storage.local.get(["autoCookies"], function (result) {
+        if (!result["autoCookies"]) {
+            console.log("autoCookies is turned off!");
+            return;
         }
-    });
+        isAllowedCookie(cookie).then(isAllowed => {
+            if (!isAllowed) {
+                // Remove the cookie after a 10-second delay
+                setTimeout(() => {
+                    chrome.cookies.remove({
+                        url: getCookieUrl(cookie),
+                        name: cookie.name
+                    }, function (details) {
+                        if (details) {
+                            console.log("Cookie removed:", details);
+                        } else {
+                            console.log("Failed to remove cookie:", cookie);
+                        }
+                    });
+                }, 10000); // 10-second delay
+            } else {
+                // console.log(cookie + " Allowed")
+            }
+        });
+    })
 }
 
 function getCookieUrl(cookie) {
