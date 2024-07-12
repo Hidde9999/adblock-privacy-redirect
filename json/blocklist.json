@@ -26,6 +26,7 @@
     "*://*.google.com/xjs/*",
 
     "*://video-stats.video.google.com/*",
+
     "*://*.clients6.google.com/*",
     "*://clients.google.com/*",
     "*://clients1.google.com/*",
@@ -46,7 +47,8 @@
 
     "*://*.doubleclick.net/*",
     "*://*.googlecode.com/*",
-    "*://*.2mdn.net/*"
+    "*://*.2mdn.net/*",
+    "*://maps.googleapis.com/*"
   ],
   "google-extra": [
     "*://accounts.google.com/*",
@@ -94,7 +96,15 @@
     "*://*.trouw.nl/*",
     "*://*.rijksoverheid.nl/*",
     "*://*.groene.nl/*",
-    "*://*.extinctionrebellion.nl/*"
+    "*://*.avrotros.nl/*",
+    "*://*.dpgmedia.nl/*",
+    "*://*.extinctionrebellion.nl/*",
+    "*://*.wwf.nl/*",
+    "*://*.bbc.com/*",
+    "*://*.cnn.com/*",
+    "*://*.politico.eu/*",
+    "*://*.dailymail.co.uk/*",
+    "*://*.telegraph.co.uk/*"
   ],
   "other":[
     "*://cdn.optoutadvertising.com/*",
@@ -144,6 +154,15 @@
     "*://api.weer.nl/v1/content/news-articles?limit=*",
     "*://api.weer.nl/v1/content/brand-campaigns?*",
 
-    "*://www.linkedin.com/li/track"
+    "*://www.linkedin.com/li/track",
+    "*://prd.jwpltx.com/*",
+
+    "*://*.cloudfront.net/*",
+    "*://collector.github.com/*",
+    "*://api.github.com/*",
+
+    "*://cdn.siftscience.com/*",
+    "*://atl-global.atlassian.com/js/2.219.0/gasv3/analytics-web-client.with-deps.amd.min.js",
+    "*://o55978.ingest.sentry.io/api/5988955/envelope/*"
   ]
 }

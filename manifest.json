@@ -86,7 +86,8 @@
     "web_accessible_resources": [
         "fonts/*.woff2",
         "js/replaceJS/*",
-        "json/*"
+        "json/*",
+        "html/*"
     ],
     "manifest_version": 2
 }

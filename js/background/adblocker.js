@@ -85,7 +85,7 @@ function ytBlockScriptsByName() {
                 details.url.includes("annotations_module.js")
             ) {
 
-                if (details.tabId != -1) {
+                if (details.tabId !== -1) {
                     // Store blocked URL
                     storeBlockedURL(details.url, details.tabId);
                 }
@@ -104,11 +104,12 @@ function blockAdsAndTrackers() {
         // console.log(blockFilters);
         // Define the block request function
         blockRequest = function (details) {
-            if (details.tabId != -1) {
+            if (details.tabId !== -1) {
                 // Store blocked URL
                 storeBlockedURL(details.url, details.tabId);
             }
             return {cancel: true};
+            // return {redirectUrl: chrome.runtime.getURL("html/blockedPage.html")};
         };
         // Add listener to block requests
         chrome.webRequest.onBeforeRequest.addListener(
