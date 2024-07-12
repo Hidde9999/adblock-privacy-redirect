@@ -82,6 +82,18 @@
     "*://watchman.na-backend.odysee.com/reports/*",
     "*://api.na-backend.odysee.com/api/v1/metric/*"
   ],
+  "microsoft": [
+    "*://www.linkedin.com/li/track",
+    "*://fpt.microsoft.com/*",
+    "*://browser.events.data.microsoft.com/*",
+    "*://eu-mobile.events.data.microsoft.com/*",
+    "*://eu-office.events.data.microsoft.com/*",
+    "*://js.monitor.azure.com/*",
+    "*://login.microsoftonline.com/savedusers?*",
+    "*://euc-word-edit.officeapps.live.com/we/RemoteTelemetry.ashx?*",
+    "*://common.online.office.com/suite/RemoteTelemetry.ashx?*",
+    "*://euc-word-telemetry.officeapps.live.com/*"
+  ],
   "propaganda-media": [
     "*://*.nos.nl/*",
     "*://*.jeugdjournaal.nl/*",
@@ -154,7 +166,6 @@
     "*://api.weer.nl/v1/content/news-articles?limit=*",
     "*://api.weer.nl/v1/content/brand-campaigns?*",
 
-    "*://www.linkedin.com/li/track",
     "*://prd.jwpltx.com/*",
 
     "*://*.cloudfront.net/*",
@@ -163,6 +174,15 @@
 
     "*://cdn.siftscience.com/*",
     "*://atl-global.atlassian.com/js/2.219.0/gasv3/analytics-web-client.with-deps.amd.min.js",
-    "*://o55978.ingest.sentry.io/api/5988955/envelope/*"
+    "*://o55978.ingest.sentry.io/api/5988955/envelope/*",
+
+    "*://*.viglink.com/*",
+    "*://*.disqus.com/*",
+    "*://referrer.disqus.com/*",
+    "*://*.amung.us/*",
+    "*://stats.wp.com/*",
+    "*://vnte9urn.click/*",
+
+    "*://game3rb.com/wp-content/uploads/2023/04/Untitled-1.png"
   ]
 }
