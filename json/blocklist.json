@@ -54,13 +54,6 @@
     "*://accounts.google.com/*",
     "*://*.sites.google.com/*"
   ],
-  "cookieBlock": [
-    "*://*.cookielaw.org/*",
-    "*://*.cookiebot.com/*",
-    "*://*.euroclix.nl/assets/8.75.6/app/pages/resources/js/consent/*",
-    "*://myprivacy-static.dpgmedia.net/*",
-    "*://sdk.privacy-center.org/*"
-  ],
   "facebook": [
     "*://dit.whatsapp.net/*",
     "*://static.ak.connect.facebook.com/*",
@@ -76,12 +69,6 @@
     "*://*.instagram.com/*",
     "*://*.meta.com/*"
   ],
-  "odysee": [
-    "*://api.odysee.com/membership/*",
-    "*://sentry.odysee.tv/*",
-    "*://watchman.na-backend.odysee.com/reports/*",
-    "*://api.na-backend.odysee.com/api/v1/metric/*"
-  ],
   "microsoft": [
     "*://www.linkedin.com/li/track",
     "*://fpt.microsoft.com/*",
@@ -93,6 +80,19 @@
     "*://euc-word-edit.officeapps.live.com/we/RemoteTelemetry.ashx?*",
     "*://common.online.office.com/suite/RemoteTelemetry.ashx?*",
     "*://euc-word-telemetry.officeapps.live.com/*"
+  ],
+  "odysee": [
+    "*://api.odysee.com/membership/*",
+    "*://sentry.odysee.tv/*",
+    "*://watchman.na-backend.odysee.com/reports/*",
+    "*://api.na-backend.odysee.com/api/v1/metric/*"
+  ],
+  "cookieBlock": [
+    "*://*.cookielaw.org/*",
+    "*://*.cookiebot.com/*",
+    "*://*.euroclix.nl/assets/8.75.6/app/pages/resources/js/consent/*",
+    "*://myprivacy-static.dpgmedia.net/*",
+    "*://sdk.privacy-center.org/*"
   ],
   "propaganda-media": [
     "*://*.nos.nl/*",
