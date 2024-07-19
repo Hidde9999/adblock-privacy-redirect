@@ -5,21 +5,11 @@ const os = [
     "X11"
 ]
 
-const os2 = [
-    "Linux x86_64",
-    "Win64",
-    "Win32"
-]
-
 const browser = [
     "Firefox/126.0",
-    "Chrome/126.0",
+    "Chrome/126.0.6478.127",
     "Safari/537.36",
-]
-const browser2 = [
-    "Firefox/126.0",
-    "Chrome/126.0",
-    "Safari/537.36",
+    // "Brave/1.67.123",
 ]
 
 
@@ -29,20 +19,17 @@ chrome.webRequest.onBeforeSendHeaders.addListener(
         if (
             details.url.includes("openai.com") ||
             details.url.includes("chatgpt.com") ||
-            details.url.includes("challenges.cloudflare.com")
+            details.url.includes("challenges.cloudflare.com") ||
+            details.url.includes("telegraaf.nl")
         ){
             return;
         }
-        let refererSet = false;
-        // console.log(details);
         for (let i = 0; i < details.requestHeaders.length; ++i) {
             if (details.requestHeaders[i].name === 'User-Agent') {
                 let randomOS = os[Math.floor(Math.random() * os.length)];
-                let randomOS2 = os2[Math.floor(Math.random() * os2.length)];
                 let randomBrowser = browser[Math.floor(Math.random() * browser.length)];
-                let randomBrowser2 = browser2[Math.floor(Math.random() * browser2.length)];
 
-                details.requestHeaders[i].value = `${randomBrowser2} (${randomOS}; ${randomOS2}; rv:126.0) Gecko/20100101 ${randomBrowser}`;
+                details.requestHeaders[i].value = `${randomBrowser} (${randomOS}; ${randomOS}; rv:0) Gecko/20100101 ${randomBrowser}`;
             }
             if (details.requestHeaders[i].name === 'sec-ch-ua') {
                 details.requestHeaders[i].value = 'Non of your businesses';

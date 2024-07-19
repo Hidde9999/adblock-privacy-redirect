@@ -168,13 +168,14 @@
 
     "*://prd.jwpltx.com/*",
 
-    "*://*.cloudfront.net/*",
     "*://collector.github.com/*",
     "*://api.github.com/*",
 
     "*://cdn.siftscience.com/*",
     "*://atl-global.atlassian.com/js/2.219.0/gasv3/analytics-web-client.with-deps.amd.min.js",
-    "*://o55978.ingest.sentry.io/api/5988955/envelope/*",
+    "*://*.ingest.sentry.io/api/*",
+    "*://*.web-sdk.dpns-notifications.com/*",
+    "*://login-static.dpgmedia.net/*",
 
     "*://*.viglink.com/*",
     "*://*.disqus.com/*",
