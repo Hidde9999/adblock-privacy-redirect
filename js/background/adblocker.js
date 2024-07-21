@@ -15,6 +15,9 @@ let blockedCountsPerTab = {};
 // Object to store blocked URLs per tab
 let blockedURLsPerTab = {};
 
+// Object to store the last domain for each tab
+let lastDomainPerTab = {};
+
 // Increment the blocked count for a tab and update the badge
 function incrementBlockedCount(tabId) {
     blockedCountsPerTab[tabId] = (blockedCountsPerTab[tabId] || 0) + 1;
@@ -63,10 +66,9 @@ function storeBlockedURL(url, tabId) {
     if (!blockedURLsPerTab[tabId]) {
         blockedURLsPerTab[tabId] = [];
     }
-    if (!blockedURLsPerTab[tabId].includes(url)) {
-        blockedURLsPerTab[tabId].push(url);
-        chrome.storage.local.set({ "blockedURLs": blockedURLsPerTab[tabId] });
-    }
+    blockedURLsPerTab[tabId].push(url);
+    chrome.storage.local.set({ "blockedURLs": blockedURLsPerTab[tabId] });
+
     incrementBlockedCount(tabId);
 }
 
@@ -123,6 +125,15 @@ chrome.webNavigation.onCommitted.addListener(function (details) {
     if (details.transitionType === "reload" || details.transitionType === "typed") {
         resetBlockedCount(details.tabId, true);
         resetBlockedURLs(details.tabId, true);
+    } else if (details.transitionType === "link" || details.transitionType === "auto_subframe") {
+        chrome.tabs.get(details.tabId, function (tab) {
+            const currentDomain = new URL(tab.url).hostname;
+            if (lastDomainPerTab[details.tabId] && lastDomainPerTab[details.tabId] !== currentDomain) {
+                resetBlockedCount(details.tabId, true);
+                resetBlockedURLs(details.tabId, true);
+            }
+            lastDomainPerTab[details.tabId] = currentDomain;
+        });
     }
 });
 

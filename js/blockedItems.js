@@ -7,10 +7,16 @@ function displayBlockedURLs() {
         // Clear previous list items
         blockedList.innerHTML = "";
 
-        // Populate the list with blocked URLs
-        blockedURLs.forEach(function(url) {
+        // Create a dictionary to count occurrences of each URL
+        const urlCounts = blockedURLs.reduce((counts, url) => {
+            counts[url] = (counts[url] || 0) + 1;
+            return counts;
+        }, {});
+
+        // Populate the list with blocked URLs and their counts
+        Object.entries(urlCounts).forEach(([url, count]) => {
             const li = document.createElement("li");
-            li.textContent = url;
+            li.textContent = `${url} (${count})`;
             blockedList.appendChild(li);
         });
     });
@@ -20,3 +26,4 @@ function displayBlockedURLs() {
 document.addEventListener("DOMContentLoaded", function() {
     displayBlockedURLs();
 });
+
