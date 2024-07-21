@@ -96,7 +96,7 @@ function googleRedirectFunc() {
 function twitterRedirectFunc() {
     chrome.webRequest.onBeforeRequest.addListener(
         function (details) {
-            console.log(details.url);
+            // console.log(details.url);
             let url = details.url.toString().replace("x.com", "twiiit.com")
 
             if (twitterRedirect) {

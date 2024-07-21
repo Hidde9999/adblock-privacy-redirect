@@ -10,7 +10,7 @@ document.addEventListener('DOMContentLoaded', function() {
         .then(response => response.json())
         .then(data => {
             cookieKeepList = data;
-            status.textContent = 'Cookie keep list loaded successfully.';
+            // status.textContent = 'Cookie keep list loaded successfully.';
         })
         .catch(error => {
             console.error('Error loading cookiesToKeep.json:', error);

@@ -170,7 +170,7 @@ function getFilterList() {
                 }
             }
             // Call blockAdsAndTrackers after all patterns are pushed
-            setTimeout(blockAdsAndTrackers, 100);
+            // setTimeout(blockAdsAndTrackers, 100);
         })
         .catch(error => {
             console.error('Error fetching JSON:', error);

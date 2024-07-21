@@ -1,133 +1,124 @@
 // Array of URL patterns to match for YouTube filtering
 const youtubeFilters = [
     "*://*.youtube.com/*",
-]
+];
 
 // Variable to store the function for blocking requests
-let blockRequest
+let blockRequest;
 
 // Arrays to store filter data
-let blockFilters = []
+let blockFilters = [];
 
 // Object to store blocked counts per tab
 let blockedCountsPerTab = {};
+
 // Object to store blocked URLs per tab
 let blockedURLsPerTab = {};
 
-// Function to increment the blocked count for a tab
+// Increment the blocked count for a tab and update the badge
 function incrementBlockedCount(tabId) {
-    if (!blockedCountsPerTab[tabId]) {
-        blockedCountsPerTab[tabId] = 1;
-    } else {
-        blockedCountsPerTab[tabId]++;
-    }
-    // Update badge text for the tab
-    chrome.browserAction.setBadgeText({text: blockedCountsPerTab[tabId].toString(), tabId: tabId});
+    blockedCountsPerTab[tabId] = (blockedCountsPerTab[tabId] || 0) + 1;
+    updateBadgeText(tabId);
 }
 
-// Function to reset the blocked count for a tab
+// Reset the blocked count for a tab and update the badge
 function resetBlockedCount(tabId, reset) {
-    if (reset){
-        // Check if blockedCountsPerTab[tabId] is defined before accessing its value
-        if (typeof blockedCountsPerTab[tabId] !== 'undefined') {
-            blockedCountsPerTab[tabId] = 0;
-        }
+    if (reset && blockedCountsPerTab[tabId] !== undefined) {
+        blockedCountsPerTab[tabId] = 0;
     }
+    updateBadgeText(tabId);
+}
 
-    // Check if blockedCountsPerTab[tabId] is defined before setting the badge text
-    if (typeof blockedCountsPerTab[tabId] !== 'undefined') {
-        chrome.browserAction.setBadgeText({text: blockedCountsPerTab[tabId].toString(), tabId: tabId});
+// Update the badge text for a tab
+function updateBadgeText(tabId) {
+    if (blockedCountsPerTab[tabId] !== undefined) {
+        chrome.browserAction.setBadgeText({ text: blockedCountsPerTab[tabId].toString(), tabId: tabId });
     }
 }
 
-// Function to reset the blocked URLs for a tab
+// Reset the blocked URLs for a tab
 function resetBlockedURLs(tabId, reset) {
-    if (reset){
+    // Ensure blockedURLsPerTab exists
+    if (!blockedURLsPerTab) {
+        blockedURLsPerTab = {};
+    }
+
+    // Reset the blocked URLs for the specified tab if reset is true
+    if (reset) {
         blockedURLsPerTab[tabId] = [];
     }
 
-    chrome.storage.local.set({"blockedURLs": blockedURLsPerTab[tabId]}, function () {
+    // Get the URLs to store; either the ones from the tab or an empty array if none exist
+    const urlsToStore = blockedURLsPerTab[tabId] || [];
+
+    // Save the URLs to storage
+    chrome.storage.local.set({ "blockedURLs": urlsToStore }, function () {
         console.log('Blocked URLs for tab ' + tabId + ' cleared.');
     });
 }
 
-// Function to store blocked URLs per tab
+
+// Store a blocked URL for a tab
 function storeBlockedURL(url, tabId) {
     if (!blockedURLsPerTab[tabId]) {
         blockedURLsPerTab[tabId] = [];
     }
-    incrementBlockedCount(tabId);
     if (!blockedURLsPerTab[tabId].includes(url)) {
         blockedURLsPerTab[tabId].push(url);
-        chrome.storage.local.set({"blockedURLs": blockedURLsPerTab[tabId]}, function () {
-        });
+        chrome.storage.local.set({ "blockedURLs": blockedURLsPerTab[tabId] });
     }
+    incrementBlockedCount(tabId);
 }
 
-// Function to block specific scripts on YouTube
+// Block specific scripts on YouTube
 function ytBlockScriptsByName() {
     chrome.webRequest.onBeforeRequest.addListener(
         function (details) {
-            // Checking if the URL matches any of the script URLs to be blocked
-            if (
-                details.url.includes("sw.js") ||
-                details.url.includes("scheduler.js") ||
-                details.url.includes("spf.js") ||
-                details.url.includes("network.js") ||
-                details.url.includes("www-tampering.js") ||
-                details.url.includes("web-animations-next-lite.min.js") ||
-                details.url.includes("offline.js") ||
-                details.url.includes("remote.js") ||
-                details.url.includes("endscreen.js") ||
-                details.url.includes("inline_preview.js") ||
-                details.url.includes("intersection-observer.min.js") ||
-                details.url.includes("custom-elements-es5-adapter.js") ||
-                details.url.includes("annotations_module.js")
-            ) {
-
+            const scriptsToBlock = [
+                "sw.js", "scheduler.js", "spf.js", "network.js", "www-tampering.js",
+                "web-animations-next-lite.min.js", "offline.js", "remote.js", "endscreen.js",
+                "inline_preview.js", "intersection-observer.min.js", "custom-elements-es5-adapter.js",
+                "annotations_module.js"
+            ];
+            if (scriptsToBlock.some(script => details.url.includes(script))) {
                 if (details.tabId !== -1) {
-                    // Store blocked URL
                     storeBlockedURL(details.url, details.tabId);
                 }
-
-                return {cancel: true};
+                return { cancel: true };
             }
         },
-        {urls: youtubeFilters}, // Matching URLs for YouTube
-        ["blocking"] // Options
+        { urls: youtubeFilters },
+        ["blocking"]
     );
 }
 
-// Function to block ads and trackers based on user-defined filters
+// Block ads and trackers based on user-defined filters
 function blockAdsAndTrackers() {
     if (blockFilters.length > 0) {
-        // console.log(blockFilters);
-        // Define the block request function
         blockRequest = function (details) {
             if (details.tabId !== -1) {
-                // Store blocked URL
                 storeBlockedURL(details.url, details.tabId);
             }
-            return {cancel: true};
-            // return {redirectUrl: chrome.runtime.getURL("html/blockedPage.html")};
+            return { cancel: true };
         };
-        // Add listener to block requests
         chrome.webRequest.onBeforeRequest.addListener(
             blockRequest,
-            {urls: blockFilters}, // Matching URLs for blocking
-            ["blocking"] // Options
+            { urls: blockFilters },
+            ["blocking"]
         );
     }
 }
 
-// Function to handle tab removal
+// Handle tab removal
 chrome.tabs.onRemoved.addListener(function (tabId) {
-    // Remove the tab's blocked count when the tab is closed
     delete blockedCountsPerTab[tabId];
-    delete blockedURLsPerTab[tabId]
+    delete blockedURLsPerTab[tabId];
+
+    resetBlockedURLs();
+    resetBlockedCount();
 });
 
-// Function to handle page reload/navigation
+// Handle page reload/navigation
 chrome.webNavigation.onCommitted.addListener(function (details) {
     if (details.transitionType === "reload" || details.transitionType === "typed") {
         resetBlockedCount(details.tabId, true);
@@ -135,39 +126,27 @@ chrome.webNavigation.onCommitted.addListener(function (details) {
     }
 });
 
-// Function to handle tab activation
-chrome.tabs.onActivated.addListener(function(details) {
-    // Reset the badge count and blocked URLs for the newly activated tab
+// Handle tab activation
+chrome.tabs.onActivated.addListener(function (details) {
     resetBlockedCount(details.tabId, false);
     resetBlockedURLs(details.tabId, false);
 });
 
-// Function to get filters from a JSON file
+// Fetch filters from a JSON file
 function getFiltersFromJson() {
-    // Fetch blocklist JSON file
-    fetch('../json/blocklist.json')
+    fetch(chrome.runtime.getURL('../json/blocklist.json'))
         .then(response => response.json())
         .then(data => {
-            // Iterate over each key-value pair in the data object
             for (const key in data) {
                 if (data.hasOwnProperty(key)) {
                     chrome.storage.local.get([`${key}Filter`], function (result) {
-                        if (result[`${key}Filter`]){
-                            // console.log(key);
-                            // Get the array of patterns for the current key
-                            const patterns = data[key];
-                            // Flatten the array of arrays
-                            const flattenedPatterns = patterns.flat();
-                            // Push each pattern into blockFilters
-                            flattenedPatterns.forEach(pattern => {
-                                // console.log(pattern);
-                                blockFilters.push(pattern);
-                            });
+                        if (result[`${key}Filter`]) {
+                            const patterns = data[key].flat();
+                            blockFilters.push(...patterns);
                         }
                     });
                 }
             }
-            // Call blockAdsAndTrackers after all patterns are pushed
             setTimeout(blockAdsAndTrackers, 100);
         })
         .catch(error => {
@@ -175,10 +154,11 @@ function getFiltersFromJson() {
         });
 }
 
-
-// Define a function to handle changes in localStorage
+// Handle changes in localStorage
 function handleStorageChange() {
-    blockFilters = []
-    chrome.webRequest.onBeforeRequest.removeListener(blockRequest)
-    getFiltersFromJson()
+    blockFilters = [];
+    if (blockRequest) {
+        chrome.webRequest.onBeforeRequest.removeListener(blockRequest);
+    }
+    getFiltersFromJson();
 }

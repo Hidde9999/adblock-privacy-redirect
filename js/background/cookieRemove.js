@@ -41,6 +41,7 @@ async function isAllowedCookie(cookie) {
 
 // Modify handleNewCookie to handle asynchronous isAllowedCookie check
 function handleNewCookie(cookie) {
+    // console.log("hier")
     chrome.storage.local.get(["autoCookies"], function (result) {
         if (!result["autoCookies"]) {
             console.log("autoCookies is turned off!");
@@ -75,6 +76,7 @@ function getCookieUrl(cookie) {
 }
 
 chrome.cookies.onChanged.addListener(function (changeInfo) {
+    // console.log("hoi")
     if (changeInfo.cause === "explicit" && !changeInfo.removed) {
         const cookie = changeInfo.cookie;
 

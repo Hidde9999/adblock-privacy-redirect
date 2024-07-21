@@ -19,8 +19,7 @@ chrome.webRequest.onBeforeSendHeaders.addListener(
         if (
             details.url.includes("openai.com") ||
             details.url.includes("chatgpt.com") ||
-            details.url.includes("challenges.cloudflare.com") ||
-            details.url.includes("telegraaf.nl")
+            details.url.includes("challenges.cloudflare.com")
         ){
             return;
         }
