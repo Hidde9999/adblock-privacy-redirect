@@ -77,9 +77,10 @@
             "js": ["js/content/fakeNews.js"]
         },{
             "matches": ["<all_urls>"],
+            "css": ["css/all.css"],
             "js": [
                 "js/content/redirect.js",
-                "js/content/tosRejecter.js"
+                "js/content/adblocker.js"
             ]
         }
     ],
