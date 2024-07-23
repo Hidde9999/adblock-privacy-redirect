@@ -12,6 +12,7 @@
     "*://*.youtube.com/youtubei/v1/player/ad_break?*",
     "*://*.youtube.com/youtubei/v1/get_survey?*",
     "*://*.youtube.com/ptracking?*",
+    "*://*.youtube.com/generate_204",
 
     "*://*.gstatic.com/cv/js/*",
     "*://*.gstatic.com/uservoice/feedback/*",
@@ -24,6 +25,7 @@
     "*://*.google.com/log?*",
     "*://*.google.com/gen_204?*",
     "*://*.google.com/xjs/*",
+    "*://*.consent.google.nl/_/ConsentUi/browserinfo?*",
 
     "*://video-stats.video.google.com/*",
 
@@ -183,6 +185,9 @@
     "*://*.amung.us/*",
     "*://stats.wp.com/*",
     "*://vnte9urn.click/*",
+
+    "*://fast.wistia.com/assets/external/vulcanV2Player/video/ui_components/Storyboard.js",
+    "*://graphql.jomi.com/graphql",
 
     "*://game3rb.com/wp-content/uploads/2023/04/Untitled-1.png"
   ]

@@ -26,6 +26,7 @@ const twitterRedirectFilters = [
 
 const youtubeRedirectFilters = [
     "*://*.youtube.com/",
+    "*://*.youtube.com/?themeRefresh=1",
     "*://*.youtube.com/embed/*",
     "*://*.youtube.com/@*",
     "*://*.youtube.com/watch?*",

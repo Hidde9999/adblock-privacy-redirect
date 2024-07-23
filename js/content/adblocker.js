@@ -5,7 +5,11 @@ const config = {
     },
     "https://jensen.nl/": {  // Matches specific URL pattern
         classes: ['sc-hAIpwP'],
-        ids: ['example-ad-id']
+        ids: []
+    },
+    "www.youtube.com": {  // Matches specific URL pattern
+        classes: [],
+        ids: ['panels']
     }
 };
 
@@ -22,7 +26,7 @@ function blockAds() {
 
     blockConfig.classes.forEach(className => {
         let elements = document.getElementsByClassName(className);
-        console.log(elements);
+        // console.log(elements);
         while (elements.length > 0) {
             elements[0].parentNode.removeChild(elements[0]);
         }
@@ -41,7 +45,7 @@ function blockAds() {
 // Initial Page Load
 if (document.readyState !== "loading") {
     // console.log("Document is ready, fetching JSON data"); // Add logging here
-    setInterval(blockAds, 500);
+    setInterval(blockAds, 250);
 } else {
     // console.log("Document is not ready, adding event listener for DOMContentLoaded"); // Add logging here
     document.addEventListener("DOMContentLoaded", blockAds);
