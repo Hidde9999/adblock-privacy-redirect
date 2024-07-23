@@ -50,6 +50,27 @@
             ]
         },{
             "matches": [
+                "*://consent.youtube.com/*"
+            ],
+            "css": [],
+            "js": [
+                "js/content/ytCookieReject.js"
+            ]
+        },{
+            "matches": [
+                "*://invidious.fdn.fr/*",
+                "*://yt.cdaut.de/*",
+                "*://invidious.privacyredirect.com/*",
+                "*://yewtu.be/*"
+            ],
+            "css": ["css/invidious.css"],
+            "js": [
+                "js/content/yt.js",
+                "js/content/ytPropagandaBlocker.js",
+                "js/content/invidious.js"
+            ]
+        },{
+            "matches": [
                 "*://*.google.com/*",
                 "*://google.com/*"
             ],
