@@ -13,12 +13,21 @@ function fakeMediaCheck() {
             .then(response => response.json())
             .then(data => {
                 const fakeMediaList = data.fakeMediaList;
-                const nlReplacements = data.nlReplacements;
+
+                let replacements = []
 
                 let language = "";
+
                 const isCurrentHostInFakeMediaList = fakeMediaList.some(site => {
                     if (site.url.includes(window.location.host)) {
                         language = site.language;
+                        console.log(language);
+                        if (language === "nl") {
+                            replacements = data.nlReplacements;
+                        } else if (language === "en") {
+                            replacements = data.enReplacements;
+                        }
+
                         return site.url.includes(window.location.host);
                     }
                 });
@@ -31,7 +40,7 @@ function fakeMediaCheck() {
                                 console.log("Media replace words turned off!");
                                 return;
                             }
-                            fakeMediaReplace(language, nlReplacements);
+                            fakeMediaReplace(language, replacements);
                         })
                         document.title = "Hitler Times";
                         let link = document.querySelector("link[rel~='icon']");
@@ -48,16 +57,16 @@ function fakeMediaCheck() {
     })
 }
 
-function fakeMediaReplace(language, nlReplacements) {
+function fakeMediaReplace(language, replacements) {
     function replaceText(node) {
         if (node.nodeType === Node.TEXT_NODE) {
             let text = node.textContent;
-            if (language === "nl") {
-                nlReplacements.forEach(({ target, replacement }) => {
+            // if (language === "nl") {
+                replacements.forEach(({ target, replacement }) => {
                     const regex = new RegExp(target, 'gi');
                     text = text.replace(regex, replacement);
                 });
-            }
+            // }
             node.textContent = text;
         } else if (node.nodeType === Node.ELEMENT_NODE) {
             node.childNodes.forEach(replaceText);

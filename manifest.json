@@ -91,7 +91,8 @@
                 "*://*.trouw.nl/*",
                 "*://*.rijksoverheid.nl/*",
                 "*://*.groene.nl/*",
-                "*://*.extinctionrebellion.nl/*"
+                "*://*.extinctionrebellion.nl/*",
+                "*://*.reuters.com/*"
 
             ],
             "css": ["css/fakeMedia.css"],

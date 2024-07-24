@@ -118,7 +118,8 @@
     "*://*.cnn.com/*",
     "*://*.politico.eu/*",
     "*://*.dailymail.co.uk/*",
-    "*://*.telegraph.co.uk/*"
+    "*://*.telegraph.co.uk/*",
+    "*://*.reuters.com/*"
   ],
   "other":[
     "*://cdn.optoutadvertising.com/*",

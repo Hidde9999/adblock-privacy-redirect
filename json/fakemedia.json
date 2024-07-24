@@ -13,7 +13,8 @@
     { "url": "www.trouw.nl", "language": "nl" },
     { "url": "www.groene.nl", "language": "nl" },
     { "url": "www.rijksoverheid.nl", "language": "nl" },
-    { "url": "extinctionrebellion.nl", "language": "nl" }
+    { "url": "extinctionrebellion.nl", "language": "nl" },
+    { "url": "www.reuters.com", "language": "en" }
   ],
   "nlReplacements": [
     { "target": "Nieuwsuur", "replacement": "Nieuwszuur" },
@@ -117,5 +118,14 @@
     { "target": "\\bKlaver\\b", "replacement": "iritante kut marokkaan" },
     { "target": "\\bMartin Bosma\\b", "replacement": "Marta Bosma" },
     { "target": "\\bSander Schimmelpenninck\\b", "replacement": "Sander Schimmelpenis" }
+  ],
+  "enReplacements": [
+    { "target": "fact", "replacement": "fiction" },
+    { "target": "misleading", "replacement": "fact" },
+    { "target": "pandemic", "replacement": "plandemic" },
+    { "target": "climate", "replacement": "climate hoax" },
+    { "target": "sustainability", "replacement": "climate hoax" },
+    { "target": "Sustainable", "replacement": "climate hoax" },
+    { "target": "who", "replacement": "world HOAX organization" }
   ]
 }
