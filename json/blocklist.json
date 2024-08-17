@@ -12,7 +12,6 @@
     "*://*.youtube.com/youtubei/v1/player/ad_break?*",
     "*://*.youtube.com/youtubei/v1/get_survey?*",
     "*://*.youtube.com/ptracking?*",
-    "*://*.youtube.com/generate_204",
 
     "*://*.gstatic.com/cv/js/*",
     "*://*.gstatic.com/uservoice/feedback/*",
@@ -54,6 +53,8 @@
   ],
   "google-extra": [
     "*://accounts.google.com/*",
+    "*://mail.google.com/*",
+    "*://gmail.com/*",
     "*://*.sites.google.com/*"
   ],
   "facebook": [
@@ -64,7 +65,12 @@
     "*://graph.instagram.com/*",
     "*://connect.facebook.net/*",
     "*://www.instagram.com/embed.js",
-    "*://www.instagram.com/ajax/bz?*"
+    "*://www.instagram.com/ajax/bz?*",
+    "*://static.xx.fbcdn.net/rsrc.php/v3/yA/r/y2hp7mRDnWc.js?*",
+    "*://static.xx.fbcdn.net/rsrc.php/v3/yS/r/IQesjrfZ6d8.js?*",
+    "*://static.xx.fbcdn.net/rsrc.php/v3i7M54/yM/l/en_US/-MtCr_YE_tJ.js?*",
+    "*://static.xx.fbcdn.net/rsrc.php/v3/yt/r/BFwTb6z3UJo.js?*",
+    "*://static.xx.fbcdn.net/rsrc.php/v3/yU/r/O7nelmd9XSI.png"
   ],
   "facebook-extra": [
     "*://*.facebook.com/*",
@@ -190,6 +196,13 @@
     "*://fast.wistia.com/assets/external/vulcanV2Player/video/ui_components/Storyboard.js",
     "*://graphql.jomi.com/graphql",
 
-    "*://game3rb.com/wp-content/uploads/2023/04/Untitled-1.png"
+    "*://game3rb.com/wp-content/uploads/2023/04/Untitled-1.png",
+    "*://static.ah.nl/ah-static/assets/advertisement-v0.js",
+    "*://static.ah.nl/__assets/features/assets/feedback.ce320c46.js",
+    "*://static.ah.nl/__assets/features/assets/feature-feedback.77228bb3.js",
+    "*://static.ah.nl/__assets/features/assets/feature-feedback.77228bb3.css",
+
+    "*://api.hackernoon.com/p/app/sponsorships?*",
+    "*://api.hackernoon.com/p/app/sponsored-audio?"
   ]
 }

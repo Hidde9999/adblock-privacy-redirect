@@ -1,27 +1,6 @@
-/*#guide-button,*/
-/*.yt-spec-button-shape-next.yt-spec-button-shape-next--outline.yt-spec-button-shape-next--call-to-action.yt-spec-button-shape-next--size-m.yt-spec-button-shape-next--icon-leading,*/
-/*.yt-spec-button-shape-next.yt-spec-button-shape-next--text.yt-spec-button-shape-next--overlay.yt-spec-button-shape-next--size-m.yt-spec-button-shape-next--icon-only-default,*/
-/*#gs_st50,*/
-/*#mealbar-promo-renderer,*/
-/*#clarify-box,*/
-/*.ad-showing,*/
-/*#panels,*/
-/*#guide-service,*/
-/*#guide,*/
-/*#contentWrapper,*/
-/*yt-tooltip-renderer::before,*/
-/*#sponsor-button,*/
-/*#subscribe-button,*/
-/*#flexible-item-buttons,*/
-/*.YtSegmentedLikeDislikeButtonViewModelHost,*/
-/*#button-shape,*/
-/*#action-menu,*/
-/*.ytp-paid-content-overlay{*/
-/*    display: none !important;*/
-/*}*/
-
 #dialog,
-#mealbar-promo-renderer
+#mealbar-promo-renderer,
+#clarify-box
 {
     display: none !important;
 }

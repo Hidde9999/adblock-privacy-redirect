@@ -19,12 +19,27 @@ function getGoogleCookies() {
         });
     });
 }
+// Convert the async storage get call to a promise-based function
+function getInstaCookies() {
+    return new Promise((resolve, reject) => {
+        chrome.storage.local.get(["instaCookies"], function (result) {
+            if (chrome.runtime.lastError) {
+                return reject(chrome.runtime.lastError);
+            }
+            resolve(result["instaCookies"]);
+        });
+    });
+}
 
 async function isAllowedCookie(cookie) {
     // Check if the cookie domain is google.com and googleCookies is set
     try {
         const googleCookies = await getGoogleCookies();
+        const instaCookies = await getInstaCookies();
         if (googleCookies && (cookie.domain.includes('google.com') || cookie.domain.includes('youtube.com'))) {
+            return true;
+        }
+        if (instaCookies && cookie.domain.includes('instagram.com')) {
             return true;
         }
     } catch (error) {

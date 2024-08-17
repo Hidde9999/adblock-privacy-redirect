@@ -62,9 +62,11 @@ document.addEventListener("DOMContentLoaded", function () {
 
     if (currentUrl.includes("cookieCleaner.html")){
         setSwitchFromLocalStorage("googleCookies");
+        setSwitchFromLocalStorage("instaCookies");
         setSwitchFromLocalStorage("autoCookies");
 
         document.getElementById("googleCookies").addEventListener("change", handleToggle("googleCookies"));
+        document.getElementById("instaCookies").addEventListener("change", handleToggle("instaCookies"));
         document.getElementById("autoCookies").addEventListener("change", handleToggle("autoCookies"));
     }
 
