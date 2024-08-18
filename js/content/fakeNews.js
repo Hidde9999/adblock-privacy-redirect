@@ -61,12 +61,12 @@ function fakeMediaReplace(language, replacements) {
     function replaceText(node) {
         if (node.nodeType === Node.TEXT_NODE) {
             let text = node.textContent;
-            // if (language === "nl") {
                 replacements.forEach(({ target, replacement }) => {
                     const regex = new RegExp(target, 'gi');
                     text = text.replace(regex, replacement);
                 });
-            // }
+            // Capitalize the first letter of each sentence
+            text = text.replace(/(?:^|\.\s+)([a-z])/g, (match, p1) => p1.toUpperCase());
             node.textContent = text;
         } else if (node.nodeType === Node.ELEMENT_NODE) {
             node.childNodes.forEach(replaceText);

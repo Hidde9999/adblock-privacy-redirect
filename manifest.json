@@ -92,6 +92,7 @@
                 "*://*.rijksoverheid.nl/*",
                 "*://*.groene.nl/*",
                 "*://*.extinctionrebellion.nl/*",
+                "*://*.www.hln.be/*",
                 "*://*.reuters.com/*"
 
             ],

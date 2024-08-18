@@ -13,6 +13,7 @@
     { "url": "www.trouw.nl", "language": "nl" },
     { "url": "www.groene.nl", "language": "nl" },
     { "url": "www.rijksoverheid.nl", "language": "nl" },
+    { "url": "www.hln.be", "language": "nl" },
     { "url": "extinctionrebellion.nl", "language": "nl" },
     { "url": "www.reuters.com", "language": "en" }
   ],
@@ -66,6 +67,7 @@
     { "target": "\\bpolio\\b", "replacement": "De Media Virus" },
     { "target": "\\brode hond\\b", "replacement": "rode WEF hond" },
     { "target": "\\brodehond\\b", "replacement": "rode WEF hond" },
+    { "target": "\\mpox\\b", "replacement": "apenpokken" },
     { "target": "\\b(de )?bof\\b", "replacement": "de EU" },
     { "target": "\\bcorona(virus)?\\b", "replacement": "de griep" },
     { "target": "\\bvogelgriep(virus)?\\b", "replacement": "de griep" },
@@ -76,6 +78,7 @@
     { "target": "\\bvirus\\b", "replacement": "Oh Hans!" },
     { "target": "\\bziekten\\b", "replacement": "gezonden" },
     { "target": "\\been bacterie\\b", "replacement": "de media" },
+    { "target": "\\bviroloog\\b", "replacement": "nep viroloog betaald om te liegen" },
     { "target": "\\bhet RIVM\\b", "replacement": "nep wetenschappers betaald door Big Pharma" },
     { "target": "\\bRIVM\\b", "replacement": "nep wetenschappers betaald door Big Pharma" },
     { "target": "\\bGGD\\b", "replacement": "nep artsen betaald door Big Pharma" },
