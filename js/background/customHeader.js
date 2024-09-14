@@ -18,7 +18,7 @@ let randomBrowser = browser[Math.floor(Math.random() * browser.length)];
 
 chrome.webRequest.onBeforeSendHeaders.addListener(
     function(details) {
-        if (details.url.includes("challenges.cloudflare.com")) {
+        if (details.url.includes("cloudflare.com") || details.url.includes("odysee.com")) {
             return;
         }
 
