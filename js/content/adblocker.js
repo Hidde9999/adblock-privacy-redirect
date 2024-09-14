@@ -4,7 +4,7 @@ const config = {
         ids: ['ad-id'],
         querySelectors: []  // Added querySelectors as an empty array
     },
-    "jensen.nl/": {  // Matches specific URL pattern
+    "jensen.nl": {  // Matches specific URL pattern
         classes: ['sc-hAIpwP'],
         ids: [],
         querySelectors: []  // Empty array for querySelectors
@@ -15,6 +15,14 @@ const config = {
         querySelectors: []  // Empty array for querySelectors
     },
     "x.com": {  // Matches specific URL pattern
+        classes: [''],  // Empty class list
+        ids: [],
+        querySelectors: [
+            'div[tabindex="0"].css-175oi2r[data-testid="birdwatch-pivot"]',
+            'div.css-146c3p1.r-bcqeeo.r-1ttztb7.r-qvutc0.r-1qd0xha.r-n6v787.r-1cwl3u0.r-16dba41.r-1mmae3n'  // Newly added query selector
+        ]
+    },
+    "twitter.com": {  // Matches specific URL pattern
         classes: [''],  // Empty class list
         ids: [],
         querySelectors: [
