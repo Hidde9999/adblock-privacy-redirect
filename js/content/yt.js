@@ -102,12 +102,24 @@ async function fetchJsonData() {
     }
 }
 
+function autoReject() {
+    const popup = document.getElementById("dialog");
+    if(popup){
+        const rejectButton = document.querySelectorAll("#dialog .yt-spec-button-shape-next.yt-spec-button-shape-next--filled.yt-spec-button-shape-next--mono.yt-spec-button-shape-next--size-m.yt-spec-button-shape-next--enable-backdrop-filter-experiment");
+
+        if(rejectButton[0]){
+            rejectButton[0].click();
+        }
+    }
+}
+
 // Main Functions
 function handlePageLoad() {
     currentUrl = window.location.href.toLowerCase().replace("+", " ");
     propagandaBlocker();
     blockVideoWithBlockedChannel();
     if (currentUrl.includes("youtube.com")) {
+        autoReject();
         toInvidious();
     }
 }
