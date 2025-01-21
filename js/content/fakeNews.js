@@ -1,5 +1,17 @@
 function handlePageLoad() {
     fakeMediaCheck();
+    fakeMediaPopup();
+}
+
+// Add navigation event listener for SPA
+if ('navigation' in window) {
+    window.navigation.addEventListener("navigate", () => {
+        setTimeout(() => {
+            fakeMediaCheck();
+        }, 200);
+    });
+} else {
+    console.error("window.navigation is not supported in this browser.");
 }
 
 function fakeMediaCheck() {
@@ -21,7 +33,7 @@ function fakeMediaCheck() {
                 const isCurrentHostInFakeMediaList = fakeMediaList.some(site => {
                     if (site.url.includes(window.location.host)) {
                         language = site.language;
-                        console.log(language);
+
                         if (language === "nl") {
                             replacements = data.nlReplacements;
                         } else if (language === "en") {
@@ -33,7 +45,6 @@ function fakeMediaCheck() {
                 });
 
                 if (isCurrentHostInFakeMediaList) {
-                    fakeMediaPopup();
                     setTimeout(() => {
                         chrome.storage.local.get(["mediaReplceWords"], function (result) {
                             if (!result["mediaReplceWords"]) {

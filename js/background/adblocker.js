@@ -73,26 +73,26 @@ function storeBlockedURL(url, tabId) {
 }
 
 // Block specific scripts on YouTube
-function ytBlockScriptsByName() {
-    chrome.webRequest.onBeforeRequest.addListener(
-        function (details) {
-            const scriptsToBlock = [
-                "sw.js", "scheduler.js", "spf.js", "network.js", "www-tampering.js",
-                "web-animations-next-lite.min.js", "offline.js", "remote.js", "endscreen.js",
-                "inline_preview.js", "intersection-observer.min.js", "custom-elements-es5-adapter.js",
-                "annotations_module.js"
-            ];
-            if (scriptsToBlock.some(script => details.url.includes(script))) {
-                if (details.tabId !== -1) {
-                    storeBlockedURL(details.url, details.tabId);
-                }
-                return { cancel: true };
-            }
-        },
-        { urls: youtubeFilters },
-        ["blocking"]
-    );
-}
+// function ytBlockScriptsByName() {
+//     chrome.webRequest.onBeforeRequest.addListener(
+//         function (details) {
+//             const scriptsToBlock = [
+//                 "sw.js", "scheduler.js", "spf.js", "network.js", "www-tampering.js",
+//                 "web-animations-next-lite.min.js", "offline.js", "remote.js", "endscreen.js",
+//                 "inline_preview.js", "intersection-observer.min.js", "custom-elements-es5-adapter.js",
+//                 "annotations_module.js"
+//             ];
+//             if (scriptsToBlock.some(script => details.url.includes(script))) {
+//                 if (details.tabId !== -1) {
+//                     storeBlockedURL(details.url, details.tabId);
+//                 }
+//                 return { cancel: true };
+//             }
+//         },
+//         { urls: youtubeFilters },
+//         ["blocking"]
+//     );
+// }
 
 // Block ads and trackers based on user-defined filters
 function blockAdsAndTrackers() {

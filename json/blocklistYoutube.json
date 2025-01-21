@@ -14,7 +14,10 @@
     "Jeugdjournaal",
     "NOS Stories",
     "NOS Nieuws van de Week",
+    "NOS Journaal in Makkelijke Taal",
     "Nieuwsuur",
+    "EenVandaag",
+    "De Groene Nerds",
     "Rijkswaterstaat",
     "Het Klokhuis",
     "De Telegraaf",
@@ -168,7 +171,7 @@
     "Mediabear"
   ],
   "videoTitles": [
-    "Overtreders",
+    "overtreders",
     "Handhavers",
     "europapa",
     "Joost Klein",
@@ -188,13 +191,14 @@
     "griep prik",
     "griepprik",
     "inenten",
-    "Ukraine",
+    "ukraine",
     "zonnebrand",
     "mazelen",
     "measles",
     "9/11",
     "pentagon",
     "covid",
-    "corona"
+    "corona",
+    "jeugdjournaal"
   ]
 }

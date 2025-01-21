@@ -1,7 +1,7 @@
 window.onload = function () {
     // getFilters()
     getFiltersFromJson()
-    ytBlockScriptsByName()
+    // ytBlockScriptsByName()
 
     loadRedirectSettings()
     youtubeRedirectFunc()

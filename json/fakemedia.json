@@ -85,6 +85,7 @@
     { "target": "\\bwereldgezondheidsorganisatie\\b", "replacement": "WereldHOAXorganisatie" },
     { "target": "\\bWHO\\b", "replacement": "World HOAX Organisation" },
     { "target": "\\bklimaat(top)?(deal)?(record)?(rampen)\\b", "replacement": "klimaat scam" },
+    { "target": "\\bwindmolen(parken)?\\b", "replacement": "ROTzooi die weinig stroom opbrengt (klimaat scam)" },
     { "target": "klimaat-", "replacement": "klimaat scam" },
     { "target": "\\bExtinction Rebellion\\b", "replacement": "Dombo Rebellion" },
     { "target": "\\bklimaatradicalen\\b", "replacement": "klimaat gekken" },

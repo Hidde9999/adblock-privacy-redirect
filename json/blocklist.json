@@ -25,6 +25,7 @@
     "*://*.google.com/gen_204?*",
     "*://*.google.com/xjs/*",
     "*://*.consent.google.nl/_/ConsentUi/browserinfo?*",
+    "*://*.google.com/js/bg/FsaNIYyPN76i0sL7d3myIoFfjMDAw8eHc9AJuLUrm7A.js",
 
     "*://video-stats.video.google.com/*",
 
@@ -167,7 +168,6 @@
     "*://advertising-cdn.dpgmedia.cloud/*",
     "*://temptation.volkskrant.nl/*",
     "*://www.volkskrant.nl/_next/static/chunks/*",
-    "*://cdn.auth0.com/*",
     "*://shared.mediahuis.be/*",
     "*://*.telegraaf.nl/statics/client/client.307808cc80.js",
     "*://tags.tiqcdn.com/utag/talpa/video-kijk-embed/prod/utag.js",
@@ -204,6 +204,21 @@
     "*://static.ah.nl/__assets/features/assets/feature-feedback.77228bb3.css",
 
     "*://api.hackernoon.com/p/app/sponsorships?*",
-    "*://api.hackernoon.com/p/app/sponsored-audio?"
+    "*://api.hackernoon.com/p/app/sponsored-audio?",
+
+    "*://joogruphezefaul.net/*",
+    "*://camp.purchase-shop.com/*",
+    "*://nedergaming.nl/*",
+    "*://eliteadblocker.net/*",
+    "*://www.etoro.com/*",
+    "*://nmonpoendpoint.2cnt.net/*",
+    "*://analytics-ingress-global.bitmovin.com/licensing",
+    "*://static.ads-twitter.com/uwt.js",
+    "*://cdn-ster-nl.akamaized.net/*",
+    "*://cdn.branch.io/branch-latest.min.js",
+    "*://m-chromadrone.prod.suno.com/*",
+    "*://s.prod.suno.com/*",
+    "*://suno.com/monitoring?*",
+    "*://rumble.com/l/*"
   ]
 }

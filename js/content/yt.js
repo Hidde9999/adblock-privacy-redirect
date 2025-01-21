@@ -4,8 +4,7 @@ let whiteList = [];
 let videoTitles = [];
 
 // Constants
-const ytElementsSelector = "#dismissible, #content-section, .style-scope.yt-horizontal-list-renderer, .style-scope.ytd-rich-grid-row, .style-scope.ytd-item-section-renderer";
-const invidiousElementsSelector = "#contents .pure-u-1:not(.navbar)";
+const ytElementsSelector = ".style-scope.ytd-rich-grid-renderer, #dismissible, #content-section, .style-scope.yt-horizontal-list-renderer, .style-scope.ytd-rich-grid-row, .style-scope.ytd-item-section-renderer";
 const blockedContentsHtml = `
     <div class="blocked-container" id="blocked-contents">
         <h1>This page is blocked</h1>
@@ -26,7 +25,7 @@ function isBlockedTitle(title) {
 }
 
 function removeBlockedVideos() {
-    const videoElements = currentUrl.includes("youtube.com") ? document.querySelectorAll(ytElementsSelector) : document.querySelectorAll(invidiousElementsSelector);
+    const videoElements = document.querySelectorAll(ytElementsSelector);
     if (blockedChannels === [] || videoTitles === []){
         return;
     }
@@ -36,56 +35,16 @@ function removeBlockedVideos() {
 
         if (!channelLink || !videoTitle) return;
 
-        if (!channelLink.textContent || !videoTitle.textContent) return;
-
         if (isWhitelistedChannel(channelLink.textContent.trim())) return;
 
         if (isBlockedChannel(channelLink.textContent.trim())) {
             console.log("Removing video from blocked channel:", channelLink.textContent.trim());
             video.remove();
-        } else if (isBlockedTitle(videoTitle.textContent.trim())) {
+        }
+        if (isBlockedTitle(videoTitle.textContent.trim())) {
             console.log("Removing video with blocked title:", videoTitle.textContent.trim());
             video.remove();
         }
-    });
-}
-
-function blockPage() {
-    const pageManagerElement = document.getElementById("page-manager") || document.querySelector("#contents");
-    if (pageManagerElement) {
-        pageManagerElement.innerHTML = blockedContentsHtml;
-        document.getElementById("blocked-contents").style.display = "block";
-    } else {
-        console.error("Element matching '#page-manager' or '#contents' not found.");
-    }
-}
-
-function toInvidious() {
-    chrome.storage.local.get(["toggleSwitchYT"], function (result) {
-        const privacyNotice = document.createElement('div');
-        privacyNotice.id = 'privacy-notice';
-        privacyNotice.innerText = 'Privacy redirect is on';
-        privacyNotice.style.display = "none";
-        document.body.prepend(privacyNotice);
-
-        if (!result["toggleSwitchYT"]) {
-            console.log("YouTube privacy redirect is turned off!");
-            privacyNotice.style.display = "none";
-            return;
-        }
-
-        privacyNotice.style.display = "block";
-
-        function backToInvidious(link) {
-            window.location.href = `${link.href.replace("www.youtube.com", "invidious.privacyredirect.com")}`;
-        }
-
-        document.querySelectorAll("a").forEach(link => {
-            link.addEventListener('click', (event) => {
-                event.preventDefault();
-                backToInvidious(link);
-            });
-        });
     });
 }
 
@@ -117,10 +76,9 @@ function autoReject() {
 function handlePageLoad() {
     currentUrl = window.location.href.toLowerCase().replace("+", " ");
     propagandaBlocker();
-    blockVideoWithBlockedChannel();
+    // blockVideoWithBlockedChannel();
     if (currentUrl.includes("youtube.com")) {
         autoReject();
-        toInvidious();
     }
 }
 
@@ -140,31 +98,7 @@ function propagandaBlocker() {
             currentUrl.includes('/feed/trending') ||
             currentUrl === "https://www.youtube.com/"
         ) {
-            setInterval(removeBlockedVideos, 250);
-        }
-    });
-}
-
-function blockVideoWithBlockedChannel() {
-    chrome.storage.local.get(["youtubeBlockList"], function (result) {
-        if (!result["youtubeBlockList"]) {
-            console.log("Propaganda blocking turned off!");
-            return;
-        }
-        if (currentUrl.includes("/watch?")) {
-            const intervalId = setInterval(function () {
-                const elementToLoad = document.querySelector("#text-container a") || document.querySelector("#channel-name");
-                const titleVideo = document.querySelector("#title .style-scope.ytd-watch-metadata:last-child");
-                if (elementToLoad && elementToLoad.textContent && titleVideo && titleVideo.textContent) {
-                    clearInterval(intervalId);
-                    if (isBlockedChannel(elementToLoad.textContent)) {
-                        blockPage();
-                    }
-                    if (isBlockedTitle(titleVideo.textContent)) {
-                        blockPage();
-                    }
-                }
-            }, 50);
+            setInterval(removeBlockedVideos, 500);
         }
     });
 }
@@ -174,23 +108,21 @@ if ('navigation' in window) {
     window.navigation.addEventListener("navigate", () => {
         setTimeout(() => {
             currentUrl = window.location.href.toLowerCase().replace("+", " ");
-            const blockedContents = document.getElementById("blocked-contents");
+            // const blockedContents = document.getElementById("blocked-contents");
 
-            if (blockedContents) {
-                blockedContents.style.display = "none";
-            } else {
-                console.warn("Element with ID 'blocked-contents' not found.");
-            }
+            // if (blockedContents) {
+            //     blockedContents.style.display = "none";
+            // } else {
+            //     console.warn("Element with ID 'blocked-contents' not found.");
+            // }
 
             if (currentUrl.includes("/shorts/")) {
                 window.location.href = window.location.href.replace("/shorts/", "/watch?v=");
             }
 
-            if (currentUrl.includes("youtube.com")) {
-                toInvidious();
-            }
-
-            blockVideoWithBlockedChannel();
+            propagandaBlocker();
+            autoReject();
+            // blockVideoWithBlockedChannel();
         }, 200);
     });
 } else {
@@ -199,10 +131,10 @@ if ('navigation' in window) {
 
 // Initial Page Load
 if (document.readyState !== "loading") {
-    // console.log("Document is ready, fetching JSON data"); // Add logging here
+    console.log("Document is ready, fetching JSON data"); // Add logging here
     fetchJsonData();
     handlePageLoad();
 } else {
     // console.log("Document is not ready, adding event listener for DOMContentLoaded"); // Add logging here
-    document.addEventListener("DOMContentLoaded", fetchJsonData);
+    // document.addEventListener("DOMContentLoaded", fetchJsonData);
 }

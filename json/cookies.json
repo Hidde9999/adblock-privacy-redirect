@@ -42,5 +42,13 @@
   {
     "domain": "x.com",
     "cookies": ["*"]
+  },
+  {
+    "domain": "app.addy.io",
+    "cookies": ["*"]
+  },
+  {
+    "domain": "suno.com",
+    "cookies": ["*"]
   }
 ]
