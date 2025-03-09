@@ -29,13 +29,17 @@ function removeBlockedVideos() {
     if (blockedChannels === [] || videoTitles === []){
         return;
     }
+
     videoElements.forEach(video => {
+        const channelTitle = document.querySelector("#page-header .yt-core-attributed-string.yt-core-attributed-string--white-space-pre-wrap") || video.querySelector('#container #text a');
         const channelLink = video.querySelector(".pure-u-14-24 a") || video.querySelector(".channel-name") || video.querySelector('#container #text a') || video.querySelector('#container #text') || document.querySelector("#inner-header-container #text");
         const videoTitle = video.querySelector('#video-title') || video.querySelector(".video-card-row p");
 
         if (!channelLink || !videoTitle) return;
 
-        if (isWhitelistedChannel(channelLink.textContent.trim())) return;
+        if (channelTitle){
+            if (isWhitelistedChannel(channelTitle.textContent.trim())) return;
+        }
 
         if (isBlockedChannel(channelLink.textContent.trim())) {
             console.log("Removing video from blocked channel:", channelLink.textContent.trim());
